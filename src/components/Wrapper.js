@@ -1,62 +1,76 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useLayoutEffect } from 'react';
 import Header from './Header';
+import Home from './Home';
 import About from './About';
 import Projects from './Projects';
 import Contact from './Contact';
-import Home from './Home';
 import Footer from './Footer';
-
 
 const Wrapper = () => {
   const [activeArticle, setActiveArticle] = useState('header');
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
-  // Handle setting active article and adding class to body
-  const handleSetActive = (article) => {
+  // Optimize the setActive handler with transition state
+  const handleSetActive = useCallback((article) => {
+    setIsTransitioning(true);
     setActiveArticle(article);
+    // Reset transition state after a short delay
+    setTimeout(() => setIsTransitioning(false), 200);
+  }, []);
 
-    // Scroll the active article to the top of the page
-    if (article !== 'header') {
-      const targetArticle = document.getElementById(article);
-      if (targetArticle) {
-        targetArticle.scrollIntoView({ behavior: 'smooth' });
-      }
+  // Optimize close handler for immediate response
+  const handleClose = useCallback((e) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
     }
-  };
-
-  const handleClose = () => {
+    
+    // Immediately remove visible class before state update
+    document.body.classList.remove('is-article-visible');
+    setIsTransitioning(true);
+    
+    // Immediate state update
     setActiveArticle('header');
-    // Scroll back to the top of the page when closing an article
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
-  };
+    
+    // Reset transition state
+    setTimeout(() => setIsTransitioning(false), 200);
+  }, []);
 
-  // Add or remove class from the body based on active article
-  useEffect(() => {
-    const body = document.querySelector('body');
-    if (activeArticle !== 'header') {
-      body.classList.add('is-article-visible');
-    } else {
-      body.classList.remove('is-article-visible');
+  // Use useLayoutEffect for synchronous DOM updates
+  useLayoutEffect(() => {
+    if (!isTransitioning) {
+      document.body.classList.toggle('is-article-visible', activeArticle !== 'header');
     }
-  }, [activeArticle]);
+  }, [activeArticle, isTransitioning]);
 
   return (
-    
-    <div id="wrapper">
+    <div id="wrapper" className={isTransitioning ? 'is-transitioning' : ''}>
       <Header onSetActive={handleSetActive} />
-      <body className="is-article-visible">
-      <Home isActive={activeArticle === 'home'} onClose={handleClose} />
-      <About isActive={activeArticle === 'about'} onClose={handleClose} />
-      <Projects isActive={activeArticle === 'projects'} onClose={handleClose} />
-      <Contact isActive={activeArticle === 'contact'} onClose={handleClose} />
-      </body>
+      <div id="main">
+        <Home 
+          isActive={activeArticle === 'home'} 
+          onClose={handleClose}
+          isTransitioning={isTransitioning} 
+        />
+        <About 
+          isActive={activeArticle === 'about'} 
+          onClose={handleClose}
+          isTransitioning={isTransitioning} 
+        />
+        <Projects 
+          isActive={activeArticle === 'projects'} 
+          onClose={handleClose}
+          isTransitioning={isTransitioning} 
+        />
+        <Contact 
+          isActive={activeArticle === 'contact'} 
+          onClose={handleClose}
+          isTransitioning={isTransitioning} 
+        />
+      </div>
       <Footer />
     </div>
-   
-   
   );
 };
 
-export default Wrapper;
+export default React.memo(Wrapper);

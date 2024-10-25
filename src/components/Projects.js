@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import CloseButton from './CloseButton';
 
 const Projects = ({ isActive, onClose }) => {
   const [projects, setProjects] = useState([]);
@@ -34,26 +35,23 @@ const Projects = ({ isActive, onClose }) => {
   }
 
   return (
-    <div id="main">
-      <article id="projects" className={` ${isActive ? 'active' : ''}`}>
-        <div className="inner">
-          <h2 className="major">Projects</h2>
-          <ul>
-            {projects.map((project, index) => (
-              <li key={index}>
-                <h3>{project.title}</h3>
-                <p>{project.description}</p>
-                <a href={project.github_link} target="_blank" rel="noopener noreferrer">
-                  View on GitHub
-                </a>
-                <br />
-              </li>
-            ))}
-          </ul>
-          <div className="close" onClick={onClose}>Close</div>
-        </div>
-      </article>
-    </div>
+    <article id="projects" className={`${isActive ? 'active' : ''} ${isActive ? 'debug-active' : 'debug-inactive'}`}>
+      <h2 className="major">Projects</h2>
+      <CloseButton onClick={onClose} />
+      <ul>
+        {projects.map((project, index) => (
+          <li key={index}>
+            <h3>{project.title}</h3>
+            <p>{project.description}</p>
+            <a href={project.github_link} target="_blank" rel="noopener noreferrer">
+              View on GitHub
+            </a>
+            <br />
+          </li>
+        ))}
+      </ul>
+     
+    </article>
   );
 };
 

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { CSSTransition } from 'react-transition-group';
 
 const Header = ({ onSetActive }) => {
   const [showIntro, setShowIntro] = useState(true);
@@ -13,6 +14,11 @@ const Header = ({ onSetActive }) => {
     return () => clearTimeout(timer);
   }, []);
 
+  const handleNavClick = (article) => {
+    console.log('Nav item clicked:', article); // Debug log
+    onSetActive(article);
+  };
+
   return (
     
     <header id="header">
@@ -20,7 +26,12 @@ const Header = ({ onSetActive }) => {
         <span className="icon fa-gem"></span>
       </div>
 
-      {showIntro && (
+      <CSSTransition
+        in={showIntro}
+        timeout={500}
+        classNames="fade"
+        unmountOnExit
+      >
         <div className="content">
           <div className="inner">
             <h1>Takudzwa Wushe</h1>
@@ -33,14 +44,14 @@ const Header = ({ onSetActive }) => {
             </p>
           </div>
         </div>
-      )}
+      </CSSTransition>
 
       <nav>
         <ul>
-          <li><a href="#home" onClick={() => onSetActive('home')}>Home</a></li>
-          <li><a href="#projects" onClick={() => onSetActive('projects')}>Projects</a></li>
-          <li><a href="#about" onClick={() => onSetActive('about')}>About Me</a></li>
-          <li><a href="#contact" onClick={() => onSetActive('contact')}>Contact</a></li>
+          <li><a href="#home" onClick={() => handleNavClick('home')}>Home</a></li>
+          <li><a href="#projects" onClick={() => handleNavClick('projects')}>Projects</a></li>
+          <li><a href="#about" onClick={() => handleNavClick('about')}>About Me</a></li>
+          <li><a href="#contact" onClick={() => handleNavClick('contact')}>Contact</a></li>
         </ul>
       </nav>
     </header>

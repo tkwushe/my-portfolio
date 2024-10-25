@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Footer = () => (
-  <footer id="footer">
+  <footer id="footer" className="fade-in">
     <ul className="icons">
       <li><a href="https://twitter.com" className="icon brands fa-twitter"><span className="label">Twitter</span></a></li>
       <li><a href="https://facebook.com" className="icon brands fa-facebook"><span className="label">Facebook</span></a></li>
