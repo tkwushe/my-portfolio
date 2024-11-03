@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import CloseButton from './CloseButton';
 
 const About = ({ isActive, onClose }) => {
@@ -10,8 +10,28 @@ const About = ({ isActive, onClose }) => {
     "Other": ["Technical Expertise", "Open-Source Projects"]
   };
 
+  // Handle escape key
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape' && isActive) {
+        onClose();
+      }
+    };
+
+    if (isActive) {
+      window.addEventListener('keydown', handleEscape);
+    }
+
+    return () => window.removeEventListener('keydown', handleEscape);
+  }, [isActive, onClose]);
+
   return (
-    <article id="about" className={isActive ? 'active' : ''}>
+    <article 
+      id="about" 
+      className={isActive ? 'active' : ''}
+      role="dialog"
+      aria-modal="true"
+    >
       <h2 className="major">About Me</h2>
       <CloseButton onClick={onClose} />
       <h3>Skills</h3>
@@ -43,4 +63,4 @@ const About = ({ isActive, onClose }) => {
   );
 };
 
-export default About;
+export default React.memo(About);

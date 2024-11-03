@@ -6,9 +6,10 @@ const Projects = ({ isActive, onClose }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Fetch projects from the backend API
   useEffect(() => {
-    fetch('http://localhost:5001/projects')  // Replace with your backend server URL
+    if (!isActive) return; // Only fetch when active
+
+    fetch('http://localhost:5001/projects')
       .then((response) => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -24,35 +25,54 @@ const Projects = ({ isActive, onClose }) => {
         setError(error);
         setLoading(false);
       });
-  }, []);
+  }, [isActive]);
 
-  if (loading) {
-    return <p>Loading projects...</p>;
-  }
+  // Handle escape key
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape' && isActive) {
+        onClose();
+      }
+    };
 
-  if (error) {
-    return <p>Error fetching projects: {error.message}</p>;
-  }
+    if (isActive) {
+      window.addEventListener('keydown', handleEscape);
+    }
+
+    return () => window.removeEventListener('keydown', handleEscape);
+  }, [isActive, onClose]);
 
   return (
-    <article id="projects" className={`${isActive ? 'active' : ''} ${isActive ? 'debug-active' : 'debug-inactive'}`}>
+    <article 
+      id="projects" 
+      className={isActive ? 'active' : ''}
+      role="dialog"
+      aria-modal="true"
+    >
       <h2 className="major">Projects</h2>
       <CloseButton onClick={onClose} />
-      <ul>
-        {projects.map((project, index) => (
-          <li key={index}>
-            <h3>{project.title}</h3>
-            <p>{project.description}</p>
-            <a href={project.github_link} target="_blank" rel="noopener noreferrer">
-              View on GitHub
-            </a>
-            <br />
-          </li>
-        ))}
-      </ul>
-     
+      {loading && <p>Loading projects...</p>}
+      {error && <p>Error fetching projects: {error.message}</p>}
+      {!loading && !error && (
+        <ul>
+          {projects.map((project, index) => (
+            <li key={project.id || index}>
+              <h3>{project.title}</h3>
+              <p>{project.description}</p>
+              <a 
+                href={project.github_link} 
+                target="_blank" 
+                rel="noopener noreferrer"
+              >
+                View on GitHub
+              </a>
+              <br />
+            </li>
+          ))}
+        </ul>
+      )}
     </article>
   );
 };
 
-export default Projects;
+export default React.memo(Projects);

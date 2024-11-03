@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useLayoutEffect } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import Header from './Header';
 import Home from './Home';
 import About from './About';
@@ -8,66 +8,60 @@ import Footer from './Footer';
 
 const Wrapper = () => {
   const [activeArticle, setActiveArticle] = useState('header');
-  const [isTransitioning, setIsTransitioning] = useState(false);
 
-  // Optimize the setActive handler with transition state
+  // Handle body class
+  useEffect(() => {
+    const isArticleVisible = activeArticle !== 'header';
+    document.body.classList.toggle('is-article-visible', isArticleVisible);
+    
+    // Cleanup
+    return () => {
+      document.body.classList.remove('is-article-visible');
+    };
+  }, [activeArticle]);
+
+  // Global escape key handler
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape' && activeArticle !== 'header') {
+        handleClose();
+      }
+    };
+
+    window.addEventListener('keydown', handleEscape);
+    return () => window.removeEventListener('keydown', handleEscape);
+  }, [activeArticle]);
+
   const handleSetActive = useCallback((article) => {
-    setIsTransitioning(true);
+    if (article === activeArticle) return;
     setActiveArticle(article);
-    // Reset transition state after a short delay
-    setTimeout(() => setIsTransitioning(false), 200);
-  }, []);
+  }, [activeArticle]);
 
-  // Optimize close handler for immediate response
-  const handleClose = useCallback((e) => {
-    if (e) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-    
-    // Immediately remove visible class before state update
-    document.body.classList.remove('is-article-visible');
-    setIsTransitioning(true);
-    
-    // Immediate state update
+  const handleClose = useCallback(() => {
     setActiveArticle('header');
-    
-    // Reset transition state
-    setTimeout(() => setIsTransitioning(false), 200);
   }, []);
-
-  // Use useLayoutEffect for synchronous DOM updates
-  useLayoutEffect(() => {
-    if (!isTransitioning) {
-      document.body.classList.toggle('is-article-visible', activeArticle !== 'header');
-    }
-  }, [activeArticle, isTransitioning]);
 
   return (
-    <div id="wrapper" className={isTransitioning ? 'is-transitioning' : ''}>
+    <div id="wrapper">
       <Header onSetActive={handleSetActive} />
-      <div id="main">
+      <main id="main">
         <Home 
           isActive={activeArticle === 'home'} 
           onClose={handleClose}
-          isTransitioning={isTransitioning} 
         />
         <About 
           isActive={activeArticle === 'about'} 
           onClose={handleClose}
-          isTransitioning={isTransitioning} 
         />
         <Projects 
           isActive={activeArticle === 'projects'} 
           onClose={handleClose}
-          isTransitioning={isTransitioning} 
         />
         <Contact 
           isActive={activeArticle === 'contact'} 
           onClose={handleClose}
-          isTransitioning={isTransitioning} 
         />
-      </div>
+      </main>
       <Footer />
     </div>
   );
