@@ -6,26 +6,38 @@ const Projects = ({ isActive, onClose }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // Replace the fetch URL with your Railway URL
+  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'https://my-portfolio-production-382d.up.railway.app/';
+
   useEffect(() => {
     if (!isActive) return; // Only fetch when active
 
-    fetch('http://localhost:5001/projects')
-      .then((response) => {
+    console.log('Fetching from:', `${BACKEND_URL}/projects`); // Debug log
+
+    fetch(`${BACKEND_URL}/projects`)
+      .then(async (response) => {
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          const errorText = await response.text();
+          console.error('Response details:', {
+            status: response.status,
+            statusText: response.statusText,
+            body: errorText
+          });
+          throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
         }
         return response.json();
       })
       .then((data) => {
+        console.log('Received data:', data); // Debug log
         setProjects(data);
         setLoading(false);
       })
       .catch((error) => {
-        console.error('Error fetching projects:', error);
+        console.error('Detailed error:', error);
         setError(error);
         setLoading(false);
       });
-  }, [isActive]);
+  }, [isActive, BACKEND_URL]);
 
   // Handle escape key
   useEffect(() => {
@@ -52,7 +64,12 @@ const Projects = ({ isActive, onClose }) => {
       <h2 className="major">Projects</h2>
       <CloseButton onClick={onClose} />
       {loading && <p>Loading projects...</p>}
-      {error && <p>Error fetching projects: {error.message}</p>}
+      {error && (
+        <div className="error-container">
+          <p>Error fetching projects: {error.message}</p>
+          <p>Backend URL: {BACKEND_URL}</p>
+        </div>
+      )}
       {!loading && !error && (
         <ul>
           {projects.map((project, index) => (
