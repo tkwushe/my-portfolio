@@ -9,6 +9,10 @@ import Footer from './Footer';
 const Wrapper = () => {
   const [activeArticle, setActiveArticle] = useState('header');
 
+  const handleClose = useCallback(() => {
+    setActiveArticle('header');
+  }, []);
+
   // Handle body class
   useEffect(() => {
     const isArticleVisible = activeArticle !== 'header';
@@ -30,16 +34,12 @@ const Wrapper = () => {
 
     window.addEventListener('keydown', handleEscape);
     return () => window.removeEventListener('keydown', handleEscape);
-  }, [activeArticle]);
+  }, [activeArticle, handleClose]);
 
   const handleSetActive = useCallback((article) => {
     if (article === activeArticle) return;
     setActiveArticle(article);
   }, [activeArticle]);
-
-  const handleClose = useCallback(() => {
-    setActiveArticle('header');
-  }, []);
 
   return (
     <div id="wrapper">
