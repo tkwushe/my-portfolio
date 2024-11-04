@@ -3963,7 +3963,6 @@ body.is-article-visible #main article.active {
 }
 
 #footer .icons a:hover {
-  background-color: rgba(255, 255, 255, 0.075);
   border-color: #ffffff;
   color: #ffffff;
 }
