@@ -20,32 +20,49 @@ console.log('Environment check:', {
   port: process.env.PORT
 });
 
-// Database configuration
+// Database configuration for MySQL
 const pool = mysql.createPool({
-  host: process.env.MYSQLHOST,
-  user: process.env.MYSQLUSER,
+  host: 'mysql.railway.internal', // Railway's internal MySQL host
+  user: process.env.MYSQLUSER || 'root',
   password: process.env.MYSQLPASSWORD,
-  database: process.env.MYSQLDATABASE,
-  port: process.env.MYSQLPORT,
+  database: process.env.MYSQLDATABASE || 'railway',
+  port: parseInt(process.env.MYSQLPORT) || 3306, // MySQL port
   waitForConnections: true,
   connectionLimit: 10,
-  queueLimit: 0
+  queueLimit: 0,
+  enableKeepAlive: true,
+  keepAliveInitialDelay: 0
 });
 
+// Convert pool to promise-based API
+const promisePool = pool.promise();
+
 // Test database connection
-pool.getConnection((err, connection) => {
-  if (err) {
+const testConnection = async () => {
+  try {
+    console.log('Attempting database connection with config:', {
+      host: process.env.MYSQLHOST,
+      user: process.env.MYSQLUSER,
+      database: process.env.MYSQLDATABASE,
+      port: process.env.MYSQLPORT
+    });
+    
+    const [result] = await promisePool.query('SELECT VERSION() as version');
+    console.log('Database connected successfully');
+    console.log('MySQL Version:', result[0].version);
+  } catch (err) {
     console.error('Database connection failed:', {
       code: err.code,
       errno: err.errno,
       sqlMessage: err.sqlMessage,
-      sqlState: err.sqlState
+      sqlState: err.sqlState,
+      host: process.env.MYSQLHOST,
+      port: process.env.MYSQLPORT
     });
-    return;
   }
-  console.log('Database connected successfully');
-  connection.release();
-});
+};
+
+testConnection();
 
 // Root route with DB info
 app.get('/', (req, res) => {
@@ -63,9 +80,7 @@ app.get('/', (req, res) => {
 // Health check endpoint with detailed info
 app.get('/health', async (req, res) => {
   try {
-    const connection = await pool.promise().getConnection();
-    await connection.query('SELECT 1');
-    connection.release();
+    await promisePool.query('SELECT 1');
     res.status(200).json({ 
       status: 'healthy',
       database: 'connected',
@@ -89,50 +104,33 @@ app.get('/health', async (req, res) => {
 app.get('/projects', async (req, res) => {
   console.log('Projects endpoint hit');
   try {
-    // Test connection first
-    const connection = await pool.promise().getConnection();
-    console.log('Connection successful');
-
-    // Show available tables
-    const [tables] = await connection.query('SHOW TABLES');
-    console.log('Available tables:', tables);
-
-    // Try to get projects
-    const [rows] = await connection.query('SELECT * FROM projects');
-    console.log('Projects fetched:', rows);
-    
-    connection.release();
-    res.json(rows);
+    const [results] = await promisePool.query('SELECT * FROM projects');
+    console.log('Projects fetched:', results);
+    res.json(results);
   } catch (error) {
-    console.error('Detailed error:', {
-      message: error.message,
-      code: error.code,
-      state: error.sqlState,
-      errno: error.errno,
-      stack: error.stack
-    });
+    console.error('Query error:', error);
     res.status(500).json({ 
-      error: 'Database error',
-      details: error.message,
-      code: error.code
+      error: 'Database query error',
+      details: error.message
     });
   }
 });
 
 const PORT = process.env.PORT || 8080;
 
+// Force IPv4
 const server = app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server running on port ${PORT}`);
+  console.log('Server address:', server.address());
 });
 
 // Handle shutdown gracefully
 process.on('SIGTERM', () => {
   console.log('SIGTERM received. Closing server and DB connections...');
-  server.close(() => {
-    pool.end(() => {
-      console.log('Database connections closed.');
-      process.exit(0);
-    });
+  server.close(async () => {
+    await promisePool.end();
+    console.log('Database connections closed.');
+    process.exit(0);
   });
 });
 

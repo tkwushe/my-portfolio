@@ -7,7 +7,7 @@ const Projects = ({ isActive, onClose }) => {
   const [error, setError] = useState(null);
 
   // Replace the fetch URL with your Railway URL
-  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'https://my-portfolio-production-382d.up.railway.app/';
+  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'https://my-portfolio-production-382d.up.railway.app';
 
   useEffect(() => {
     if (!isActive) return; // Only fetch when active
