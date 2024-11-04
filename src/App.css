@@ -1914,3 +1914,55 @@ body.is-article-visible #main article.active {
   margin-bottom: 0.5rem;
 }
 
+/* Footer icon styles */
+#footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+  padding: 1rem;
+}
+
+#footer .icons {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#footer .icons li {
+  padding: 0 1rem;
+}
+
+#footer .icons a {
+  display: block;
+  width: 2.25rem;
+  height: 2.25rem;
+  line-height: 2.25rem;
+  text-align: center;
+  border-radius: 100%;
+  border: solid 1px rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+#footer .icons a:hover {
+  background-color: rgba(255, 255, 255, 0.075);
+  border-color: #ffffff;
+  color: #ffffff;
+}
+
+#footer .icons a .label {
+  display: none;
+}
+
+/* Ensure icons are clickable */
+#footer .icons a.icon {
+  position: relative;
+  z-index: 2;
+  pointer-events: auto;
+}
+
