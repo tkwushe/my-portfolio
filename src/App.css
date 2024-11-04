@@ -2001,7 +2001,9 @@ body.is-article-visible #main article.active {
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 }
-
+#footer .icons a.icon:hover:before {
+  color: #040404;
+}
 #footer .icons a:hover {
   border-color: #ffffff;
   color: #ffffff;
