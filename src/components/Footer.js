@@ -5,7 +5,7 @@ const Footer = () => (
     <ul className="icons">
       <li>
         <a 
-          href="www.linkedin.com/in/takudzwa-wushe-5a874b30a" 
+          href="https://www.linkedin.com/in/takudzwa-wushe-5a874b30a" 
           target="_blank" 
           rel="noopener noreferrer" 
           className="icon brands fa-linkedin"
@@ -27,6 +27,7 @@ const Footer = () => (
         <a 
           href="mailto:tk.wushe@gmail.com" 
           className="icon solid fa-envelope"
+          rel="noopener noreferrer"
         >
           <span className="label">Email</span>
         </a>
