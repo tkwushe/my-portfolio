@@ -6,7 +6,7 @@ const Projects = ({ isActive, onClose }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Replace the fetch URL with your Railway URL
+
   const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'https://my-portfolio-production-382d.up.railway.app';
 
   useEffect(() => {
@@ -62,6 +62,7 @@ const Projects = ({ isActive, onClose }) => {
       aria-modal="true"
     >
       <h2 className="major">Projects</h2>
+    
       <CloseButton onClick={onClose} />
       {loading && <p>Loading projects...</p>}
       {error && (
