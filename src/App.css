@@ -3799,10 +3799,9 @@ input, select, textarea {
 }
 
 #main article {
-  position: relative; /* Ensure debug info is positioned correctly */
+  position: relative; /
 }
 
-/* Add this to your existing styles */
 
 .skills-grid {
   display: grid;
@@ -3951,7 +3950,7 @@ body.is-article-visible #main article.active {
 }
 
 #footer .icons a {
-  display: block;
+
   width: 2.25rem;
   height: 2.25rem;
   line-height: 2.25rem;
@@ -3981,4 +3980,3 @@ body.is-article-visible #main article.active {
 }
 
 		}
-		
