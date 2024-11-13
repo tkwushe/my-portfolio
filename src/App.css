@@ -1710,18 +1710,20 @@ input, select, textarea {
 			line-height: 2.25rem;
 			text-align: center;
 			border-radius: 100%;
-			border: solid 1px rgba(255, 255, 255, 0.5);
-			color: rgba(255, 255, 255, 0.5);
+			border: solid 1px rgba(255, 255, 255, 0.8);
+			color: rgba(255, 255, 255, 0.8);
 			cursor: pointer;
 			transition: all 0.2s ease-in-out;
 			position: relative;
 			z-index: 1001;
+			background-color: rgba(255, 255, 255, 0.1);
 		}
 
 		#footer .icons a:hover {
-			background-color: rgba(255, 255, 255, 0.075);
+			background-color: rgba(255, 255, 255, 0.2);
 			border-color: #ffffff;
 			color: #ffffff;
+			transform: scale(1.05);
 		}
 
 		#footer .icons a .label {
@@ -1736,8 +1738,13 @@ input, select, textarea {
 			content: '\f08e';
 			font-family: 'Font Awesome 5 Free';
 			font-weight: 900;
-			font-size: 1.5rem;
+			font-size: 1.2rem;
 			line-height: 2.25rem;
+			color: rgba(255, 255, 255, 0.8);
+		}
+
+		#footer .icons a.icon:hover:before {
+			color: #ffffff;
 		}
 
 		   
@@ -1996,28 +2003,24 @@ body.is-article-visible #main article.active {
   line-height: 2.25rem;
   text-align: center;
   border-radius: 100%;
-  border: solid 1px rgba(255, 255, 255, 0.5);
-  color: rgba(255, 255, 255, 0.5);
+  border: solid 1px rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.8);
   cursor: pointer;
   transition: all 0.2s ease-in-out;
-}
-#footer .icons a.icon:hover:before {
-  color: #040404;
+  background-color: rgba(255, 255, 255, 0.1);
 }
 #footer .icons a:hover {
+  background-color: rgba(255, 255, 255, 0.2);
   border-color: #ffffff;
   color: #ffffff;
+  transform: scale(1.05);
 }
-
-#footer .icons a .label {
-  display: none;
+#footer .icons a.icon:before {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.2rem;
 }
-
-/* Ensure icons are clickable */
-#footer .icons a.icon {
-  position: relative;
-  z-index: 2;
-  pointer-events: auto;
+#footer .icons a.icon:hover:before {
+  color: #ffffff;
 }
 
 /* Mobile Styles */
