@@ -2,17 +2,16 @@ FROM node:18-slim
 
 WORKDIR /app
 
-# Copy package files
 COPY package*.json ./
 
-# Install dependencies
-RUN npm install
+RUN npm install --production --legacy-peer-deps && \
+    npm cache clean --force
 
-# Copy source code
 COPY . .
 
-# Expose the port your app runs on
-EXPOSE 8080
+ENV NODE_ENV=production
+ENV NODE_OPTIONS=--openssl-legacy-provider
 
-# Start the application
-CMD ["node", "server.js"] 
+EXPOSE ${PORT:-8080}
+
+CMD ["npm", "run", "start:prod"] 

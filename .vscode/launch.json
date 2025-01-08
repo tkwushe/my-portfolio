@@ -1,0 +1,26 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch React App",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/react-scripts",
+            "args": ["start"],
+            "env": {
+                "NODE_OPTIONS": "--openssl-legacy-provider",
+                "BROWSER": "none"
+            },
+            "console": "integratedTerminal",
+            "serverReadyAction": {
+                "pattern": "Local:.+(https?://\\S+|[0-9]+)",
+                "uriFormat": "http://localhost:3000",
+                "action": "debugWithChrome"
+            }
+        }
+    ]
+}
