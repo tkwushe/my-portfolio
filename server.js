@@ -20,44 +20,68 @@ console.log('Environment check:', {
   port: process.env.PORT
 });
 
-// Database configuration for MySQL
-const pool = mysql.createPool({
-  host: 'mysql.railway.internal', // Railway's internal MySQL host
-  user: process.env.MYSQLUSER || 'root',
-  password: process.env.MYSQLPASSWORD,
-  database: process.env.MYSQLDATABASE || 'railway',
-  port: parseInt(process.env.MYSQLPORT) || 3306, // MySQL port
+// Database configuration with fallbacks
+const dbConfig = {
+  host: process.env.MYSQLHOST || process.env.MYSQL_HOST || 'mysql.railway.internal',
+  user: process.env.MYSQLUSER || process.env.MYSQL_USER || 'root',
+  password: process.env.MYSQLPASSWORD || process.env.MYSQL_ROOT_PASSWORD,
+  database: process.env.MYSQLDATABASE || process.env.MYSQL_DATABASE || 'railway',
+  port: parseInt(process.env.MYSQLPORT || process.env.MYSQL_PORT || '3306'),
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
   enableKeepAlive: true,
   keepAliveInitialDelay: 0
-});
+};
+
+// Update the pool creation with the new config
+const pool = mysql.createPool(dbConfig);
 
 // Convert pool to promise-based API
 const promisePool = pool.promise();
 
-// Test database connection
+// Enhanced connection test
 const testConnection = async () => {
   try {
-    console.log('Attempting database connection with config:', {
-      host: process.env.MYSQLHOST,
-      user: process.env.MYSQLUSER,
-      database: process.env.MYSQLDATABASE,
-      port: process.env.MYSQLPORT
+    console.log('Database configuration:', {
+      host: dbConfig.host,
+      user: dbConfig.user,
+      database: dbConfig.database,
+      port: dbConfig.port
     });
     
-    const [result] = await promisePool.query('SELECT VERSION() as version');
-    console.log('Database connected successfully');
-    console.log('MySQL Version:', result[0].version);
+    const [result] = await promisePool.query('SELECT 1 as connection_test');
+    if (result[0].connection_test === 1) {
+      console.log('Database connection successful');
+      
+      // Test if projects table exists
+      const [tables] = await promisePool.query(`
+        SELECT TABLE_NAME 
+        FROM information_schema.TABLES 
+        WHERE TABLE_SCHEMA = ? 
+        AND TABLE_NAME = 'projects'`, 
+        [dbConfig.database]
+      );
+      
+      if (tables.length === 0) {
+        console.warn('Warning: projects table does not exist');
+      } else {
+        const [projectCount] = await promisePool.query('SELECT COUNT(*) as count FROM projects');
+        console.log(`Found ${projectCount[0].count} projects in database`);
+      }
+    }
   } catch (err) {
     console.error('Database connection failed:', {
       code: err.code,
       errno: err.errno,
       sqlMessage: err.sqlMessage,
       sqlState: err.sqlState,
-      host: process.env.MYSQLHOST,
-      port: process.env.MYSQLPORT
+      config: {
+        host: dbConfig.host,
+        user: dbConfig.user,
+        database: dbConfig.database,
+        port: dbConfig.port
+      }
     });
   }
 };
@@ -100,18 +124,43 @@ app.get('/health', async (req, res) => {
   }
 });
 
-// Projects endpoint with error details
+// Enhanced projects endpoint
 app.get('/projects', async (req, res) => {
   console.log('Projects endpoint hit');
   try {
+    // First check if table exists
+    const [tables] = await promisePool.query(`
+      SELECT TABLE_NAME 
+      FROM information_schema.TABLES 
+      WHERE TABLE_SCHEMA = ? 
+      AND TABLE_NAME = 'projects'`, 
+      [dbConfig.database]
+    );
+
+    if (tables.length === 0) {
+      console.error('Projects table does not exist');
+      return res.status(404).json({ 
+        error: 'Projects table not found',
+        details: 'Database schema may not be initialized'
+      });
+    }
+
     const [results] = await promisePool.query('SELECT * FROM projects');
-    console.log('Projects fetched:', results);
+    console.log('Projects fetched:', {
+      count: results.length,
+      projects: results
+    });
     res.json(results);
   } catch (error) {
-    console.error('Query error:', error);
+    console.error('Query error:', {
+      message: error.message,
+      code: error.code,
+      state: error.sqlState
+    });
     res.status(500).json({ 
       error: 'Database query error',
-      details: error.message
+      details: error.message,
+      code: error.code
     });
   }
 });
