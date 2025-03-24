@@ -38,7 +38,6 @@ const AdminProjects = ({ isActive, onClose }) => {
       const response = await fetch(`${BACKEND_URL}/projects`);
       
       if (!response.ok) {
-        const errorText = await response.text();
         throw new Error(`Failed to fetch projects`);
       }
       

@@ -2194,301 +2194,50 @@ body.is-article-visible #main article.active {
   margin-top: 2rem;
 }
 
-.contact-form {
-  background: var(--bg-secondary);
-  padding: 2rem;
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.contact-form h3 {
-  margin-bottom: 1.5rem;
-  font-size: 1.5rem;
-  color: var(--text-primary);
-}
-
-.contact-info {
-  display: flex;
-  flex-direction: column;
-}
-
-.contact-info h3 {
-  margin-bottom: 1.5rem;
-  font-size: 1.5rem;
-  color: var(--text-primary);
-}
-
-.contact-methods {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.contact-method {
-  display: flex;
-  align-items: center;
-  padding: 1.5rem;
-  background: var(--bg-secondary);
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  transition: all 0.3s ease;
-  text-decoration: none;
-  animation: fadeInUp 0.5s ease forwards;
-  opacity: 0;
-}
-
-.contact-method:hover {
-  transform: translateY(-5px);
-  border-color: var(--accent-primary);
-  box-shadow: 0 5px 15px rgba(100, 255, 218, 0.15);
-}
-
-.contact-method .icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 3rem;
-  height: 3rem;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 50%;
-  margin-right: 1rem;
-  font-size: 1.2rem;
-  color: var(--accent-primary);
-}
-
-.contact-details {
-  flex: 1;
-}
-
-.contact-details h4 {
-  margin: 0;
-  color: var(--text-primary);
-  font-size: 1.1rem;
-}
-
-.contact-details p {
-  margin: 0.25rem 0 0;
-  color: var(--text-secondary);
-  font-size: 0.9rem;
-}
-
-/* Form Improvements */
-.fields {
-  margin-bottom: 2rem;
-}
-
-.field {
-  margin-bottom: 1.5rem;
-}
-
-.field.half {
-  width: 48%;
-  display: inline-block;
-}
-
-.field.half:first-child {
-  margin-right: 4%;
-}
-
-input[type="text"],
-input[type="email"],
-textarea {
-  width: 100%;
-  padding: 0.8rem 1rem;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 6px;
-  color: var(--text-primary);
-  transition: all 0.3s ease;
-}
-
-input[type="text"]:focus,
-input[type="email"]:focus,
-textarea:focus {
-  border-color: var(--accent-primary);
-  box-shadow: 0 0 0 2px rgba(100, 255, 218, 0.1);
-  outline: none;
-}
-
-/* Admin Interface Styles */
-.admin-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-  margin-top: 2rem;
-}
-
-@media (max-width: 768px) {
-  .admin-container {
-    grid-template-columns: 1fr;
+/* Mobile responsive styling for contact page */
+@media screen and (max-width: 768px) {
+  .contact-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem;
+  }
+  
+  .contact-form, .contact-info {
+    width: 100%;
+  }
+  
+  .field.half {
+    width: 100% !important;
+    display: block !important;
+    margin-right: 0 !important;
   }
 }
 
-.admin-form, .admin-projects-list {
-  background: var(--bg-secondary);
-  border-radius: 12px;
-  padding: 1.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
+/* Improved footer responsive styling */
+@media screen and (max-width: 480px) {
+  #footer {
+    padding: 1rem 0.5rem !important;
+  }
 
-.admin-login-container {
-  max-width: 400px;
-  margin: 2rem auto;
-  background: var(--bg-secondary);
-  border-radius: 12px;
-  padding: 2rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
+  #footer .social-links {
+    gap: 0.75rem !important;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 
-.login-button {
-  width: 100%;
-  margin-top: 1rem;
-  background-color: var(--accent-primary);
-  color: var(--bg-primary);
-  font-weight: bold;
-}
+  #footer .social-icon {
+    width: 2.25rem !important;
+    height: 2.25rem !important;
+    font-size: 0.9rem !important;
+    margin: 0 0.2rem !important;
+  }
+  
+  /* Hide tooltips on mobile to save space */
+  #footer .social-icon .tooltip {
+    display: none !important;
+  }
 
-.message {
-  padding: 1rem;
-  border-radius: 8px;
-  margin-bottom: 1rem;
-  animation: fadeIn 0.3s ease-in-out;
-}
-
-.message.error {
-  background-color: rgba(255, 99, 71, 0.2);
-  border: 1px solid rgba(255, 99, 71, 0.5);
-  color: #ff6347;
-}
-
-.message.success {
-  background-color: rgba(100, 255, 218, 0.2);
-  border: 1px solid rgba(100, 255, 218, 0.5);
-  color: var(--accent-primary);
-}
-
-.form-actions {
-  margin-top: 1.5rem;
-  display: flex;
-  justify-content: flex-end;
-}
-
-.submit-button {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  background-color: var(--accent-primary);
-  color: var(--bg-primary);
-  font-weight: 500;
-  padding: 0.75rem 1.5rem;
-}
-
-.submit-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(100, 255, 218, 0.2);
-}
-
-.submit-button:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
-}
-
-.projects-table-container {
-  overflow-x: auto;
-  margin-top: 1rem;
-}
-
-.projects-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.projects-table th, 
-.projects-table td {
-  padding: 0.75rem;
-  text-align: left;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.projects-table th {
-  font-weight: 600;
-  color: var(--accent-primary);
-  text-transform: uppercase;
-  font-size: 0.8rem;
-  letter-spacing: 0.05rem;
-}
-
-.description-cell {
-  max-width: 200px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.table-link {
-  color: var(--accent-primary);
-  text-decoration: none;
-  font-weight: 500;
-  font-size: 0.85rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-}
-
-.table-link:hover {
-  text-decoration: underline;
-}
-
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-.spin {
-  animation: spin 1s linear infinite;
-}
-
-.loading {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-style: italic;
-  color: var(--text-secondary);
-  margin: 1rem 0;
-}
-
-/* Add more styles as needed */
-
-/* Admin navigation styling */
-.admin-nav-item a {
-  display: flex;
-  align-items: center;
-  background-color: rgba(80, 80, 80, 0.2);
-  color: #ffffff;
-  border: 1px solid rgba(150, 150, 150, 0.3);
-  gap: 8px;
-}
-
-.admin-nav-item a:hover {
-  background-color: rgba(120, 120, 120, 0.3);
-}
-
-.debug-info {
-  display: none;
-}
-
-.message.error strong {
-  display: none;
-}
-
-.backend-tester {
-  display: none;
-}
-
-.test-connection-button {
-  display: none;
-}
-
-.message.info {
-  display: none;
+  #footer .copyright {
+    font-size: 0.7rem;
+    margin-top: 0.5rem;
+  }
 }
