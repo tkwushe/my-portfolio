@@ -2461,205 +2461,34 @@ textarea:focus {
 
 /* Admin navigation styling */
 .admin-nav-item a {
-  display: flex !important;
+  display: flex;
   align-items: center;
-  gap: 0.5rem;
-  background-color: rgba(100, 255, 218, 0.1) !important;
-  color: var(--accent-primary) !important;
-  border: 1px solid var(--accent-primary) !important;
+  background-color: rgba(80, 80, 80, 0.2);
+  color: #ffffff;
+  border: 1px solid rgba(150, 150, 150, 0.3);
+  gap: 8px;
 }
 
 .admin-nav-item a:hover {
-  background-color: rgba(100, 255, 218, 0.2) !important;
+  background-color: rgba(120, 120, 120, 0.3);
 }
 
-.admin-hint {
-  position: absolute;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  color: rgba(255, 255, 255, 0.1);
-  font-size: 0.6rem;
-  letter-spacing: 1px;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-  opacity: 0;
-}
-
-#header:hover .admin-hint {
-  opacity: 0.5;
-}
-
-/* Additional admin form styling */
-
-/* Admin Header Styles */
-.admin-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.5rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.admin-welcome {
-  font-size: 0.9rem;
-  color: #9bf1ff;
-  display: flex;
-  align-items: center;
-}
-
-.logout-button {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  background-color: rgba(255, 0, 0, 0.1);
-  color: #ff7675;
-  border: 1px solid #ff7675;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  font-size: 0.9rem;
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
-
-.logout-button:hover {
-  background-color: rgba(255, 0, 0, 0.2);
-  transform: translateY(-2px);
-}
-
-.logout-button:active {
-  transform: translateY(0);
-}
-
-/* Update Admin Login Container */
-.admin-login-container {
-  max-width: 400px;
-  margin: 2rem auto;
-  padding: 2rem;
-  border-radius: 8px;
-  background-color: rgba(0, 0, 0, 0.2);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.admin-login-container h3 {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 1.5rem;
-  color: #9bf1ff;
-}
-
-.admin-login-form .field {
-  margin-bottom: 1.5rem;
-}
-
-.admin-login-form label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.8);
-}
-
-.admin-login-form input {
-  width: 100%;
-  padding: 0.75rem;
-  border-radius: 4px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background-color: rgba(255, 255, 255, 0.05);
-  color: white;
-  font-size: 1rem;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.admin-login-form input:focus {
-  border-color: #9bf1ff;
-  box-shadow: 0 0 0 2px rgba(155, 241, 255, 0.2);
-  outline: none;
-}
-
-.login-button {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.5rem;
-  background-color: #9bf1ff;
-  color: #1b1f22;
-  font-weight: bold;
-  padding: 0.75rem;
-  border: none;
-  border-radius: 4px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.login-button:hover:not(:disabled) {
-  background-color: #b5f5ff;
-  transform: translateY(-2px);
-}
-
-.login-button:active:not(:disabled) {
-  transform: translateY(0);
-}
-
-.login-button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-/* Debug info styling */
 .debug-info {
-  font-family: monospace;
-  background-color: rgba(0, 0, 0, 0.7);
-  padding: 10px;
-  border-radius: 4px;
-  margin-top: 10px;
-  font-size: 12px;
-  color: #ddd;
-  white-space: pre-wrap;
-  max-height: 200px;
-  overflow-y: auto;
+  display: none;
 }
 
 .message.error strong {
-  color: #ff6b6b;
-  margin-right: 5px;
+  display: none;
 }
 
-/* Backend connection tester */
 .backend-tester {
-  margin: 1rem 0;
-  text-align: center;
+  display: none;
 }
 
 .test-connection-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  background-color: #3a3f44;
-  color: #fff;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.test-connection-button:hover:not(:disabled) {
-  background-color: #4a545d;
-}
-
-.test-connection-button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
+  display: none;
 }
 
 .message.info {
-  background-color: rgba(54, 79, 199, 0.1);
-  border-left: 4px solid #364fc7;
-  color: #adbcff;
+  display: none;
 }

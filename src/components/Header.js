@@ -22,7 +22,6 @@ const Header = ({ onSetActive }) => {
     // Listen for keyboard shortcut (Ctrl+Shift+A)
     const handleKeyDown = (e) => {
       if (e.ctrlKey && e.shiftKey && e.key === 'A') {
-        console.log('Admin shortcut pressed');
         setShowAdmin(prev => !prev);
       }
     };
@@ -36,7 +35,6 @@ const Header = ({ onSetActive }) => {
   }, []);
 
   const handleNavClick = (article) => {
-    console.log('Nav item clicked:', article); // Debug log
     onSetActive(article);
   };
 
@@ -74,12 +72,6 @@ const Header = ({ onSetActive }) => {
           )}
         </ul>
       </nav>
-      
-      {!showAdmin && (
-        <div className="admin-hint">
-          Press Ctrl+Shift+A to access admin panel
-        </div>
-      )}
     </header>
   );
 };

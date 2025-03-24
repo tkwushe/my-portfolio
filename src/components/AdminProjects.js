@@ -3,8 +3,6 @@ import CloseButton from './CloseButton';
 import { FaPlus, FaSpinner, FaLock, FaSignOutAlt } from 'react-icons/fa';
 
 const AdminProjects = ({ isActive, onClose }) => {
-  console.log('AdminProjects rendered, isActive:', isActive); // Debug log
-
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState({ text: '', type: '' });
@@ -30,11 +28,6 @@ const AdminProjects = ({ isActive, onClose }) => {
   // Configure backend URL
   const RAILWAY_URL = 'https://my-portfolio-production-382d.up.railway.app';
   const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || RAILWAY_URL;
-  console.log('Using backend URL:', BACKEND_URL); // Debug log
-  console.log('Environment variables:', {
-    REACT_APP_BACKEND_URL: process.env.REACT_APP_BACKEND_URL,
-    usingFallback: !process.env.REACT_APP_BACKEND_URL
-  });
 
   // Fetch existing projects - wrapped in useCallback to prevent infinite loops
   const fetchProjects = useCallback(async (currentToken = token) => {
@@ -42,24 +35,18 @@ const AdminProjects = ({ isActive, onClose }) => {
     setError(null);
     
     try {
-      console.log('Fetching projects from:', `${BACKEND_URL}/projects`); // Debug log
-      
       const response = await fetch(`${BACKEND_URL}/projects`);
-      console.log('Projects response status:', response.status); // Debug log
       
       if (!response.ok) {
         const errorText = await response.text();
-        console.error('Projects fetch error:', errorText); // Debug log
-        throw new Error(`Failed to fetch projects: ${errorText || response.statusText}`);
+        throw new Error(`Failed to fetch projects`);
       }
       
       const data = await response.json();
-      console.log('Projects fetched:', data.length); // Debug log
       setProjects(data);
     } catch (error) {
-      console.error('Fetch projects error:', error); // Debug log
-      setMessage({ text: `Error fetching projects: ${error.message}`, type: 'error' });
-      setError(error.message);
+      setMessage({ text: `Error fetching projects`, type: 'error' });
+      setError('Could not load projects. Please try again later.');
     } finally {
       setLoading(false);
     }
@@ -67,12 +54,9 @@ const AdminProjects = ({ isActive, onClose }) => {
 
   // Check for existing token on component mount or when isActive changes
   useEffect(() => {
-    console.log('AdminProjects useEffect running, isActive:', isActive); // Debug log
     try {
       const storedToken = localStorage.getItem('authToken');
       const storedUser = localStorage.getItem('authUser');
-      
-      console.log('Stored token exists:', !!storedToken); // Debug log
       
       if (storedToken && storedUser) {
         setToken(storedToken);
@@ -84,8 +68,7 @@ const AdminProjects = ({ isActive, onClose }) => {
         }
       }
     } catch (err) {
-      console.error('Error in AdminProjects useEffect:', err);
-      setError(err.message);
+      setError('Authentication error. Please try logging in again.');
     }
   }, [isActive, fetchProjects]);
 
@@ -106,8 +89,6 @@ const AdminProjects = ({ isActive, onClose }) => {
     setError(null);
 
     try {
-      console.log('Attempting login to:', `${BACKEND_URL}/api/login`); // Debug log
-      
       const response = await fetch(`${BACKEND_URL}/api/login`, {
         method: 'POST',
         headers: {
@@ -118,22 +99,16 @@ const AdminProjects = ({ isActive, onClose }) => {
           password: authForm.password
         }),
       });
-
-      console.log('Login response status:', response.status, response.statusText); // Debug log
       
       // Check the content-type of the response
       const contentType = response.headers.get('content-type');
-      console.log('Response content type:', contentType);
       
       let data;
       
       // If content type is not JSON, handle it specially
       if (!contentType || !contentType.includes('application/json')) {
         // Read as text instead of JSON
-        const textResponse = await response.text();
-        console.error('Non-JSON response:', textResponse.substring(0, 150) + '...');
-        
-        throw new Error(`Server returned non-JSON response. The endpoint might not exist or there's a server error. Status: ${response.status}`);
+        throw new Error(`Login failed. Please check your credentials and try again.`);
       } else {
         // Parse as JSON as normal
         data = await response.json();
@@ -155,9 +130,8 @@ const AdminProjects = ({ isActive, onClose }) => {
       // Fetch existing projects
       fetchProjects(data.token);
     } catch (error) {
-      console.error('Login error:', error); // Debug log
       setMessage({ text: error.message, type: 'error' });
-      setError(error.message);
+      setError('Login failed. Please check your credentials and try again.');
     } finally {
       setLoading(false);
     }
@@ -191,8 +165,6 @@ const AdminProjects = ({ isActive, onClose }) => {
     setError(null);
 
     try {
-      console.log('Submitting project to:', `${BACKEND_URL}/projects`); // Debug log
-      
       const response = await fetch(`${BACKEND_URL}/projects`, {
         method: 'POST',
         headers: {
@@ -201,8 +173,6 @@ const AdminProjects = ({ isActive, onClose }) => {
         },
         body: JSON.stringify(formData),
       });
-
-      console.log('Submit response status:', response.status); // Debug log
 
       if (!response.ok) {
         if (response.status === 401 || response.status === 403) {
@@ -213,8 +183,7 @@ const AdminProjects = ({ isActive, onClose }) => {
           throw new Error('Session expired. Please login again.');
         }
         
-        const errorText = await response.text();
-        throw new Error(`Failed to add project: ${errorText}`);
+        throw new Error(`Failed to add project`);
       }
 
       const newProject = await response.json();
@@ -231,9 +200,8 @@ const AdminProjects = ({ isActive, onClose }) => {
         category: 'Web Development'
       });
     } catch (error) {
-      console.error('Submit project error:', error); // Debug log
       setMessage({ text: error.message, type: 'error' });
-      setError(error.message);
+      setError('Could not add project. Please try again later.');
     } finally {
       setLoading(false);
     }
@@ -254,9 +222,6 @@ const AdminProjects = ({ isActive, onClose }) => {
     return () => window.removeEventListener('keydown', handleEscape);
   }, [isActive, onClose]);
 
-  // Render the admin panel
-  console.log('AdminProjects rendering, isActive:', isActive, 'authenticated:', authenticated); // Debug log
-
   return (
     <article 
       id="admin-projects" 
@@ -267,51 +232,12 @@ const AdminProjects = ({ isActive, onClose }) => {
       <h2 className="major">Admin - Manage Projects</h2>
       <CloseButton onClick={onClose} />
 
-      {/* Error display for troubleshooting */}
+      {/* Error display */}
       {error && (
         <div className="message error">
-          <strong>Error:</strong> {error}
-          <pre className="debug-info">
-            isActive: {String(isActive)}<br />
-            Backend URL: {BACKEND_URL}<br />
-            Hash: {window.location.hash}
-          </pre>
+          {error}
         </div>
       )}
-
-      {/* Backend Connection Tester */}
-      <div className="backend-tester">
-        <button 
-          onClick={async () => {
-            setLoading(true);
-            setMessage({ text: 'Testing backend connection...', type: 'info' });
-            
-            try {
-              console.log('Testing connection to:', `${BACKEND_URL}/health`);
-              const response = await fetch(`${BACKEND_URL}/health`);
-              const data = await response.json();
-              
-              console.log('Backend health response:', data);
-              setMessage({ 
-                text: `Backend connection successful! Status: ${data.status}`, 
-                type: 'success' 
-              });
-            } catch (err) {
-              console.error('Backend connection test failed:', err);
-              setMessage({ 
-                text: `Backend connection failed: ${err.message}. Check console for details.`, 
-                type: 'error' 
-              });
-            } finally {
-              setLoading(false);
-            }
-          }}
-          className="test-connection-button"
-          disabled={loading}
-        >
-          {loading ? <><FaSpinner className="spin" /> Testing...</> : 'Test Backend Connection'}
-        </button>
-      </div>
 
       {/* Message display */}
       {message.text && (
