@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import CloseButton from './CloseButton';
-import { FaPlus, FaSave, FaSpinner, FaLock, FaSignOutAlt } from 'react-icons/fa';
+import { FaPlus, FaSpinner, FaLock, FaSignOutAlt } from 'react-icons/fa';
 
 const AdminProjects = ({ isActive, onClose }) => {
   console.log('AdminProjects rendered, isActive:', isActive); // Debug log
@@ -58,7 +58,7 @@ const AdminProjects = ({ isActive, onClose }) => {
       console.error('Error in AdminProjects useEffect:', err);
       setError(err.message);
     }
-  }, [isActive]);
+  }, [isActive, fetchProjects]);
 
   // Handle auth form changes
   const handleAuthChange = (e) => {
@@ -145,8 +145,8 @@ const AdminProjects = ({ isActive, onClose }) => {
     setMessage({ text: 'You have been logged out.', type: 'success' });
   };
 
-  // Fetch existing projects
-  const fetchProjects = async (currentToken = token) => {
+  // Fetch existing projects - wrapped in useCallback to prevent infinite loops
+  const fetchProjects = useCallback(async (currentToken = token) => {
     setLoading(true);
     setError(null);
     
@@ -172,7 +172,7 @@ const AdminProjects = ({ isActive, onClose }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [token, BACKEND_URL]);
 
   // Handle form input changes
   const handleChange = (e) => {
