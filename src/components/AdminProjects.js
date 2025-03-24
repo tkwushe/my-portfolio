@@ -36,6 +36,35 @@ const AdminProjects = ({ isActive, onClose }) => {
     usingFallback: !process.env.REACT_APP_BACKEND_URL
   });
 
+  // Fetch existing projects - wrapped in useCallback to prevent infinite loops
+  const fetchProjects = useCallback(async (currentToken = token) => {
+    setLoading(true);
+    setError(null);
+    
+    try {
+      console.log('Fetching projects from:', `${BACKEND_URL}/projects`); // Debug log
+      
+      const response = await fetch(`${BACKEND_URL}/projects`);
+      console.log('Projects response status:', response.status); // Debug log
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Projects fetch error:', errorText); // Debug log
+        throw new Error(`Failed to fetch projects: ${errorText || response.statusText}`);
+      }
+      
+      const data = await response.json();
+      console.log('Projects fetched:', data.length); // Debug log
+      setProjects(data);
+    } catch (error) {
+      console.error('Fetch projects error:', error); // Debug log
+      setMessage({ text: `Error fetching projects: ${error.message}`, type: 'error' });
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  }, [token, BACKEND_URL]);
+
   // Check for existing token on component mount or when isActive changes
   useEffect(() => {
     console.log('AdminProjects useEffect running, isActive:', isActive); // Debug log
@@ -144,35 +173,6 @@ const AdminProjects = ({ isActive, onClose }) => {
     setProjects([]);
     setMessage({ text: 'You have been logged out.', type: 'success' });
   };
-
-  // Fetch existing projects - wrapped in useCallback to prevent infinite loops
-  const fetchProjects = useCallback(async (currentToken = token) => {
-    setLoading(true);
-    setError(null);
-    
-    try {
-      console.log('Fetching projects from:', `${BACKEND_URL}/projects`); // Debug log
-      
-      const response = await fetch(`${BACKEND_URL}/projects`);
-      console.log('Projects response status:', response.status); // Debug log
-      
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error('Projects fetch error:', errorText); // Debug log
-        throw new Error(`Failed to fetch projects: ${errorText || response.statusText}`);
-      }
-      
-      const data = await response.json();
-      console.log('Projects fetched:', data.length); // Debug log
-      setProjects(data);
-    } catch (error) {
-      console.error('Fetch projects error:', error); // Debug log
-      setMessage({ text: `Error fetching projects: ${error.message}`, type: 'error' });
-      setError(error.message);
-    } finally {
-      setLoading(false);
-    }
-  }, [token, BACKEND_URL]);
 
   // Handle form input changes
   const handleChange = (e) => {
