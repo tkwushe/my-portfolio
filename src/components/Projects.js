@@ -38,7 +38,7 @@ const Projects = ({ isActive, onClose }) => {
         setLoading(false);
       });
   }, [isActive, BACKEND_URL]);
-
+  
   // Handle escape key
   useEffect(() => {
     const handleEscape = (e) => {
@@ -69,24 +69,24 @@ const Projects = ({ isActive, onClose }) => {
         <div className="error-container">
           <p>Error fetching projects: {error.message}</p>
           <p>Backend URL: {BACKEND_URL}</p>
-        </div>
-      )}
+                </div>
+              )}
       {!loading && !error && (
         <ul>
           {projects.map((project, index) => (
             <li key={project.id || index}>
               <h3>{project.title}</h3>
               <p>{project.description}</p>
-              <a 
-                href={project.github_link} 
-                target="_blank" 
-                rel="noopener noreferrer"
-              >
+                  <a 
+                    href={project.github_link} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                  >
                 View on GitHub
-              </a>
+                  </a>
               <br />
             </li>
-          ))}
+        ))}
         </ul>
       )}
     </article>
