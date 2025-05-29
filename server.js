@@ -233,9 +233,6 @@ app.get('/projects', async (req, res) => {
   }
 });
 
-<<<<<<< HEAD
-// Railway injects PORT environment variable
-=======
 // Add new project (protected)
 app.post('/projects', authenticateToken, async (req, res) => {
   console.log('Add project endpoint hit');
@@ -314,7 +311,6 @@ app.get('/generate-hash/:password', async (req, res) => {
   }
 });
 
->>>>>>> 96067d9a09588f4a451f669051d04c6cd17083ca
 const PORT = process.env.PORT || 8080;
 
 const server = app.listen(PORT, '0.0.0.0', () => {
