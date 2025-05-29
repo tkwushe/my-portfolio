@@ -1,6 +1,12 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import CloseButton from './CloseButton';
+import React, { useState, useEffect } from 'react';
+import { createClient } from '@supabase/supabase-js';
 import { FaPlus, FaSpinner, FaLock, FaSignOutAlt } from 'react-icons/fa';
+import CloseButton from './CloseButton';
+
+// Use environment variables for Supabase credentials
+const SUPABASE_URL = process.env.REACT_APP_SUPABASE_URL;
+const SUPABASE_ANON_KEY = process.env.REACT_APP_SUPABASE_ANON_KEY;
+const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 const AdminProjects = ({ isActive, onClose }) => {
   const [projects, setProjects] = useState([]);
@@ -14,182 +20,86 @@ const AdminProjects = ({ isActive, onClose }) => {
     image_url: '',
     category: 'Web Development'
   });
-
-  // For JWT authentication
-  const [authForm, setAuthForm] = useState({
-    email: '',
-    password: ''
-  });
-  const [token, setToken] = useState('');
+  const [authForm, setAuthForm] = useState({ email: '', password: '' });
   const [authenticated, setAuthenticated] = useState(false);
-  const [user, setUser] = useState(null);
-  const [error, setError] = useState(null);
+  const [userEmail, setUserEmail] = useState('');
 
-  // Configure backend URL
-  const RAILWAY_URL = 'https://my-portfolio-production-382d.up.railway.app';
-  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || RAILWAY_URL;
-
-  // Fetch existing projects - wrapped in useCallback to prevent infinite loops
-  const fetchProjects = useCallback(async (currentToken = token) => {
+  // Fetch projects from Supabase
+  const fetchProjects = async () => {
     setLoading(true);
-    setError(null);
-    
-    try {
-      const response = await fetch(`${BACKEND_URL}/projects`);
-      
-      if (!response.ok) {
-        throw new Error(`Failed to fetch projects`);
-      }
-      
-      const data = await response.json();
+    const { data, error } = await supabase.from('projects').select('*').order('id', { ascending: false });
+    if (error) {
+      setMessage({ text: 'Error loading projects.', type: 'error' });
+    } else {
       setProjects(data);
-    } catch (error) {
-      setMessage({ text: `Error fetching projects`, type: 'error' });
-      setError('Could not load projects. Please try again later.');
-    } finally {
-      setLoading(false);
     }
-  }, [token, BACKEND_URL]);
-
-  // Check for existing token on component mount or when isActive changes
-  useEffect(() => {
-    try {
-      const storedToken = localStorage.getItem('authToken');
-      const storedUser = localStorage.getItem('authUser');
-      
-      if (storedToken && storedUser) {
-        setToken(storedToken);
-        setUser(JSON.parse(storedUser));
-        setAuthenticated(true);
-        // Fetch projects if authenticated and component is active
-        if (isActive) {
-          fetchProjects(storedToken);
-        }
-      }
-    } catch (err) {
-      setError('Authentication error. Please try logging in again.');
-    }
-  }, [isActive, fetchProjects]);
-
-  // Handle auth form changes
-  const handleAuthChange = (e) => {
-    const { name, value } = e.target;
-    setAuthForm({
-      ...authForm,
-      [name]: value
-    });
+    setLoading(false);
   };
 
-  // Handle login
+  useEffect(() => {
+    // Check if user is already logged in
+    const checkSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session && session.user) {
+        setAuthenticated(true);
+        setUserEmail(session.user.email);
+      }
+    };
+    checkSession();
+  }, []);
+
+  useEffect(() => {
+    if (authenticated && isActive) fetchProjects();
+  }, [authenticated, isActive]);
+
+  // Handle login with Supabase Auth
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
     setMessage({ text: '', type: '' });
-    setError(null);
-
-    try {
-      const response = await fetch(`${BACKEND_URL}/api/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: authForm.email,
-          password: authForm.password
-        }),
-      });
-      
-      // Check the content-type of the response
-      const contentType = response.headers.get('content-type');
-      
-      let data;
-      
-      // If content type is not JSON, handle it specially
-      if (!contentType || !contentType.includes('application/json')) {
-        // Read as text instead of JSON
-        throw new Error(`Login failed. Please check your credentials and try again.`);
-      } else {
-        // Parse as JSON as normal
-        data = await response.json();
-      }
-      
-      if (!response.ok) {
-        throw new Error(data.error || 'Authentication failed');
-      }
-
-      // Store token and user info
-      localStorage.setItem('authToken', data.token);
-      localStorage.setItem('authUser', JSON.stringify(data.user));
-      
-      setToken(data.token);
-      setUser(data.user);
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: authForm.email,
+      password: authForm.password
+    });
+    if (error) {
+      setMessage({ text: error.message || 'Invalid credentials.', type: 'error' });
+      setAuthenticated(false);
+      setUserEmail('');
+    } else if (data && data.user) {
       setAuthenticated(true);
-      setMessage({ text: 'Authentication successful!', type: 'success' });
-      
-      // Fetch existing projects
-      fetchProjects(data.token);
-    } catch (error) {
-      setMessage({ text: error.message, type: 'error' });
-      setError('Login failed. Please check your credentials and try again.');
-    } finally {
-      setLoading(false);
+      setUserEmail(data.user.email);
+      setMessage({ text: 'Login successful!', type: 'success' });
     }
+    setLoading(false);
   };
 
   // Handle logout
-  const handleLogout = () => {
-    localStorage.removeItem('authToken');
-    localStorage.removeItem('authUser');
-    setToken('');
-    setUser(null);
+  const handleLogout = async () => {
+    setLoading(true);
+    await supabase.auth.signOut();
     setAuthenticated(false);
-    setProjects([]);
-    setMessage({ text: 'You have been logged out.', type: 'success' });
+    setUserEmail('');
+    setAuthForm({ email: '', password: '' });
+    setMessage({ text: 'Logged out.', type: 'success' });
+    setLoading(false);
   };
 
   // Handle form input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value
-    });
+    setFormData({ ...formData, [name]: value });
   };
 
-  // Handle form submission
+  // Handle project submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setMessage({ text: '', type: '' });
-    setError(null);
-
-    try {
-      const response = await fetch(`${BACKEND_URL}/projects`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (!response.ok) {
-        if (response.status === 401 || response.status === 403) {
-          // Token might be expired
-          setAuthenticated(false);
-          localStorage.removeItem('authToken');
-          localStorage.removeItem('authUser');
-          throw new Error('Session expired. Please login again.');
-        }
-        
-        throw new Error(`Failed to add project`);
-      }
-
-      const newProject = await response.json();
-      setProjects([...projects, newProject]);
+    const { error } = await supabase.from('projects').insert([formData]);
+    if (error) {
+      setMessage({ text: 'Failed to add project.', type: 'error' });
+    } else {
       setMessage({ text: 'Project added successfully!', type: 'success' });
-      
-      // Reset form
       setFormData({
         title: '',
         description: '',
@@ -198,56 +108,20 @@ const AdminProjects = ({ isActive, onClose }) => {
         image_url: '',
         category: 'Web Development'
       });
-    } catch (error) {
-      setMessage({ text: error.message, type: 'error' });
-      setError('Could not add project. Please try again later.');
-    } finally {
-      setLoading(false);
+      fetchProjects();
     }
+    setLoading(false);
   };
 
-  // Handle escape key
-  React.useEffect(() => {
-    const handleEscape = (e) => {
-      if (e.key === 'Escape' && isActive) {
-        onClose();
-      }
-    };
-
-    if (isActive) {
-      window.addEventListener('keydown', handleEscape);
-    }
-
-    return () => window.removeEventListener('keydown', handleEscape);
-  }, [isActive, onClose]);
-
   return (
-    <article 
-      id="admin-projects" 
-      className={isActive ? 'active' : ''}
-      role="dialog"
-      aria-modal="true"
-    >
+    <article id="admin-projects" className={isActive ? 'active' : ''} role="dialog" aria-modal="true">
       <h2 className="major">Admin - Manage Projects</h2>
       <CloseButton onClick={onClose} />
-
-      {/* Error display */}
-      {error && (
-        <div className="message error">
-          {error}
-        </div>
-      )}
-
-      {/* Message display */}
-      {message.text && (
-        <div className={`message ${message.type}`}>
-          {message.text}
-        </div>
-      )}
+      {message.text && <div className={`message ${message.type}`}>{message.text}</div>}
 
       {!authenticated ? (
         <div className="admin-login-container">
-          <h3>Login Required <FaLock /></h3>
+          <h3>Admin Login <FaLock /></h3>
           <form onSubmit={handleLogin} className="admin-login-form">
             <div className="field">
               <label htmlFor="email">Email</label>
@@ -256,8 +130,8 @@ const AdminProjects = ({ isActive, onClose }) => {
                 id="email"
                 name="email"
                 value={authForm.email}
-                onChange={handleAuthChange}
-                placeholder="admin@example.com"
+                onChange={e => setAuthForm({ ...authForm, email: e.target.value })}
+                placeholder="Enter admin email"
                 required
               />
             </div>
@@ -268,7 +142,7 @@ const AdminProjects = ({ isActive, onClose }) => {
                 id="password"
                 name="password"
                 value={authForm.password}
-                onChange={handleAuthChange}
+                onChange={e => setAuthForm({ ...authForm, password: e.target.value })}
                 placeholder="Enter admin password"
                 required
               />
@@ -281,12 +155,11 @@ const AdminProjects = ({ isActive, onClose }) => {
       ) : (
         <div className="admin-container">
           <div className="admin-header">
-            <span className="admin-welcome">Welcome, {user?.email}</span>
-            <button onClick={handleLogout} className="logout-button">
+            <span className="admin-welcome">Welcome, {userEmail}</span>
+            <button onClick={handleLogout} className="logout-button" disabled={loading}>
               <FaSignOutAlt /> Logout
             </button>
           </div>
-          
           <div className="admin-form">
             <h3>Add New Project</h3>
             <form onSubmit={handleSubmit}>
@@ -303,7 +176,6 @@ const AdminProjects = ({ isActive, onClose }) => {
                     required
                   />
                 </div>
-                
                 <div className="field">
                   <label htmlFor="description">Description</label>
                   <textarea
@@ -316,7 +188,6 @@ const AdminProjects = ({ isActive, onClose }) => {
                     required
                   />
                 </div>
-                
                 <div className="field half">
                   <label htmlFor="github_link">GitHub Link</label>
                   <input
@@ -328,7 +199,6 @@ const AdminProjects = ({ isActive, onClose }) => {
                     placeholder="https://github.com/username/repo"
                   />
                 </div>
-                
                 <div className="field half">
                   <label htmlFor="live_link">Live Demo Link (optional)</label>
                   <input
@@ -340,7 +210,6 @@ const AdminProjects = ({ isActive, onClose }) => {
                     placeholder="https://your-project.com"
                   />
                 </div>
-                
                 <div className="field">
                   <label htmlFor="image_url">Image URL (optional)</label>
                   <input
@@ -352,7 +221,6 @@ const AdminProjects = ({ isActive, onClose }) => {
                     placeholder="https://image-host.com/your-image.jpg"
                   />
                 </div>
-                
                 <div className="field">
                   <label htmlFor="category">Category</label>
                   <select
@@ -371,23 +239,16 @@ const AdminProjects = ({ isActive, onClose }) => {
                   </select>
                 </div>
               </div>
-              
               <div className="form-actions">
-                <button 
-                  type="submit" 
-                  className="submit-button"
-                  disabled={loading}
-                >
+                <button type="submit" className="submit-button" disabled={loading}>
                   {loading ? <><FaSpinner className="spin" /> Saving...</> : <><FaPlus /> Add Project</>}
                 </button>
               </div>
             </form>
           </div>
-          
           <div className="admin-projects-list">
             <h3>Existing Projects ({projects.length})</h3>
             {loading && <p className="loading"><FaSpinner className="spin" /> Loading projects...</p>}
-            
             {projects.length > 0 ? (
               <div className="projects-table-container">
                 <table className="projects-table">
@@ -400,19 +261,32 @@ const AdminProjects = ({ isActive, onClose }) => {
                   </thead>
                   <tbody>
                     {projects.map((project) => (
-                      <tr key={project.id || project._id}>
+                      <tr key={project.id}>
                         <td>{project.title}</td>
                         <td className="description-cell">{project.description?.substring(0, 50)}...</td>
                         <td>
                           {project.github_link && (
-                            <a 
-                              href={project.github_link} 
-                              target="_blank" 
+                            <a
+                              href={project.github_link}
+                              target="_blank"
                               rel="noopener noreferrer"
                               className="table-link"
                             >
                               GitHub
                             </a>
+                          )}
+                          {project.live_link && (
+                            <>
+                              {' | '}
+                              <a
+                                href={project.live_link}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="table-link"
+                              >
+                                Live
+                              </a>
+                            </>
                           )}
                         </td>
                       </tr>
@@ -430,4 +304,4 @@ const AdminProjects = ({ isActive, onClose }) => {
   );
 };
 
-export default React.memo(AdminProjects); 
+export default React.memo(AdminProjects);
