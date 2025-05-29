@@ -6,39 +6,28 @@ const Projects = ({ isActive, onClose }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-
   const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'https://my-portfolio-production-382d.up.railway.app';
 
   useEffect(() => {
     if (!isActive) return; // Only fetch when active
 
-    console.log('Fetching from:', `${BACKEND_URL}/projects`); // Debug log
-
     fetch(`${BACKEND_URL}/projects`)
       .then(async (response) => {
         if (!response.ok) {
-          const errorText = await response.text();
-          console.error('Response details:', {
-            status: response.status,
-            statusText: response.statusText,
-            body: errorText
-          });
-          throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
+          throw new Error(`Failed to fetch projects`);
         }
         return response.json();
       })
       .then((data) => {
-        console.log('Received data:', data); // Debug log
         setProjects(data);
         setLoading(false);
       })
       .catch((error) => {
-        console.error('Detailed error:', error);
-        setError(error);
+        setError('Error loading projects. Please try again later.');
         setLoading(false);
       });
   }, [isActive, BACKEND_URL]);
-
+  
   // Handle escape key
   useEffect(() => {
     const handleEscape = (e) => {
@@ -65,12 +54,7 @@ const Projects = ({ isActive, onClose }) => {
     
       <CloseButton onClick={onClose} />
       {loading && <p>Loading projects...</p>}
-      {error && (
-        <div className="error-container">
-          <p>Error fetching projects: {error.message}</p>
-          <p>Backend URL: {BACKEND_URL}</p>
-        </div>
-      )}
+      {error && <p>{error}</p>}
       {!loading && !error && (
         <ul>
           {projects.map((project, index) => (

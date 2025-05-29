@@ -4,6 +4,7 @@ import Home from './Home';
 import About from './About';
 import Projects from './Projects';
 import Contact from './Contact';
+import AdminProjects from './AdminProjects';
 import Footer from './Footer';
 
 const Wrapper = () => {
@@ -11,6 +12,7 @@ const Wrapper = () => {
 
   const handleClose = useCallback(() => {
     setActiveArticle('header');
+    window.location.hash = '';
   }, []);
 
   // Handle body class
@@ -23,6 +25,29 @@ const Wrapper = () => {
       document.body.classList.remove('is-article-visible');
     };
   }, [activeArticle]);
+
+  // Handle URL hash changes and initial URL
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash;
+      if (hash) {
+        const article = hash.substring(1); // Remove the # character
+        if (['home', 'about', 'projects', 'contact', 'admin'].includes(article)) {
+          console.log('Setting active article from URL hash:', article);
+          setActiveArticle(article);
+        }
+      } else {
+        setActiveArticle('header');
+      }
+    };
+
+    // Handle initial URL hash
+    handleHashChange();
+
+    // Listen for hash changes
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
 
   // Global escape key handler
   useEffect(() => {
@@ -39,6 +64,7 @@ const Wrapper = () => {
   const handleSetActive = useCallback((article) => {
     if (article === activeArticle) return;
     setActiveArticle(article);
+    window.location.hash = article === 'header' ? '' : article;
   }, [activeArticle]);
 
   return (
@@ -59,6 +85,10 @@ const Wrapper = () => {
         />
         <Contact 
           isActive={activeArticle === 'contact'} 
+          onClose={handleClose}
+        />
+        <AdminProjects 
+          isActive={activeArticle === 'admin'} 
           onClose={handleClose}
         />
       </main>

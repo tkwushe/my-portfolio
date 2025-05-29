@@ -1,8 +1,40 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { FaLock } from 'react-icons/fa';
 
 const Header = ({ onSetActive }) => {
+  const [showAdmin, setShowAdmin] = useState(false);
+  
+  // Check for admin hash in URL and listen for keyboard shortcut
+  useEffect(() => {
+    // Check if URL hash is #admin
+    const checkHashAndUpdate = () => {
+      if (window.location.hash === '#admin') {
+        setShowAdmin(true);
+      }
+    };
+    
+    // Initial check
+    checkHashAndUpdate();
+    
+    // Listen for hash changes
+    window.addEventListener('hashchange', checkHashAndUpdate);
+    
+    // Listen for keyboard shortcut (Ctrl+Shift+A)
+    const handleKeyDown = (e) => {
+      if (e.ctrlKey && e.shiftKey && e.key === 'A') {
+        setShowAdmin(prev => !prev);
+      }
+    };
+    
+    window.addEventListener('keydown', handleKeyDown);
+    
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('hashchange', checkHashAndUpdate);
+    };
+  }, []);
+
   const handleNavClick = (article) => {
-    console.log('Nav item clicked:', article); // Debug log
     onSetActive(article);
   };
 
@@ -31,6 +63,13 @@ const Header = ({ onSetActive }) => {
           <li><a href="#projects" onClick={() => handleNavClick('projects')}>Projects</a></li>
           <li><a href="#about" onClick={() => handleNavClick('about')}>About Me</a></li>
           <li><a href="#contact" onClick={() => handleNavClick('contact')}>Contact</a></li>
+          {showAdmin && (
+            <li className="admin-nav-item">
+              <a href="#admin" onClick={() => handleNavClick('admin')}>
+                <FaLock /> Admin
+              </a>
+            </li>
+          )}
         </ul>
       </nav>
     </header>
