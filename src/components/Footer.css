@@ -1,0 +1,79 @@
+/* Footer Styles */
+footer {
+  width: 100%;
+  padding: 1.5rem 0;
+  text-align: center;
+  position: relative;
+  z-index: 10;
+}
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
+  gap: 2rem;
+}
+
+.social-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background-color: rgba(17, 18, 20, 0.7);
+  color: var(--text-primary);
+  font-size: 1.25rem;
+  transition: all 0.3s ease;
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.social-icon:hover {
+  transform: translateY(-5px);
+  background-color: var(--accent-primary);
+  color: #000;
+}
+
+.social-icon:after {
+  display: none;
+}
+
+.tooltip {
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.tooltip:after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 5px 5px 0;
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0.8) transparent transparent;
+}
+
+.social-icon:hover .tooltip {
+  opacity: 1;
+  visibility: visible;
+  top: -35px;
+}
+
+.copyright {
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+}

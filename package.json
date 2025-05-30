@@ -2,63 +2,49 @@
   "name": "my-portfolio",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "engines": {
-    "node": "16.x"
+    "node": ">=18.0.0"
   },
   "dependencies": {
-    "@babel/plugin-transform-class-properties": "^7.25.9",
-    "@babel/plugin-transform-nullish-coalescing-operator": "^7.25.9",
-    "@babel/plugin-transform-numeric-separator": "^7.25.9",
-    "@babel/plugin-transform-optional-chaining": "^7.25.9",
-    "@babel/plugin-transform-private-methods": "^7.25.9",
-    "@jridgewell/sourcemap-codec": "^1.5.0",
-    "@rollup/plugin-terser": "^0.4.4",
-    "@supabase/supabase-js": "^2.49.8",
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
-    "dotenv": "^16.0.3",
-    "express": "^4.21.1",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
-    "mysql2": "^3.6.5",
+    "mysql2": "^3.11.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-icons": "^5.3.0",
-    "react-scripts": "4.0.3",
+    "react-icons": "^5.4.0",
     "react-transition-group": "^4.4.5",
-    "svgo": "^3.3.2",
-    "web-vitals": "^2.1.4"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "start:prod": "node server.js",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "web-vitals": "^3.3.2"
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "nth-check": "^2.1.1",
-    "postcss": "^8.4.47"
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.1.0",
+    "@testing-library/user-event": "^14.5.2",
+    "@types/bcrypt": "^5.0.2",
+    "@types/cors": "^2.8.17",
+    "@types/jsonwebtoken": "^9.0.7",
+    "@types/react": "^18.3.17",
+    "@types/react-dom": "^18.3.5",
+    "@types/react-transition-group": "^4.4.11",
+    "@vitejs/plugin-react": "^4.3.4",
+    "eslint": "^9.17.0",
+    "eslint-plugin-react": "^7.37.2",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "eslint-plugin-react-refresh": "^0.4.16",
+    "jsdom": "^25.0.1",
+    "vite": "^6.0.5",
+    "vitest": "^2.1.8"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint . --ext js,jsx,ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint:fix": "eslint . --ext js,jsx,ts,tsx --fix",
+    "preview": "vite preview",
+    "test": "vitest",
+    "start:prod": "node server.js"
   }
 }

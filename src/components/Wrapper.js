@@ -3,6 +3,7 @@ import Header from './Header';
 import Home from './Home';
 import About from './About';
 import Projects from './Projects';
+import DeepDiveProjects from './DeepDiveProjects';
 import Contact from './Contact';
 import AdminProjects from './AdminProjects';
 import Footer from './Footer';
@@ -32,7 +33,7 @@ const Wrapper = () => {
       const hash = window.location.hash;
       if (hash) {
         const article = hash.substring(1); // Remove the # character
-        if (['home', 'about', 'projects', 'contact', 'admin'].includes(article)) {
+        if (['home', 'about', 'projects', 'deep-dive-projects', 'contact', 'admin'].includes(article)) {
           console.log('Setting active article from URL hash:', article);
           setActiveArticle(article);
         }
@@ -81,6 +82,10 @@ const Wrapper = () => {
         />
         <Projects 
           isActive={activeArticle === 'projects'} 
+          onClose={handleClose}
+        />
+        <DeepDiveProjects 
+          isActive={activeArticle === 'deep-dive-projects'} 
           onClose={handleClose}
         />
         <Contact 

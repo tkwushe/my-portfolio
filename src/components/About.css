@@ -1,0 +1,61 @@
+/* About Component Styles */
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.skill-category {
+  background-color: rgba(30, 30, 35, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 1.5rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.skill-category:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  border-color: var(--accent-primary);
+}
+
+.skill-category h4 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  color: var(--accent-primary);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 0.5rem;
+}
+
+.skill-category ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.skill-category li {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.skill-category li:before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: var(--accent-primary);
+  font-size: 1.2rem;
+}
+
+.interests-section h3 {
+  margin-top: 2.5rem;
+}
+
+@media screen and (max-width: 768px) {
+  .skills-grid {
+    grid-template-columns: 1fr;
+  }
+}

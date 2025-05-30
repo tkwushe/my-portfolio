@@ -1,16 +1,26 @@
 // server.js (Node.js Backend)
-const express = require('express');
-const cors = require('cors');
-const mysql = require('mysql2');
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
-require('dotenv').config();
+import express from 'express';
+import cors from 'cors';
+import mysql from 'mysql2';
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
+import dotenv from 'dotenv';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+
+dotenv.config();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const app = express();
 
 // Enable CORS
 app.use(cors());
 app.use(express.json());
+
+// Serve static files from the build directory
+app.use(express.static(join(__dirname, 'build')));
 
 // JWT Secret Key (should be in .env file in production)
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
@@ -113,6 +123,14 @@ const authenticateToken = (req, res, next) => {
     next();
   });
 };
+
+// Token verification endpoint
+app.get('/api/verify-token', authenticateToken, (req, res) => {
+  res.json({ 
+    valid: true, 
+    user: req.user 
+  });
+});
 
 // Login route
 app.post('/api/login', async (req, res) => {
@@ -311,7 +329,129 @@ app.get('/generate-hash/:password', async (req, res) => {
   }
 });
 
-const PORT = process.env.PORT || 8080;
+// Update project (protected)
+app.put('/projects/:id', authenticateToken, async (req, res) => {
+  console.log('Update project endpoint hit');
+  const projectId = req.params.id;
+  const { title, description, github_link, live_link, image_url, category } = req.body;
+  
+  // Validate required fields
+  if (!title || !description) {
+    return res.status(400).json({ error: 'Title and description are required' });
+  }
+  
+  try {
+    // Check if projects table exists
+    const [tables] = await promisePool.query(`
+      SELECT TABLE_NAME 
+      FROM information_schema.TABLES 
+      WHERE TABLE_SCHEMA = ? 
+      AND TABLE_NAME = 'projects'`, 
+      [dbConfig.database]
+    );
+
+    if (tables.length === 0) {
+      return res.status(404).json({ error: 'Projects table not found' });
+    }
+
+    // Check if project exists
+    const [existingProject] = await promisePool.query(
+      'SELECT * FROM projects WHERE id = ?',
+      [projectId]
+    );
+
+    if (existingProject.length === 0) {
+      return res.status(404).json({ error: 'Project not found' });
+    }
+
+    // Update project
+    await promisePool.query(
+      'UPDATE projects SET title = ?, description = ?, github_link = ?, live_link = ?, image_url = ?, category = ? WHERE id = ?',
+      [title, description, github_link, live_link, image_url, category, projectId]
+    );
+
+    // Get the updated project
+    const [updatedProject] = await promisePool.query(
+      'SELECT * FROM projects WHERE id = ?',
+      [projectId]
+    );
+
+    console.log('Project updated:', updatedProject[0]);
+    res.json(updatedProject[0]);
+  } catch (error) {
+    console.error('Update project error:', {
+      message: error.message,
+      code: error.code,
+      state: error.sqlState
+    });
+    res.status(500).json({ 
+      error: 'Failed to update project',
+      details: error.message,
+      code: error.code
+    });
+  }
+});
+
+// Delete project (protected)
+app.delete('/projects/:id', authenticateToken, async (req, res) => {
+  console.log('Delete project endpoint hit');
+  const projectId = req.params.id;
+  
+  try {
+    // Check if projects table exists
+    const [tables] = await promisePool.query(`
+      SELECT TABLE_NAME 
+      FROM information_schema.TABLES 
+      WHERE TABLE_SCHEMA = ? 
+      AND TABLE_NAME = 'projects'`, 
+      [dbConfig.database]
+    );
+
+    if (tables.length === 0) {
+      return res.status(404).json({ error: 'Projects table not found' });
+    }
+
+    // Check if project exists
+    const [existingProject] = await promisePool.query(
+      'SELECT * FROM projects WHERE id = ?',
+      [projectId]
+    );
+
+    if (existingProject.length === 0) {
+      return res.status(404).json({ error: 'Project not found' });
+    }
+
+    // Delete project
+    await promisePool.query(
+      'DELETE FROM projects WHERE id = ?',
+      [projectId]
+    );
+
+    console.log('Project deleted:', projectId);
+    res.json({ 
+      message: 'Project deleted successfully',
+      id: projectId 
+    });
+  } catch (error) {
+    console.error('Delete project error:', {
+      message: error.message,
+      code: error.code,
+      state: error.sqlState
+    });
+    res.status(500).json({ 
+      error: 'Failed to delete project',
+      details: error.message,
+      code: error.code
+    });
+  }
+});
+
+// Serve React app for all other routes
+app.get('*', (req, res) => {
+  res.sendFile(join(__dirname, 'build', 'index.html'));
+});
+
+const PORT = process.env.PORT || 9000;
 
 const server = app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server running on port ${PORT}`);

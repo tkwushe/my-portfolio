@@ -1,0 +1,54 @@
+/* Article Background Fix */
+#main article {
+  background-color: #0a0b0c !important; /* Dark background */
+  color: #ffffff !important; /* Light text */
+  overflow-y: auto !important;
+  max-height: 100vh !important;
+  height: 100% !important;
+  position: absolute !important; /* Changed from fixed to absolute */
+  box-sizing: border-box !important;
+  padding: 2.5rem 2.5rem 2rem 2.5rem !important;
+  top: 0 !important; /* Ensure it starts at the top */
+  left: 0 !important;
+  right: 0 !important;
+  margin: 0 !important;
+  transform: none !important; /* Prevent any transforms that might offset it */
+}
+
+/* Make sure content doesn't overflow */
+#main article > * {
+  max-width: 100% !important;
+}
+
+/* Proper padding at the bottom of scrollable content */
+#main article::after {
+  content: '';
+  display: block;
+  height: 2rem;
+}
+
+/* Ensure the background covers the entire visible area */
+body.is-article-visible::before {
+  background-color: #0a0b0c !important;
+}
+
+.social-icon {
+  cursor: pointer !important;
+  pointer-events: auto !important;
+}
+
+footer .social-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+  z-index: 100;
+  pointer-events: auto !important;
+}
+
+/* Fix tooltips */
+.social-icon:hover .tooltip {
+  opacity: 1 !important;
+  visibility: visible !important;
+}

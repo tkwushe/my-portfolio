@@ -43,8 +43,8 @@ const Home = ({ isActive, onClose }) => {
       </ul>
       
       <h3>Education</h3>
-      <h4>BSc Software Engineering (Second Year - Projected 2:1)</h4>
-      <p>Anglia Ruskin University, UK (2022-2026)</p>
+      <h4>BSc Software Engineering (Final Year - Projected First Class)</h4>
+      <p>Anglia Ruskin University, UK (2022-2025)</p>
       
       <div className="grades">
         <h4>Key Modules and Achievements:</h4>

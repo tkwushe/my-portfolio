@@ -12,6 +12,6 @@ COPY . .
 ENV NODE_ENV=production
 ENV NODE_OPTIONS=--openssl-legacy-provider
 
-EXPOSE ${PORT:-8080}
+EXPOSE ${PORT:-9000}
 
 CMD ["npm", "run", "start:prod"] 

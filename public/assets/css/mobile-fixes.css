@@ -1,0 +1,116 @@
+/* Mobile responsiveness improvements */
+
+/* General mobile adjustments */
+@media screen and (max-width: 736px) {
+  /* Adjust article padding for mobile */
+  #main article {
+    padding: 2rem 1.5rem 1.5rem 1.5rem !important;
+  }
+  
+  /* Improve header text size on mobile */
+  #header .inner h1 {
+    font-size: 1.75rem !important;
+    margin-bottom: 0.75rem !important;
+  }
+  
+  #header .inner p {
+    font-size: 0.85rem !important;
+    line-height: 1.5 !important;
+  }
+  
+  /* Adjust navigation for mobile */
+  #header nav ul {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+  }
+  
+  #header nav ul li {
+    margin: 0.35rem !important;
+  }
+  
+  /* Make article headings more appropriate for mobile */
+  #main article h2.major {
+    font-size: 1.5rem !important;
+    margin-bottom: 1.5rem !important;
+  }
+  
+  /* Adjust section spacing */
+  #main article section {
+    margin-bottom: 1.5rem !important;
+  }
+  
+  /* Make content more readable on small screens */
+  #main article p, 
+  #main article ul, 
+  #main article li {
+    font-size: 0.9rem !important;
+    line-height: 1.5 !important;
+  }
+  
+  /* Adjust skills grid for mobile */
+  .skills-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+  
+  /* Optimize footer on mobile */
+  footer {
+    padding: 10px 0 !important;
+    bottom: 10px !important;
+  }
+  
+  footer .social-links {
+    gap: 1.5rem !important;
+  }
+  
+  /* Ensure proper spacing below content to accommodate fixed footer */
+  #main article::after {
+    content: '' !important;
+    display: block !important;
+    height: 80px !important; /* Height of footer + some extra space */
+  }
+}
+
+/* Tablet adjustments */
+@media screen and (min-width: 737px) and (max-width: 980px) {
+  /* Adjust padding for medium screens */
+  #main article {
+    padding: 2.5rem 2rem 2rem 2rem !important;
+  }
+  
+  /* Ensure proper spacing below content for footer */
+  #main article::after {
+    content: '' !important;
+    display: block !important;
+    height: 80px !important;
+  }
+  
+  /* Optimize skills and projects grid for tablets */
+  .skills-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+/* Ensure buttons and interactive elements are easy to tap on mobile */
+@media screen and (max-width: 736px) {
+  button, 
+  .button,
+  a.button,
+  nav a,
+  .read-more-button,
+  .back-button {
+    padding: 0.6rem 1rem !important;
+    min-height: 44px !important; /* Apple's recommended minimum tap target size */
+    min-width: 44px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  
+  /* Ensure proper spacing between tap targets */
+  nav li, 
+  .social-links a {
+    margin: 0 0.3rem !important;
+  }
+}

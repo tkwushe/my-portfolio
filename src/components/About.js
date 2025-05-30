@@ -1,13 +1,17 @@
 import React, { useEffect } from 'react';
 import CloseButton from './CloseButton';
+import './About.css';
 
 const About = ({ isActive, onClose }) => {
   const skillCategories = {
-    "Programming Languages": ["Java", "Python", "C", "JavaScript"],
-    "Web Technologies": ["React", "Node.js", "Full-Stack Development"],
-    "Database": ["SQL"],
-    "Soft Skills": ["Problem-Solving", "Communication", "Teamwork", "Leadership", "Creative Thinking"],
-    "Other": ["Technical Expertise", "Open-Source Projects"]
+    "Programming Languages": ["Python", "JavaScript", "Java", "C", "SQL", "HTML/CSS"],
+    "Web Development": ["React", "Node.js", "Express", "Full-Stack Development", "RESTful APIs"],
+    "Database & Data Engineering": ["SQL", "Database Design", "Data Modeling", "Entity-Relationship Diagrams", "JSON", "NoSQL"],
+    "Data Science & ML": ["Machine Learning", "Data Analysis", "Feature Engineering", "XGBoost", "Random Forest", "SHAP (Explainable AI)", "Scikit-learn", "Pandas", "NumPy"],
+    "Data Visualization": ["Matplotlib", "Seaborn", "Interactive Dashboards", "Geospatial Visualization"],
+    "Version Control & Tools": ["Git", "GitHub", "Command Line", "VS Code", "Jupyter Notebooks"],
+    "Methodologies": ["Agile", "Test-Driven Development", "Data Ethics", "User-Centered Design"],
+    "Soft Skills": ["Problem-Solving", "Communication", "Teamwork", "Leadership", "Creative Thinking", "Research", "Technical Writing"]
   };
 
   // Handle escape key

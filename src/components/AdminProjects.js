@@ -1,12 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { createClient } from '@supabase/supabase-js';
-import { FaPlus, FaSpinner, FaLock, FaSignOutAlt } from 'react-icons/fa';
+import { FaPlus, FaSpinner, FaLock, FaSignOutAlt, FaTrash, FaEdit } from 'react-icons/fa';
 import CloseButton from './CloseButton';
-
-// Use environment variables for Supabase credentials
-const SUPABASE_URL = process.env.REACT_APP_SUPABASE_URL;
-const SUPABASE_ANON_KEY = process.env.REACT_APP_SUPABASE_ANON_KEY;
-const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 const AdminProjects = ({ isActive, onClose }) => {
   const [projects, setProjects] = useState([]);
@@ -23,65 +17,144 @@ const AdminProjects = ({ isActive, onClose }) => {
   const [authForm, setAuthForm] = useState({ email: '', password: '' });
   const [authenticated, setAuthenticated] = useState(false);
   const [userEmail, setUserEmail] = useState('');
+  const [editingProject, setEditingProject] = useState(null);
 
-  // Fetch projects from Supabase
+  // Use the same backend URL as Projects component
+  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || (
+    process.env.NODE_ENV === 'production' 
+      ? 'https://my-portfolio-production-382d.up.railway.app'
+      : 'http://localhost:9000'
+  );
+
+  // Fetch projects from Express backend
   const fetchProjects = async () => {
+    if (!authenticated) return;
+    
     setLoading(true);
-    const { data, error } = await supabase.from('projects').select('*').order('id', { ascending: false });
-    if (error) {
-      setMessage({ text: 'Error loading projects.', type: 'error' });
-    } else {
+    try {
+      const token = localStorage.getItem('admin_token');
+      const response = await fetch(`${BACKEND_URL}/projects`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch projects');
+      }
+
+      const data = await response.json();
       setProjects(data);
+      setMessage({ text: '', type: '' });
+    } catch (error) {
+      console.error('Error fetching projects:', error);
+      setMessage({ text: 'Error loading projects.', type: 'error' });
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   useEffect(() => {
     // Check if user is already logged in
-    const checkSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (session && session.user) {
-        setAuthenticated(true);
-        setUserEmail(session.user.email);
+    const checkAuth = () => {
+      const token = localStorage.getItem('admin_token');
+      const email = localStorage.getItem('admin_email');
+      
+      if (token && email) {
+        // Verify token is still valid
+        fetch(`${BACKEND_URL}/api/verify-token`, {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        })
+        .then(response => {
+          if (response.ok) {
+            setAuthenticated(true);
+            setUserEmail(email);
+          } else {
+            // Token invalid, clear storage
+            localStorage.removeItem('admin_token');
+            localStorage.removeItem('admin_email');
+          }
+        })
+        .catch(() => {
+          // Error verifying token, clear storage
+          localStorage.removeItem('admin_token');
+          localStorage.removeItem('admin_email');
+        });
       }
     };
-    checkSession();
-  }, []);
+    
+    checkAuth();
+  }, [BACKEND_URL]);
 
   useEffect(() => {
-    if (authenticated && isActive) fetchProjects();
+    if (authenticated && isActive) {
+      fetchProjects();
+    }
   }, [authenticated, isActive]);
 
-  // Handle login with Supabase Auth
+  // Handle login with Express backend
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
     setMessage({ text: '', type: '' });
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email: authForm.email,
-      password: authForm.password
-    });
-    if (error) {
-      setMessage({ text: error.message || 'Invalid credentials.', type: 'error' });
-      setAuthenticated(false);
-      setUserEmail('');
-    } else if (data && data.user) {
+
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email: authForm.email,
+          password: authForm.password
+        })
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Login failed');
+      }
+
+      // Store token and user info
+      localStorage.setItem('admin_token', data.token);
+      localStorage.setItem('admin_email', data.user.email);
+      
       setAuthenticated(true);
       setUserEmail(data.user.email);
       setMessage({ text: 'Login successful!', type: 'success' });
+      
+      // Clear form
+      setAuthForm({ email: '', password: '' });
+    } catch (error) {
+      console.error('Login error:', error);
+      setMessage({ text: error.message || 'Invalid credentials.', type: 'error' });
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   // Handle logout
-  const handleLogout = async () => {
-    setLoading(true);
-    await supabase.auth.signOut();
+  const handleLogout = () => {
+    localStorage.removeItem('admin_token');
+    localStorage.removeItem('admin_email');
     setAuthenticated(false);
     setUserEmail('');
     setAuthForm({ email: '', password: '' });
     setMessage({ text: 'Logged out.', type: 'success' });
-    setLoading(false);
+    setEditingProject(null);
+    setFormData({
+      title: '',
+      description: '',
+      github_link: '',
+      live_link: '',
+      image_url: '',
+      category: 'Web Development'
+    });
   };
 
   // Handle form input changes
@@ -90,16 +163,41 @@ const AdminProjects = ({ isActive, onClose }) => {
     setFormData({ ...formData, [name]: value });
   };
 
-  // Handle project submission
+  // Handle project submission (add or edit)
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setMessage({ text: '', type: '' });
-    const { error } = await supabase.from('projects').insert([formData]);
-    if (error) {
-      setMessage({ text: 'Failed to add project.', type: 'error' });
-    } else {
-      setMessage({ text: 'Project added successfully!', type: 'success' });
+
+    try {
+      const token = localStorage.getItem('admin_token');
+      const url = editingProject 
+        ? `${BACKEND_URL}/projects/${editingProject.id}`
+        : `${BACKEND_URL}/projects`;
+      
+      const method = editingProject ? 'PUT' : 'POST';
+
+      const response = await fetch(url, {
+        method,
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || `Failed to ${editingProject ? 'update' : 'add'} project`);
+      }
+
+      setMessage({ 
+        text: `Project ${editingProject ? 'updated' : 'added'} successfully!`, 
+        type: 'success' 
+      });
+      
+      // Reset form
       setFormData({
         title: '',
         description: '',
@@ -108,16 +206,98 @@ const AdminProjects = ({ isActive, onClose }) => {
         image_url: '',
         category: 'Web Development'
       });
+      setEditingProject(null);
+      
+      // Refresh projects list
       fetchProjects();
+    } catch (error) {
+      console.error('Submit error:', error);
+      setMessage({ 
+        text: error.message || `Failed to ${editingProject ? 'update' : 'add'} project.`, 
+        type: 'error' 
+      });
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
+  };
+
+  // Handle project deletion
+  const handleDelete = async (projectId) => {
+    if (!window.confirm('Are you sure you want to delete this project?')) {
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const token = localStorage.getItem('admin_token');
+      const response = await fetch(`${BACKEND_URL}/projects/${projectId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.error || 'Failed to delete project');
+      }
+
+      setMessage({ text: 'Project deleted successfully!', type: 'success' });
+      fetchProjects(); // Refresh list
+    } catch (error) {
+      console.error('Delete error:', error);
+      setMessage({ text: error.message || 'Failed to delete project.', type: 'error' });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Handle edit project
+  const handleEdit = (project) => {
+    setEditingProject(project);
+    setFormData({
+      title: project.title || '',
+      description: project.description || '',
+      github_link: project.github_link || '',
+      live_link: project.live_link || '',
+      image_url: project.image_url || '',
+      category: project.category || 'Web Development'
+    });
+    
+    // Scroll to form
+    document.querySelector('.admin-form')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  // Cancel edit
+  const handleCancelEdit = () => {
+    setEditingProject(null);
+    setFormData({
+      title: '',
+      description: '',
+      github_link: '',
+      live_link: '',
+      image_url: '',
+      category: 'Web Development'
+    });
   };
 
   return (
     <article id="admin-projects" className={isActive ? 'active' : ''} role="dialog" aria-modal="true">
       <h2 className="major">Admin - Manage Projects</h2>
       <CloseButton onClick={onClose} />
-      {message.text && <div className={`message ${message.type}`}>{message.text}</div>}
+      
+      {message.text && (
+        <div className={`message ${message.type}`} style={{
+          padding: '1rem',
+          marginBottom: '1rem',
+          borderRadius: '4px',
+          backgroundColor: message.type === 'error' ? '#ff4444' : '#44ff44',
+          color: message.type === 'error' ? '#fff' : '#000'
+        }}>
+          {message.text}
+        </div>
+      )}
 
       {!authenticated ? (
         <div className="admin-login-container">
@@ -154,14 +334,41 @@ const AdminProjects = ({ isActive, onClose }) => {
         </div>
       ) : (
         <div className="admin-container">
-          <div className="admin-header">
+          <div className="admin-header" style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: '2rem',
+            padding: '1rem',
+            backgroundColor: 'rgba(255, 255, 255, 0.05)',
+            borderRadius: '4px'
+          }}>
             <span className="admin-welcome">Welcome, {userEmail}</span>
             <button onClick={handleLogout} className="logout-button" disabled={loading}>
               <FaSignOutAlt /> Logout
             </button>
           </div>
+
           <div className="admin-form">
-            <h3>Add New Project</h3>
+            <h3>{editingProject ? 'Edit Project' : 'Add New Project'}</h3>
+            {editingProject && (
+              <div style={{ marginBottom: '1rem' }}>
+                <button 
+                  type="button" 
+                  onClick={handleCancelEdit}
+                  style={{
+                    padding: '0.5rem 1rem',
+                    backgroundColor: 'transparent',
+                    border: '1px solid #ccc',
+                    borderRadius: '4px',
+                    color: '#ccc',
+                    cursor: 'pointer'
+                  }}
+                >
+                  Cancel Edit
+                </button>
+              </div>
+            )}
             <form onSubmit={handleSubmit}>
               <div className="fields">
                 <div className="field">
@@ -241,61 +448,122 @@ const AdminProjects = ({ isActive, onClose }) => {
               </div>
               <div className="form-actions">
                 <button type="submit" className="submit-button" disabled={loading}>
-                  {loading ? <><FaSpinner className="spin" /> Saving...</> : <><FaPlus /> Add Project</>}
+                  {loading ? (
+                    <><FaSpinner className="spin" /> {editingProject ? 'Updating...' : 'Saving...'}</>
+                  ) : (
+                    <><FaPlus /> {editingProject ? 'Update Project' : 'Add Project'}</>
+                  )}
                 </button>
               </div>
             </form>
           </div>
-          <div className="admin-projects-list">
+
+          <div className="projects-list" style={{ marginTop: '2rem' }}>
             <h3>Existing Projects ({projects.length})</h3>
-            {loading && <p className="loading"><FaSpinner className="spin" /> Loading projects...</p>}
-            {projects.length > 0 ? (
-              <div className="projects-table-container">
-                <table className="projects-table">
-                  <thead>
-                    <tr>
-                      <th>Title</th>
-                      <th>Description</th>
-                      <th>Links</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {projects.map((project) => (
-                      <tr key={project.id}>
-                        <td>{project.title}</td>
-                        <td className="description-cell">{project.description?.substring(0, 50)}...</td>
-                        <td>
+            {loading && projects.length === 0 ? (
+              <div style={{ textAlign: 'center', padding: '2rem' }}>
+                <FaSpinner className="spin" /> Loading projects...
+              </div>
+            ) : projects.length === 0 ? (
+              <p style={{ textAlign: 'center', padding: '2rem', color: '#888' }}>
+                No projects found. Add your first project above.
+              </p>
+            ) : (
+              <div className="projects-grid" style={{
+                display: 'grid',
+                gap: '1rem',
+                marginTop: '1rem'
+              }}>
+                {projects.map((project) => (
+                  <div 
+                    key={project.id} 
+                    className="project-item"
+                    style={{
+                      border: '1px solid rgba(255, 255, 255, 0.1)',
+                      borderRadius: '8px',
+                      padding: '1rem',
+                      backgroundColor: 'rgba(255, 255, 255, 0.02)'
+                    }}
+                  >
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                      <div style={{ flex: 1 }}>
+                        <h4 style={{ margin: '0 0 0.5rem 0', color: '#64ffda' }}>{project.title}</h4>
+                        <p style={{ margin: '0 0 0.5rem 0', color: '#ccc', fontSize: '0.9rem' }}>
+                          {project.description?.substring(0, 100)}
+                          {project.description?.length > 100 ? '...' : ''}
+                        </p>
+                        <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                          <span style={{
+                            padding: '0.25rem 0.5rem',
+                            backgroundColor: 'rgba(127, 90, 240, 0.2)',
+                            borderRadius: '12px',
+                            fontSize: '0.75rem',
+                            color: '#7f5af0'
+                          }}>
+                            {project.category}
+                          </span>
                           {project.github_link && (
-                            <a
-                              href={project.github_link}
-                              target="_blank"
+                            <a 
+                              href={project.github_link} 
+                              target="_blank" 
                               rel="noopener noreferrer"
-                              className="table-link"
+                              style={{ color: '#64ffda', fontSize: '0.75rem' }}
                             >
                               GitHub
                             </a>
                           )}
                           {project.live_link && (
-                            <>
-                              {' | '}
-                              <a
-                                href={project.live_link}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="table-link"
-                              >
-                                Live
-                              </a>
-                            </>
+                            <a 
+                              href={project.live_link} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              style={{ color: '#64ffda', fontSize: '0.75rem' }}
+                            >
+                              Live Demo
+                            </a>
                           )}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+                        </div>
+                      </div>
+                      <div style={{ display: 'flex', gap: '0.5rem', marginLeft: '1rem' }}>
+                        <button
+                          onClick={() => handleEdit(project)}
+                          style={{
+                            padding: '0.5rem',
+                            backgroundColor: 'transparent',
+                            border: '1px solid #64ffda',
+                            borderRadius: '4px',
+                            color: '#64ffda',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                          }}
+                          title="Edit project"
+                        >
+                          <FaEdit />
+                        </button>
+                        <button
+                          onClick={() => handleDelete(project.id)}
+                          style={{
+                            padding: '0.5rem',
+                            backgroundColor: 'transparent',
+                            border: '1px solid #ff4444',
+                            borderRadius: '4px',
+                            color: '#ff4444',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                          }}
+                          title="Delete project"
+                        >
+                          <FaTrash />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
-            ) : (
-              <p>No projects found.</p>
             )}
           </div>
         </div>
@@ -304,4 +572,4 @@ const AdminProjects = ({ isActive, onClose }) => {
   );
 };
 
-export default React.memo(AdminProjects);
+export default AdminProjects;
