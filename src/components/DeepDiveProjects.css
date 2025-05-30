@@ -127,11 +127,45 @@
   color: var(--accent-primary);
 }
 
-/* Embedded Demo Styles */
-.embedded-demo-container {
+/* Embedded Demo and Game Instructions Styles */
+.embedded-demo-container,
+.game-instructions-container {
   margin-top: 3rem;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   padding-top: 2rem;
+}
+
+.note-box {
+  background-color: rgba(30, 30, 40, 0.6);
+  border: 1px solid rgba(100, 255, 218, 0.2);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  position: relative;
+}
+
+.download-button {
+  display: inline-block;
+  background-color: var(--accent-primary);
+  color: #111214;
+  font-weight: 600;
+  padding: 0.8rem 1.5rem;
+  border-radius: 4px;
+  margin-top: 1rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.download-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(100, 255, 218, 0.3);
+  text-decoration: none;
+}
+
+.screenshots-container {
+  margin-top: 2rem;
+  font-style: italic;
+  opacity: 0.8;
 }
 
 .embedded-demo-container h3 {

@@ -36,6 +36,7 @@ This work means a lot to me because it is not just academic. It has real potenti
       title: "Fantasy Dungeon Adventure: A Deep Dive into Software Architecture",
       shortDescription: "Developed a comprehensive Java game application demonstrating enterprise-level software architecture and design patterns.",
       github_link: "https://github.com/tkwushe/Fantasy-Dungeon-Game",
+      play_instructions: "To play this game: 1) Clone the repository, 2) Open in an IDE like IntelliJ or Eclipse, 3) Ensure Java 8+ is installed, 4) Run the Main.java file to start the adventure!",
       technologies: ["Java", "Design Patterns", "Object-Oriented Programming", "Event-Driven Architecture", "Swing GUI", "SQLite", "JUnit", "Procedural Generation", "Multi-threading", "Software Architecture", "Dependency Management"],
       image_url: "",
       category: "Software Engineering",
@@ -189,6 +190,27 @@ In the end, MindCareDB is not just a technical artefact. It is a foundation that
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
               ></iframe>
+            </div>
+          )}
+          
+          {activeProject.id === 3 && activeProject.play_instructions && (
+            <div className="game-instructions-container">
+              <h3>How to Play</h3>
+              <div className="note-box">
+                <p><strong>Note:</strong> This is a Java desktop application that cannot run directly in the browser.</p>
+                <p>{activeProject.play_instructions}</p>
+                <a 
+                  href={activeProject.github_link} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="download-button"
+                >
+                  Download Source Code
+                </a>
+              </div>
+              <div className="screenshots-container">
+                <p>See the GitHub repository for screenshots and more details about this desktop application.</p>
+              </div>
             </div>
           )}
         </div>
