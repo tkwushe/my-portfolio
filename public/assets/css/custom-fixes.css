@@ -32,3 +32,115 @@ body:before, body:after {
   background-color: #0a0b0c !important;
   z-index: -1 !important;
 }
+
+/* Enhanced Mobile Navigation - Horizontal Menu */
+@media screen and (max-width: 736px) {
+  /* Improve header layout and accessibility */
+  #header {
+    padding: 1.5rem 0.5rem 0.5rem !important;
+    margin-bottom: 0 !important;
+  }
+  
+  /* Make navigation horizontal and scrollable */
+  #header nav {
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    -webkit-overflow-scrolling: touch !important;
+    white-space: nowrap !important;
+    width: 100% !important;
+    margin: 1rem 0 0 !important;
+    padding: 0.5rem 0 !important;
+    position: relative !important;
+    z-index: 100 !important;
+  }
+  
+  /* Show subtle scrollbar indicator */
+  #header nav::-webkit-scrollbar {
+    height: 3px !important;
+  }
+  
+  #header nav::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.3) !important;
+  }
+  
+  /* Make nav buttons more touchable and visible */
+  #header nav ul {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    justify-content: flex-start !important;
+    width: auto !important;
+    padding: 0 0.5rem !important;
+  }
+  
+  #header nav ul li {
+    flex: 0 0 auto !important;
+    margin: 0 0.25rem !important;
+    border: none !important;
+    position: relative !important;
+    z-index: 2 !important;
+  }
+  
+  #header nav ul li a {
+    font-size: 0.85rem !important;
+    padding: 0 1rem !important;
+    height: 2.5rem !important;
+    line-height: 2.5rem !important;
+    white-space: nowrap !important;
+    display: block !important;
+    width: auto !important;
+    min-width: 70px !important;
+    text-align: center !important;
+    background-color: rgba(255, 255, 255, 0.08) !important;
+    border-radius: 4px !important;
+    transition: all 0.2s ease !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  }
+  
+  #header nav ul li a:hover,
+  #header nav ul li a:active {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+    transform: translateY(-2px) !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+  }
+  
+  /* Ensure first article is scrollable on mobile */
+  body:not(.is-article-visible) #main {
+    height: auto !important;
+  }
+  
+  /* Improve footer positioning */
+  footer {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    padding: 0.5rem 0 !important;
+    background-color: rgba(10, 11, 12, 0.9) !important;
+    -webkit-backdrop-filter: blur(5px) !important;
+    backdrop-filter: blur(5px) !important;
+    z-index: 1000 !important;
+  }
+  
+  /* Ensure articles have adequate bottom padding for the footer */
+  #main article {
+    padding-bottom: 80px !important;
+  }
+  
+  /* Add clear indicators for horizontal scrollable navigation */
+  #header nav::after {
+    content: '' !important;
+    position: absolute !important;
+    right: 0 !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    width: 30px !important;
+    background: linear-gradient(to right, rgba(10, 11, 12, 0), rgba(10, 11, 12, 0.8)) !important;
+    pointer-events: none !important;
+    z-index: 10 !important;
+  }
+  
+  /* Make all buttons and clickable elements easier to tap */
+  a, button, .clickable, [role="button"] {
+    touch-action: manipulation !important;
+  }
+}

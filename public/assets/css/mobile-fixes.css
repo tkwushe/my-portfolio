@@ -42,26 +42,99 @@ html, body {
     transform: none !important;
   }
   
-  /* Improve header text size on mobile */
+  /* Optimize header for mobile - more compact */
+  #header {
+    padding: 1.5rem 1rem !important;
+    margin-bottom: 0 !important;
+    min-height: 0 !important;
+  }
+  
+  #header .content {
+    padding: 1rem 0 !important;
+  }
+  
+  #header .inner {
+    padding: 1.25rem 1rem !important;
+    max-height: 60vh !important; /* Allow scrolling if needed */
+    overflow-y: auto !important;
+  }
+  
   #header .inner h1 {
-    font-size: 1.75rem !important;
+    font-size: 1.5rem !important;
     margin-bottom: 0.75rem !important;
   }
   
   #header .inner p {
-    font-size: 0.85rem !important;
+    font-size: 0.8rem !important;
     line-height: 1.5 !important;
+    max-width: 100% !important;
+    overflow-wrap: break-word !important;
   }
   
-  /* Adjust navigation for mobile */
+  /* Add fade effect at the bottom of scrollable content */
+  #header .inner::after {
+    content: '' !important;
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: 20px !important;
+    background: linear-gradient(to top, rgba(10, 11, 12, 1), rgba(10, 11, 12, 0)) !important;
+    pointer-events: none !important;
+  }
+  
+  /* Improve navigation for mobile - horizontal scrollable menu */
+  #header nav {
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    -webkit-overflow-scrolling: touch !important;
+    white-space: nowrap !important;
+    width: 100% !important;
+    padding: 0.5rem 0 !important;
+    margin-top: 1rem !important;
+    position: relative !important;
+    z-index: 100 !important;
+  }
+  
+  #header nav::-webkit-scrollbar {
+    height: 3px !important;
+  }
+  
+  #header nav::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.3) !important;
+  }
+  
   #header nav ul {
     display: flex !important;
-    flex-wrap: wrap !important;
-    justify-content: center !important;
+    flex-wrap: nowrap !important;
+    justify-content: flex-start !important;
+    width: auto !important;
+    padding: 0 1rem !important;
   }
   
   #header nav ul li {
-    margin: 0.35rem !important;
+    flex: 0 0 auto !important;
+    margin: 0 0.5rem !important;
+    border: none !important;
+  }
+  
+  #header nav ul li a {
+    font-size: 0.9rem !important;
+    padding: 0 0.8rem !important;
+    height: 44px !important; /* Minimum tap target size */
+    line-height: 44px !important;
+    white-space: nowrap !important;
+    display: block !important;
+    width: auto !important;
+    min-width: 44px !important;
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    border-radius: 4px !important;
+    transition: background-color 0.2s ease !important;
+  }
+  
+  #header nav ul li a:hover,
+  #header nav ul li a:active {
+    background-color: rgba(255, 255, 255, 0.1) !important;
   }
   
   /* Make article headings more appropriate for mobile */
@@ -125,6 +198,34 @@ html, body {
   
   #bg:after {
     opacity: 0 !important;
+  }
+  
+  /* Fix for initial landing page scrollability */
+  body:not(.is-article-visible) #header {
+    position: relative !important;
+    height: auto !important;
+    min-height: 0 !important;
+    padding-bottom: 1rem !important;
+  }
+  
+  body:not(.is-article-visible) #main {
+    position: relative !important;
+    height: auto !important;
+    min-height: 0 !important;
+    padding-bottom: 80px !important; /* Space for footer */
+  }
+  
+  /* Ensure touch targets are large enough */
+  a, button, [role="button"], input, select, textarea {
+    touch-action: manipulation !important;
+  }
+  
+  /* Make clickable areas larger for all links */
+  a, .button, .clickable {
+    position: relative !important;
+    display: inline-block !important;
+    padding: 0.5rem !important;
+    margin: -0.5rem !important;
   }
 }
 
