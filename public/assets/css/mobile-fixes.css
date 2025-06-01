@@ -1,10 +1,45 @@
 /* Mobile responsiveness improvements */
 
+/* Fix for black screen issue on mobile */
+html, body {
+  background-color: #0a0b0c !important;
+  min-height: 100% !important;
+  height: auto !important;
+  overflow-x: hidden !important;
+  width: 100% !important;
+}
+
+#wrapper {
+  background-color: #0a0b0c !important;
+  min-height: 100vh !important;
+  height: auto !important;
+  overflow-y: auto !important;
+  position: relative !important;
+}
+
+#main {
+  background-color: #0a0b0c !important;
+  min-height: 100vh !important;
+  height: auto !important;
+  position: relative !important;
+  overflow: visible !important;
+}
+
 /* General mobile adjustments */
 @media screen and (max-width: 736px) {
-  /* Adjust article padding for mobile */
+  /* Adjust article padding and positioning for mobile */
   #main article {
     padding: 2rem 1.5rem 1.5rem 1.5rem !important;
+    background-color: #0a0b0c !important;
+    position: relative !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: auto !important;
+    min-height: 100vh !important;
+    max-height: none !important;
+    overflow-y: visible !important;
+    transform: none !important;
   }
   
   /* Improve header text size on mobile */
@@ -69,6 +104,27 @@
     content: '' !important;
     display: block !important;
     height: 80px !important; /* Height of footer + some extra space */
+  }
+  
+  /* Fix for black screen - ensure background and content visibility */
+  body.is-article-visible::before,
+  body.is-article-visible #main::after {
+    background-color: #0a0b0c !important;
+    z-index: -1 !important;
+  }
+  
+  body.is-article-visible #main {
+    transform: none !important;
+    opacity: 1 !important;
+    filter: none !important;
+  }
+  
+  body.is-article-visible:before {
+    background-color: #0a0b0c !important;
+  }
+  
+  #bg:after {
+    opacity: 0 !important;
   }
 }
 
