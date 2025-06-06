@@ -7,7 +7,7 @@ body:before, body:after, #wrapper:before, #wrapper:after {
   background: #0a0b0c !important;
 }
 
-/* Fix article positioning */
+/* Fix article positioning for desktop */
 #main article {
   background-color: #0a0b0c !important;
   color: #ffffff !important;
