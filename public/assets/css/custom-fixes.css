@@ -1,9 +1,7 @@
-/* Custom fixes import file to load all custom CSS fixes */
+/* Essential custom fixes - simplified */
 @import url('global-fixes.css');
-@import url('article-fix.css');
 @import url('mobile-fixes.css');
 @import url('home-fixes.css');
-
 /* Additional fixes for black screen */
 html, body, #root, #wrapper, #main {
   background-color: #0a0b0c !important;
@@ -21,3 +19,4 @@ body:before, body:after {
   background-color: #0a0b0c !important;
   z-index: -1 !important;
 }
+
