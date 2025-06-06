@@ -69,36 +69,39 @@ const Wrapper = () => {
   }, [activeArticle]);
 
   return (
-    <div id="wrapper">
-      <Header onSetActive={handleSetActive} />
-      <main id="main">
-        <Home 
-          isActive={activeArticle === 'home'} 
-          onClose={handleClose}
-        />
-        <About 
-          isActive={activeArticle === 'about'} 
-          onClose={handleClose}
-        />
-        <Projects 
-          isActive={activeArticle === 'projects'} 
-          onClose={handleClose}
-        />
-        <DeepDiveProjects 
-          isActive={activeArticle === 'deep-dive-projects'} 
-          onClose={handleClose}
-        />
-        <Contact 
-          isActive={activeArticle === 'contact'} 
-          onClose={handleClose}
-        />
-        <AdminProjects 
-          isActive={activeArticle === 'admin'} 
-          onClose={handleClose}
-        />
-      </main>
-      <Footer />
-    </div>
+    <>
+      <div id="bg"></div>
+      <div id="wrapper">
+        <Header onSetActive={handleSetActive} />
+        <main id="main">
+          <Home 
+            isActive={activeArticle === 'home'} 
+            onClose={handleClose}
+          />
+          <About 
+            isActive={activeArticle === 'about'} 
+            onClose={handleClose}
+          />
+          <Projects 
+            isActive={activeArticle === 'projects'} 
+            onClose={handleClose}
+          />
+          <DeepDiveProjects 
+            isActive={activeArticle === 'deep-dive-projects'} 
+            onClose={handleClose}
+          />
+          <Contact 
+            isActive={activeArticle === 'contact'} 
+            onClose={handleClose}
+          />
+          <AdminProjects 
+            isActive={activeArticle === 'admin'} 
+            onClose={handleClose}
+          />
+        </main>
+        <Footer />
+      </div>
+    </>
   );
 };
 
