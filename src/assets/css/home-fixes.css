@@ -1,0 +1,85 @@
+/* Home article specific fixes */
+
+/* Make the profile image smaller */
+#home .image.main {
+  max-width: 250px !important;
+  margin: 0 auto 2rem auto !important;
+}
+
+#home .image.main img {
+  width: 100% !important;
+  height: auto !important;
+  border-radius: 50% !important; /* Optional: makes the image circular */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Make text less zoomed in */
+#home p, #home ul, #home li {
+  font-size: 0.95rem !important;
+  line-height: 1.6 !important;
+}
+
+#home h3 {
+  font-size: 1.35rem !important;
+  margin-top: 1.5rem !important;
+  margin-bottom: 0.75rem !important;
+}
+
+#home h4 {
+  font-size: 1.1rem !important;
+  margin-top: 1rem !important;
+  margin-bottom: 0.5rem !important;
+}
+
+/* Improve content spacing */
+#home .grades {
+  margin-top: 1rem !important;
+  margin-bottom: 1.5rem !important;
+}
+
+#home .grades h4 {
+  margin-bottom: 0.75rem !important;
+}
+
+#home .grades ul {
+  padding-left: 1.5rem !important;
+}
+
+#home .grades li {
+  margin-bottom: 0.5rem !important;
+  position: relative !important;
+}
+
+#home .previous-education {
+  margin-top: 1.5rem !important;
+  margin-bottom: 1.5rem !important;
+}
+
+/* Mobile responsive adjustments */
+@media screen and (max-width: 736px) {
+  #home .image.main {
+    max-width: 180px !important;
+  }
+  
+  #home p, #home ul, #home li {
+    font-size: 0.9rem !important;
+  }
+  
+  #home h3 {
+    font-size: 1.25rem !important;
+  }
+  
+  #home h4 {
+    font-size: 1.05rem !important;
+  }
+}
+
+/* Ensure proper padding/margins for the overall article */
+#home {
+  padding: 2.5rem 2rem !important;
+}
+
+/* Add spacing after list items */
+#home ul li {
+  margin-bottom: 0.5rem !important;
+}

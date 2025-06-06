@@ -1,0 +1,18 @@
+/* Styles for when JavaScript is disabled */
+body.is-preload {
+  opacity: 1;
+}
+
+noscript p {
+  display: block;
+  padding: 20px;
+  background: #f44336;
+  color: white;
+  text-align: center;
+  font-weight: bold;
+  margin: 0;
+}
+
+#root {
+  display: none;
+}
