@@ -2062,67 +2062,100 @@ body.is-article-visible #main article.active {
 @media screen and (max-width: 736px) {
   /* Header adjustments */
   #header {
-    padding: 2rem 1rem;
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    width: 100% !important;
+    transform: none !important;
+    filter: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    background: transparent !important;
+    padding: 2rem 1rem !important;
+    margin: 0 !important;
+    z-index: 10000 !important;
   }
-
-  #header nav ul {
-    flex-direction: column;
-    width: 100%;
-    margin: 1rem 0;
+  
+  /* Ensure header content is always visible on mobile */
+  #header > *,
+  #header .content,
+  #header .content .inner,
+  #header nav {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    filter: none !important;
+    max-height: none !important;
+    overflow: visible !important;
   }
-
-  #header nav ul li {
-    width: 100%;
-    border-left: none;
-    border-top: solid 1px rgba(255, 255, 255, 0.15);
+  
+  /* Override article-visible state for mobile */
+  body.is-article-visible #header {
+    transform: none !important;
+    filter: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    position: relative !important;
   }
-
-  #header nav ul li a {
-    height: 4rem;
-    line-height: 4rem;
-    padding: 0;
-    width: 100%;
-    font-size: 1.1rem;
+  
+  /* Override preload state for mobile */
+  body.is-preload #header,
+  body.is-preload #header > *,
+  body.is-preload #header .content .inner {
+    filter: none !important;
+    opacity: 1 !important;
+    max-height: none !important;
+    padding: inherit !important;
+    transform: none !important;
   }
-
-  /* Main content adjustments */
+  
+  /* Ensure wrapper and main work properly on mobile */
+  #wrapper {
+    position: relative !important;
+    display: flex !important;
+    flex-direction: column !important;
+    min-height: 100vh !important;
+    padding: 0 !important;
+    background-color: #0a0b0c !important;
+  }
+  
+  #main {
+    position: relative !important;
+    display: flex !important;
+    flex-direction: column !important;
+    flex-grow: 1 !important;
+    z-index: 3 !important;
+    align-items: stretch !important;
+    justify-content: flex-start !important;
+  }
+  
+  /* Fix article positioning for mobile */
   #main article {
-    padding: 4rem 1.5rem 2rem 1.5rem;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
+    position: static !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
+    transform: none !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    z-index: auto !important;
+    overflow: visible !important;
+    padding: 2rem 1.5rem !important;
+    margin: 0 !important;
+    background-color: #0a0b0c !important;
+    color: #ffffff !important;
   }
-
-  /* Improve text readability */
-  p, li {
-    font-size: 1.1rem;
-    line-height: 1.6;
-  }
-
-  h1 { font-size: 1.8rem; }
-  h2 { font-size: 1.4rem; }
-  h3 { font-size: 1.2rem; }
-
-  /* Make close button more accessible */
-  .close-button {
-    top: 1.5rem;
-    right: 1.5rem;
-    width: 3.5rem;
-    height: 3.5rem;
-  }
-
-  /* Footer adjustments */
-  #footer {
-    padding: 1.5rem;
-  }
-
-  #footer .icons li {
-    padding: 0 1.5rem;
-  }
-
-  #footer .icons a {
-    width: 3rem;
-    height: 3rem;
-    line-height: 3rem;
+  
+  /* Ensure body background is always dark on mobile */
+  body,
+  html {
+    background-color: #0a0b0c !important;
+    overflow-x: hidden !important;
   }
 }
 
@@ -2245,5 +2278,106 @@ body.is-article-visible #main article.active {
   #footer .copyright {
     font-size: 0.7rem;
     margin-top: 0.5rem;
+  }
+}
+
+/* CRITICAL MOBILE OVERRIDE - Add at the very end to ensure highest specificity */
+@media screen and (max-width: 736px) {
+  /* Override header positioning for mobile - ensure it's always visible */
+  #header {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    width: 100% !important;
+    transform: none !important;
+    filter: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    background: transparent !important;
+    padding: 2rem 1rem !important;
+    margin: 0 !important;
+    z-index: 10000 !important;
+  }
+  
+  /* Ensure header content is always visible on mobile */
+  #header > *,
+  #header .content,
+  #header .content .inner,
+  #header nav {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    filter: none !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+  
+  /* Override article-visible state for mobile */
+  body.is-article-visible #header {
+    transform: none !important;
+    filter: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    position: relative !important;
+  }
+  
+  /* Override preload state for mobile */
+  body.is-preload #header,
+  body.is-preload #header > *,
+  body.is-preload #header .content .inner {
+    filter: none !important;
+    opacity: 1 !important;
+    max-height: none !important;
+    padding: inherit !important;
+    transform: none !important;
+  }
+  
+  /* Ensure wrapper and main work properly on mobile */
+  #wrapper {
+    position: relative !important;
+    display: flex !important;
+    flex-direction: column !important;
+    min-height: 100vh !important;
+    padding: 0 !important;
+    background-color: #0a0b0c !important;
+  }
+  
+  #main {
+    position: relative !important;
+    display: flex !important;
+    flex-direction: column !important;
+    flex-grow: 1 !important;
+    z-index: 3 !important;
+    align-items: stretch !important;
+    justify-content: flex-start !important;
+  }
+  
+  /* Fix article positioning for mobile */
+  #main article {
+    position: static !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
+    transform: none !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    z-index: auto !important;
+    overflow: visible !important;
+    padding: 2rem 1.5rem !important;
+    margin: 0 !important;
+    background-color: #0a0b0c !important;
+    color: #ffffff !important;
+  }
+  
+  /* Ensure body background is always dark on mobile */
+  body,
+  html {
+    background-color: #0a0b0c !important;
+    overflow-x: hidden !important;
   }
 }
