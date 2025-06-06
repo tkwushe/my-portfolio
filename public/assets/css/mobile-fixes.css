@@ -290,45 +290,66 @@ html, body {
     background: transparent !important;
   }
   
+  /* Hide header when article is active on mobile */
+  body.is-article-visible #header {
+    display: none !important;
+  }
+  
   /* Ensure main container is properly positioned on mobile */
   #main {
     position: relative !important;
     display: flex !important;
     flex-direction: column !important;
-    min-height: auto !important;
-    height: auto !important;
+    min-height: 100vh !important;
+    height: 100vh !important;
     z-index: 3 !important;
     flex-grow: 1 !important;
+    overflow: hidden !important;
   }
   
-  /* Ensure articles are properly positioned on mobile */
+  /* Ensure articles are properly isolated on mobile - like desktop */
   #main article {
-    position: static !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
     width: 100% !important;
-    height: auto !important;
-    min-height: auto !important;
-    max-height: none !important;
-    top: auto !important;
-    left: auto !important;
-    right: auto !important;
-    bottom: auto !important;
-    transform: none !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    z-index: auto !important;
+    height: 100vh !important;
+    min-height: 100vh !important;
+    max-height: 100vh !important;
+    transform: translateY(100vh) !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    z-index: 1 !important;
     background-color: #0a0b0c !important;
     color: #ffffff !important;
-    overflow: visible !important;
-    padding: 2rem 1.5rem !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    padding: 2rem 1.5rem 4rem 1.5rem !important;
     margin: 0 !important;
+    transition: transform 0.325s ease-in-out, opacity 0.325s ease-in-out, visibility 0.325s !important;
+  }
+  
+  /* Show only the active article on mobile */
+  #main article.active {
+    transform: translateY(0) !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    z-index: 2 !important;
   }
   
   /* Ensure body layout works properly on mobile */
   body {
     overflow-x: hidden !important;
-    overflow-y: auto !important;
+    overflow-y: hidden !important; /* Prevent body scroll when article is active */
     min-height: 100vh !important;
     background-color: #0a0b0c !important;
+  }
+  
+  /* Allow body scroll only when no article is active */
+  body:not(.is-article-visible) {
+    overflow-y: auto !important;
   }
   
   /* Ensure wrapper works properly on mobile */
@@ -340,7 +361,7 @@ html, body {
     width: 100% !important;
     padding: 0 !important;
     background-color: #0a0b0c !important;
-    overflow: visible !important;
+    overflow: hidden !important;
   }
   
   /* Remove preload effects on mobile */
@@ -351,5 +372,51 @@ html, body {
     opacity: 1 !important;
     max-height: none !important;
     padding: inherit !important;
+  }
+  
+  /* Ensure footer is hidden when article is active on mobile */
+  body.is-article-visible footer {
+    display: none !important;
+  }
+  
+  /* Make sure the close button is easily accessible on mobile */
+  #main article .close {
+    position: fixed !important;
+    top: 1rem !important;
+    right: 1rem !important;
+    width: 3rem !important;
+    height: 3rem !important;
+    z-index: 10000 !important;
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  
+  /* Ensure no articles are visible when header is active on mobile */
+  body:not(.is-article-visible) #main article {
+    display: none !important;
+  }
+  
+  /* Prevent any background content bleeding through on mobile */
+  body.is-article-visible {
+    position: fixed !important;
+    width: 100% !important;
+    height: 100% !important;
+    overflow: hidden !important;
+  }
+  
+  /* Ensure smooth transitions on mobile */
+  #main article {
+    -webkit-overflow-scrolling: touch !important;
+  }
+  
+  /* Additional mobile tap improvements */
+  #main article .close {
+    -webkit-tap-highlight-color: transparent !important;
+    tap-highlight-color: transparent !important;
+    user-select: none !important;
+    -webkit-user-select: none !important;
   }
 }
