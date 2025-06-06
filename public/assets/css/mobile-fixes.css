@@ -326,9 +326,13 @@ html, body {
     color: #ffffff !important;
     overflow-y: auto !important;
     overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch !important;
     padding: 2rem 1.5rem 4rem 1.5rem !important;
     margin: 0 !important;
     transition: transform 0.325s ease-in-out, opacity 0.325s ease-in-out, visibility 0.325s !important;
+    /* Ensure scrolling works properly */
+    overscroll-behavior: contain !important;
+    scroll-behavior: smooth !important;
   }
   
   /* Show only the active article on mobile */
@@ -392,6 +396,11 @@ html, body {
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
+    /* Ensure button doesn't interfere with scrolling */
+    pointer-events: auto !important;
+    touch-action: manipulation !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
   }
   
   /* Ensure no articles are visible when header is active on mobile */
@@ -405,11 +414,39 @@ html, body {
     width: 100% !important;
     height: 100% !important;
     overflow: hidden !important;
+    /* Ensure article scrolling isn't affected */
+    touch-action: none !important;
   }
   
-  /* Ensure smooth transitions on mobile */
+  /* Allow scrolling within the active article only */
+  body.is-article-visible #main article.active {
+    touch-action: auto !important;
+    overflow-y: scroll !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  
+  /* Ensure smooth transitions and scrolling on mobile */
   #main article {
     -webkit-overflow-scrolling: touch !important;
+  }
+  
+  /* Optimize scrolling performance on mobile */
+  #main article.active {
+    /* Enable momentum scrolling on iOS */
+    -webkit-overflow-scrolling: touch !important;
+    /* Improve scroll performance */
+    will-change: scroll-position !important;
+    /* Prevent elastic scrolling from interfering with page layout */
+    overscroll-behavior-y: contain !important;
+  }
+  
+  /* Ensure content within articles can be scrolled */
+  #main article .content,
+  #main article > div,
+  #main article > section {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-wrap: break-word !important;
   }
   
   /* Additional mobile tap improvements */
