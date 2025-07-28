@@ -35,5 +35,8 @@ coverage/
 # Railway
 railway.json
 
+# Claude Code documentation (auto-generated)
+CLAUDE.md
+
 # Optional: Ignore public/ if you only use src/
 # public/ 

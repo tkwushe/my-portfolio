@@ -43,6 +43,18 @@ const Projects = ({ isActive, onClose }) => {
     return () => window.removeEventListener('keydown', handleEscape);
   }, [isActive, onClose]);
 
+  // Scroll to top when article becomes active
+  useEffect(() => {
+    if (isActive) {
+      setTimeout(() => {
+        const article = document.getElementById('projects');
+        if (article) {
+          article.scrollTop = 0;
+        }
+      }, 100);
+    }
+  }, [isActive]);
+
   return (
     <article 
       id="projects" 

@@ -13,6 +13,7 @@
   right: 0 !important;
   margin: 0 !important;
   transform: none !important; /* Prevent any transforms that might offset it */
+  scroll-behavior: smooth !important; /* Smooth scrolling for better UX */
 }
 
 /* Make sure content doesn't overflow */

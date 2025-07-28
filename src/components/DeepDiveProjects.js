@@ -99,14 +99,38 @@ In the end, MindCareDB is not just a technical artefact. It is a foundation that
     return () => window.removeEventListener('keydown', handleEscape);
   }, [isActive, onClose, activeProject]);
 
+  // Scroll to top when article becomes active
+  React.useEffect(() => {
+    if (isActive) {
+      setTimeout(() => {
+        const article = document.getElementById('deep-dive-projects');
+        if (article) {
+          article.scrollTop = 0;
+        }
+      }, 100); // Small delay to ensure article is rendered
+    }
+  }, [isActive]);
+
   const handleProjectClick = (project) => {
     setActiveProject(project);
-    // Scroll to top when viewing a project
-    window.scrollTo(0, 0);
+    // Scroll the article container to top when viewing a project
+    setTimeout(() => {
+      const article = document.getElementById('deep-dive-projects');
+      if (article) {
+        article.scrollTop = 0;
+      }
+    }, 0);
   };
 
   const handleBackClick = () => {
     setActiveProject(null);
+    // Scroll the article container to top when going back to project list
+    setTimeout(() => {
+      const article = document.getElementById('deep-dive-projects');
+      if (article) {
+        article.scrollTop = 0;
+      }
+    }, 0);
   };
 
   return (
