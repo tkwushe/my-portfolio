@@ -7,6 +7,49 @@ const DeepDiveProjects = ({ isActive, onClose }) => {
   
   const projects = [
     {
+      id: 4,
+      title: "Building 19 On Bay Noakes – From Idea to a High-Performance Hotel Website",
+      shortDescription: "Developed a high-performance hotel website focusing on real-world usability, mobile optimization, and conversion-driven design.",
+      live_demo_url: "https://19onbaynoakes.com",
+      github_link: "", // Add if you have a public repo
+      technologies: ["React 18", "TypeScript", "Vite", "Tailwind CSS", "Shadcn/ui", "React Router", "Supabase", "Netlify", "Google Analytics", "Performance Optimization", "SEO", "Responsive Design"],
+      image_url: "",
+      category: "Full-Stack Development",
+      fullDescription: `When I took on the 19 On Bay Noakes website, I knew I wanted it to do more than just impress at first glance. The goal was to help this boutique hotel in Harare get real bookings and create an online experience that actually lived up to the luxury brand. That meant I needed to combine great design with proper performance, which ended up teaching me loads along the way.
+
+Before jumping into code, I spent some time researching the best hotel websites out there. I looked closely at sites for big names like Marriott and Radisson, picking out what made them work so well for guests. I noticed that everything from the booking process to the way they used images and trust signals played a big part in getting people to convert. I took all that on board and used it to shape my own design and layout choices.
+
+On the technical side, I went with React 18 and TypeScript to keep everything clean and manageable, Vite for speedy builds and development, Tailwind CSS and Shadcn/ui for styling, React Router for easy navigation, Supabase to handle bookings behind the scenes, Netlify for hassle-free hosting, and Google Analytics so I could track and improve the site as I went.
+
+I also made sure to follow the brand manual the hotel provided. That really helped keep the look and feel consistent across every page, from colours to logos and typography. It's a simple thing, but sticking to those guidelines made the whole site look much more professional.
+
+My design principles were pretty clear: focus on mobile first since nearly everyone checks hotel sites on their phone, prioritise speed over any flashy effects, and every part of the site needed to guide visitors towards making a booking.
+
+I set up the core pages based on how real guests would move through the site: Homepage with a video, quick room previews, trust signals, and an immediate booking call-to-action; Rooms page with all the details and pricing; Gallery split into easy-to-navigate categories like breakfast, rooms, and the property itself; Contact page with phone, email, and location details; and a Booking page.
+
+I wanted to build a smooth, in-house booking page like you see on the top hotel sites. I even designed and built a proper booking form and page for the hotel. But I quickly realised synchronising everything with the NightsBridge system was a challenge. There isn't a simple plug-and-play API that I could use right away, at least not without a lot more time and possibly support from the NightsBridge team.
+
+For now, I swapped out my custom booking page for a clear hyperlink that takes guests to the official NightsBridge booking portal. It's not my dream solution, but it works reliably and means guests can still book without any hassle. I plan to revisit the full integration once the site gets more traction and I've had a chance to look into API options or other ways to connect directly.
+
+I built out the main pages around the guest journey, always thinking about what would be easiest and most appealing for people coming to the site. The client gave me lots of amazing photos, but I quickly found that some were huge files – over 3MB. Loading them all at once would have slowed the site to a crawl, so I set up lazy loading so that images only load when needed. This really helped speed up the site.
+
+When I first tested the site with Lighthouse, the results weren't great: Performance score was only 48 out of 100, Largest Contentful Paint was above 23 seconds, and Blocking time was 680ms. I realised quickly that nobody would wait that long. I sorted this by fixing the gallery so only the images people are about to view are loaded, splitting up the JavaScript code so only essentials load first, and making sure Google Analytics loads after the rest of the page is ready.
+
+On mobile, I noticed the homepage video wasn't autoplaying like it should. I found that mobile browsers are really strict about autoplay unless videos are muted and set up correctly. After tweaking the settings, the video now runs smoothly on all devices.
+
+I also fixed some smaller things that made a big difference: making sure all navigation links take you to the top of the page not halfway down, showing breakfast images first in the gallery because those always help, and replacing inactive social links with only the ones that actually work.
+
+During my SEO checks, I saw that robots.txt was set up wrong, which meant search engines weren't seeing the site as they should. A quick fix there made the site much more visible. Some of the navigation links weren't being picked up properly by search engines due to how the UI library worked. Once I updated the code, search engines could see everything they needed to.
+
+With the site ready, I sorted the domain, SSL, DNS, and swapped all the references to the new .com address. I set up Google Analytics to track things like page load speed, how people use the site, and what devices they're on. I'm still learning more about analytics every week and using those insights to keep improving the site.
+
+The results speak for themselves: Lighthouse performance went from 48 up to 75 and above, Largest Contentful Paint dropped to just over 4 seconds, Blocking time was reduced to 250ms, the JavaScript bundle is now 15 percent smaller, and SEO and accessibility scores are both now in the mid-90s. The website is now quick, mobile-friendly, and ready for guests, with a booking system that's reliable, even if it's just a link for now.
+
+There's still plenty I want to do: bring back the full custom booking page once I figure out a good way to sync with NightsBridge using an API or another direct method, add support for multiple languages for international guests, make the site even more accessible especially for those using screen readers, try out new image formats for better loading like WebP and AVIF, and maybe add a live chat so guests can ask questions in real time.
+
+Building the 19 On Bay Noakes website has been a real mix of research, creative design, and proper technical problem-solving. By looking at the best hotels out there and sticking to a consistent brand manual, I was able to create something that looks the part and actually works for real people. There have been plenty of challenges along the way, but every one has made the site better. You can see the finished product at 19onbaynoakes.com, and I'm excited to keep pushing it forward.`,
+    },
+    {
       id: 2,
       title: "Machine Learning Framework for Water Point Functionality Prediction in Zimbabwe",
       shortDescription: "Developed a machine learning framework to predict water point functionality in Zimbabwe, addressing the critical issue of functional water scarcity.",
@@ -202,6 +245,22 @@ In the end, MindCareDB is not just a technical artefact. It is a foundation that
             <p key={index}>{paragraph}</p>
           ))}
           
+          {/* Live Website Demo for Hotel Project */}
+          {activeProject.id === 4 && activeProject.live_demo_url && (
+            <div className="live-website-container">
+              <h3>Live Website</h3>
+              <p>Visit the live hotel website to see the full implementation in action:</p>
+              <a 
+                href={activeProject.live_demo_url}
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="live-demo-button"
+              >
+                Visit 19onbaynoakes.com
+              </a>
+            </div>
+          )}
+
           {/* Embedded GitHub Website for Machine Learning Project */}
           {activeProject.id === 2 && activeProject.live_demo_url && (
             <div className="embedded-demo-container">
