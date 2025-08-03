@@ -43,7 +43,7 @@ const Home = ({ isActive, onClose }) => {
       </span>
 
       <p>Hi, I'm Takudzwa Wushe, a software engineer.</p>
-      <p>As a final year Software Engineering student at Anglia Ruskin University, I have been able to build a strong foundation in both procedural and object-oriented programming. My technical skills, coupled with my passion for digital innovation, make me a strong candidate for various roles in the tech industry.</p>
+      <p>As a Software Engineering graduate from Anglia Ruskin University with First Class Honours, I have built a strong foundation in both procedural and object-oriented programming. My technical skills, coupled with my passion for digital innovation, make me a strong candidate for various roles in the tech industry.</p>
       
       <h3>Professional Experience</h3>
       <h4>Software Development Intern - Tano Digital, Zimbabwe</h4>
@@ -55,7 +55,7 @@ const Home = ({ isActive, onClose }) => {
       </ul>
       
       <h3>Education</h3>
-      <h4>BSc Software Engineering (Final Year - Projected First Class)</h4>
+      <h4>BSc Software Engineering - First Class Honours</h4>
       <p>Anglia Ruskin University, UK (2022-2025)</p>
       
       <div className="grades">
@@ -77,7 +77,7 @@ const Home = ({ isActive, onClose }) => {
       </div>
 
       <p className="summary">
-        I am a dedicated software engineering student with a proven track record of academic excellence 
+        I am a dedicated software engineering graduate with First Class Honours and a proven track record of academic excellence 
         and practical experience in software development. My combination of strong technical skills and 
         professional experience positions me well for roles in software engineering.
       </p>
