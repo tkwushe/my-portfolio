@@ -1,6 +1,6 @@
 {
   "short_name": "T. Wushe",
-  "name": "Takudzwa Wushe · Deep Learning & Software Engineering",
+  "name": "Takudzwa Wushe · Data Science & Deep Learning",
   "icons": [
     { "src": "favicon.ico", "sizes": "16x16 32x32 48x48", "type": "image/x-icon" },
     { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml" },

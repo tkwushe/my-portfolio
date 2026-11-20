@@ -7,9 +7,9 @@ import crest from '../assets/arsenal-crest.svg';
 
 const keyPlayer = squad[0];
 
-export default function Hero({ entrance = false }) {
+export default function Hero({ entrance = false, waiting = false }) {
   return (
-    <section className={`hero${entrance ? ' hero--entrance' : ''}`} id="top">
+    <section className={`hero${entrance ? ' hero--entrance' : ''}${waiting ? ' hero--waiting' : ''}`} id="top">
       <div className="hero__beam hero__beam--left" aria-hidden="true" />
       <div className="hero__beam hero__beam--right" aria-hidden="true" />
 
@@ -72,7 +72,7 @@ export default function Hero({ entrance = false }) {
       <dl className="statbar">
         <div>
           <dt>{keyPlayer.name}, locked-test F1</dt>
-          <dd><CountUp value={keyPlayer.stats[0].value} /></dd>
+          <dd><CountUp value={keyPlayer.stats[0].value} paused={waiting} /></dd>
         </div>
         <div>
           <dt>Degree</dt>
@@ -80,11 +80,11 @@ export default function Hero({ entrance = false }) {
         </div>
         <div>
           <dt>Module average</dt>
-          <dd><CountUp value={inningsAverage.toFixed(1)} /></dd>
+          <dd><CountUp value={inningsAverage.toFixed(1)} paused={waiting} /></dd>
         </div>
         <div>
           <dt>Match reports</dt>
-          <dd><CountUp value={squad.length} /></dd>
+          <dd><CountUp value={squad.length} paused={waiting} /></dd>
         </div>
       </dl>
     </section>

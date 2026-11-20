@@ -14,7 +14,8 @@ export default function Squad() {
       </SectionHead>
 
       <div className="keyplayer" data-reveal>
-        <div style={{ viewTransitionName: `card-${keyPlayer.slug}` }}>
+        {/* The text beside the card carries the same facts, so screen readers skip the card. */}
+        <div aria-hidden="true" style={{ viewTransitionName: `card-${keyPlayer.slug}` }}>
           <ProjectCard project={keyPlayer} className="card--feature" />
         </div>
         <div className="keyplayer__body">

@@ -14,20 +14,25 @@ export default function CaseStudy({ project }) {
       </a>
 
       <header className="case__head">
-        <p className="chip chip--live">Match report · {project.category}</p>
-        <h1>{project.title}</h1>
-        <p className="section__lead">{project.summary}</p>
-        <div className="case__actions">
-          {links.live && (
-            <a className="button button--primary" href={links.live} target="_blank" rel="noopener noreferrer">
-              <FaExternalLinkAlt aria-hidden="true" /> {links.liveLabel}
-            </a>
-          )}
-          {links.github && (
-            <a className="button" href={links.github} target="_blank" rel="noopener noreferrer">
-              <FaGithub aria-hidden="true" /> View on GitHub
-            </a>
-          )}
+        <div className="case__head-card" style={{ viewTransitionName: `card-${project.slug}` }}>
+          <ProjectCard project={project} />
+        </div>
+        <div className="case__head-text">
+          <p className="chip chip--live">Match report · {project.category}</p>
+          <h1>{project.title}</h1>
+          <p className="section__lead">{project.summary}</p>
+          <div className="case__actions">
+            {links.live && (
+              <a className="button button--primary" href={links.live} target="_blank" rel="noopener noreferrer">
+                <FaExternalLinkAlt aria-hidden="true" /> {links.liveLabel}
+              </a>
+            )}
+            {links.github && (
+              <a className="button" href={links.github} target="_blank" rel="noopener noreferrer">
+                <FaGithub aria-hidden="true" /> View on GitHub
+              </a>
+            )}
+          </div>
         </div>
       </header>
 
@@ -89,9 +94,6 @@ export default function CaseStudy({ project }) {
         </div>
 
         <aside className="case__side" aria-label="Project summary">
-          <div style={{ viewTransitionName: `card-${project.slug}` }}>
-            <ProjectCard project={project} />
-          </div>
           <h2>Kit list</h2>
           <ul className="chips">
             {project.technologies.map((tech) => (

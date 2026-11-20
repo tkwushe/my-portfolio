@@ -15,7 +15,7 @@ import { CardDefs } from './components/Card';
 import { findProject } from './data/projects';
 import { useRevealAll } from './hooks/useRevealAll';
 
-const SITE_TITLE = 'Takudzwa Wushe · Deep Learning & Software Engineering';
+const SITE_TITLE = 'Takudzwa Wushe · Data Science & Deep Learning';
 const WALKOUT_KEY = 'walkout-seen';
 
 // Hash routing: `#/case/<slug>` opens a case study, any other hash is a section anchor.
@@ -65,7 +65,11 @@ export default function App() {
         setRoute(next);
         return;
       }
-      document.startViewTransition(() => flushSync(() => setRoute(next)));
+      document.startViewTransition(() => {
+        flushSync(() => setRoute(next));
+        // Land at the top of the report before the new view is captured, not after.
+        if (next.project) window.scrollTo({ top: 0, behavior: 'instant' });
+      });
     };
     window.addEventListener('hashchange', handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
@@ -74,7 +78,7 @@ export default function App() {
   useEffect(() => {
     document.title = route.project ? `${route.project.name} · Takudzwa Wushe` : SITE_TITLE;
     if (route.project) {
-      window.scrollTo(0, 0);
+      window.scrollTo({ top: 0, behavior: 'instant' });
       return;
     }
     // Returning from a case study remounts the sections, so the browser's own anchor jump has nothing to land on.
@@ -92,7 +96,7 @@ export default function App() {
           <CaseStudy project={route.project} />
         ) : (
           <>
-            <Hero entrance={playedIntro && !walkoutOpen} />
+            <Hero entrance={playedIntro && !walkoutOpen} waiting={walkoutOpen} />
             <Squad />
             <Lab />
             <Scorecard />

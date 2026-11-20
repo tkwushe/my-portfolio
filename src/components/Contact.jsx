@@ -90,7 +90,7 @@ export default function Contact() {
             <ul>
               {METHODS.map(({ icon: Icon, title, value, href }) => (
                 <li key={title}>
-                  <a href={href} target="_blank" rel="noopener noreferrer">
+                  <a href={href} {...(href.startsWith('mailto:') ? {} : { target: '_blank', rel: 'noopener noreferrer' })}>
                     <span className="deal__icon"><Icon aria-hidden="true" /></span>
                     <span className="deal__text">
                       <span className="deal__label">{title}</span>

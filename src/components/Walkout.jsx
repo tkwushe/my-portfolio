@@ -1,13 +1,20 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { ZimFlag } from './Card';
 import crest from '../assets/arsenal-crest.svg';
 import { overall, profile } from '../data/profile';
 
-const DURATION_MS = 4200;
+const DURATION_MS = 2700;
 
 // Pack-walkout intro: nation, club allegiance, position, rating, then the curtain lifts on the card.
 // Shown once per browser session; App decides whether to mount it at all.
 export default function Walkout({ onDone }) {
+  const skipRef = useRef(null);
+
+  useEffect(() => {
+    // Keyboard users can leave straight away.
+    skipRef.current?.focus();
+  }, []);
+
   useEffect(() => {
     const timer = setTimeout(onDone, DURATION_MS);
     const handleKey = (event) => {
@@ -34,7 +41,7 @@ export default function Walkout({ onDone }) {
         <p className="walkout__step walkout__step--3">{profile.position}</p>
         <p className="walkout__step walkout__step--4">{overall}</p>
       </div>
-      <button type="button" className="walkout__skip" onClick={onDone}>
+      <button ref={skipRef} type="button" className="walkout__skip" onClick={onDone}>
         Skip intro
       </button>
     </div>

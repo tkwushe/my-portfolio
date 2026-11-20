@@ -29,8 +29,10 @@ describe('PlayerCard', () => {
   it('lists every module mark on the back', () => {
     render(<PlayerCard />);
     fireEvent.click(screen.getByRole('button', { name: 'Flip card' }));
+    // Codes on the card, full module names in the abbreviation title.
     modules.forEach((m) => {
-      expect(screen.getByText(m.name)).toBeInTheDocument();
+      const abbr = screen.getAllByTitle(m.name).find((el) => el.tagName === 'ABBR');
+      expect(abbr).toHaveTextContent(m.code);
     });
   });
 });

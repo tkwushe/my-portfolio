@@ -47,10 +47,10 @@
   --face: radial-gradient(130% 100% at 50% 0%, #fff6cc 0%, #f1d47d 38%, #dcb25a 78%, #c99a3e 100%);
 }
 
-/* Every text size here is at least 4.4cqw: 11.3px on the 256px mobile card. */
+/* Text never drops under 12px, whatever the card width. */
 .card__back-inner {
   position: absolute;
-  top: 13cqw;
+  top: 11cqw;
   left: 10cqw;
   right: 10cqw;
   display: flex;
@@ -60,20 +60,20 @@
 }
 
 .card__back-kicker {
+  margin-top: 1cqw;
   font-family: var(--font-mono);
-  font-size: 4.4cqw;
+  font-size: max(12px, 4.4cqw);
   font-weight: 700;
   letter-spacing: 0.1em;
   line-height: 1.2;
   text-align: center;
   text-transform: uppercase;
-  margin-top: 0.6cqw;
 }
 
 .card__back-name {
   padding-bottom: 2cqw;
   border-bottom: 1px solid color-mix(in srgb, currentColor 40%, transparent);
-  font-size: 8cqw;
+  font-size: max(14px, 8cqw);
   font-weight: 900;
   line-height: 1;
   letter-spacing: 0.02em;
@@ -81,26 +81,21 @@
   text-transform: uppercase;
 }
 
-.card__facts,
-.card__marks {
+/* One shared label column, so every value starts on the same line. */
+.card__facts {
   display: grid;
-  gap: 0.4cqw;
-}
-
-.card__facts div,
-.card__marks div {
-  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 0.4cqw 3cqw;
   align-items: baseline;
-  gap: 2.4cqw;
 }
 
 .card__facts div {
-  grid-template-columns: max-content minmax(0, 1fr);
+  display: contents;
 }
 
 .card__facts dt {
   font-family: var(--font-mono);
-  font-size: 4.4cqw;
+  font-size: max(12px, 4.4cqw);
   font-weight: 700;
   letter-spacing: 0.04em;
   line-height: 1.2;
@@ -108,30 +103,39 @@
 }
 
 .card__facts dd {
-  font-size: 5.2cqw;
+  font-size: max(13px, 5.2cqw);
   font-weight: 800;
   line-height: 1.12;
 }
 
+/* Module marks as a compact grid of codes; the scorecard section has the full names. */
 .card__marks {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1cqw 2cqw;
   padding-top: 1.4cqw;
   border-top: 1px solid color-mix(in srgb, currentColor 40%, transparent);
 }
 
 .card__marks div {
-  grid-template-columns: minmax(0, 1fr) auto;
+  display: grid;
+  justify-items: center;
 }
 
 .card__marks dt {
-  font-size: 4.6cqw;
+  font-family: var(--font-mono);
+  font-size: max(12px, 4.4cqw);
   font-weight: 700;
-  line-height: 1.15;
+}
+
+.card__marks abbr {
+  text-decoration: none;
 }
 
 .card__marks dd {
-  font-size: 5.4cqw;
+  font-size: max(14px, 7cqw);
   font-weight: 900;
-  line-height: 1.1;
+  line-height: 1;
   font-variant-numeric: tabular-nums;
 }
 

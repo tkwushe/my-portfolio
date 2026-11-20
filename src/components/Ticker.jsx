@@ -13,7 +13,7 @@ export default function Ticker() {
         <svg className="ticker__state" viewBox="0 0 12 12" aria-hidden="true" focusable="false">
           {paused ? <path d="M3 1.5 10.5 6 3 10.5Z" /> : <path d="M2.5 1.5h2.6v9H2.5zM6.9 1.5h2.6v9H6.9z" />}
         </svg>
-        <span className="visually-hidden">: pause the ticker</span>
+        <span className="visually-hidden">{paused ? ': play the ticker' : ': pause the ticker'}</span>
       </button>
       <div className="ticker__window">
         <div className="ticker__track">

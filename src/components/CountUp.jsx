@@ -7,7 +7,8 @@ const easeOut = (t) => 1 - (1 - t) ** 3;
 // keeping any prefix, suffix and decimal places ("0.920", "80.3", "1st"). The final
 // value is what renders without JavaScript, without IntersectionObserver, and for
 // reduced motion, and screen readers always get the final value.
-export default function CountUp({ value }) {
+// `paused` holds the count until something covering the page (the walkout intro) has gone.
+export default function CountUp({ value, paused = false }) {
   const text = String(value);
   const match = text.match(/^(\D*)(\d+(?:\.\d+)?)(.*)$/);
   const ref = useRef(null);
@@ -15,7 +16,7 @@ export default function CountUp({ value }) {
 
   useEffect(() => {
     const el = ref.current;
-    if (!match || !el || typeof IntersectionObserver !== 'function') return undefined;
+    if (paused || !match || !el || typeof IntersectionObserver !== 'function') return undefined;
     if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return undefined;
 
     const [, prefix, number, suffix] = match;
@@ -46,11 +47,11 @@ export default function CountUp({ value }) {
     };
     // The value is static per mount; re-running on every render would restart the count.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [text]);
+  }, [text, paused]);
 
   return (
     <>
-      <span aria-hidden="true">{shown}</span>
+      <span ref={ref} aria-hidden="true">{shown}</span>
       <span className="visually-hidden">{text}</span>
     </>
   );

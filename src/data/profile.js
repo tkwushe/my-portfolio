@@ -11,12 +11,13 @@ export const profile = {
   cardName: 'Taku',
   nation: 'Zimbabwe',
   location: 'Coventry, UK',
-  club: 'ARU',
+  // The card's club is where I play now.
+  club: 'PEG',
   supports: 'Arsenal',
   cricket: 'Australia & Zimbabwe',
   cricketFavourite: 'Steve Smith',
   football: 'Watches loads of football',
-  tagline: "I'm an assistant data scientist at Pegara, a startup where I work in a team of three on an animal detector. I build its datasets, generate synthetic video for the scenes it struggles with, and test it until I trust the numbers.",
+  tagline: "I'm an assistant data scientist at Pegara, a startup where I work in a team of three on an animal detector. I build its datasets, generate synthetic video for the scenes it struggles with, and test every change against the same clips.",
   // Where I want to go next, said the same way wherever it comes up.
   nextStep: 'data science, deep learning and quantitative research roles',
   email: 'tk.wushe@gmail.com',
@@ -41,7 +42,7 @@ export const ticker = [
 
 // How the interest in machine learning started, in my own words.
 export const whyML =
-  'In the second year of my degree, one module went worse than the others, so I focused my dissertation on machine learning to prove I could do it. That is what pulled me into practical data science, deep learning and Python.';
+  "In the second year of my degree, one module went worse than the others, so I focused my dissertation on machine learning to prove I could do it. That's what pulled me into practical data science, deep learning and Python.";
 
 // The away fixture: what working for a Japanese startup has taught me.
 export const japan = {
@@ -86,7 +87,7 @@ export const career = [
   },
   {
     period: 'Nov 2025 – present',
-    club: 'Pegara Japan',
+    club: 'Pegara',
     role: 'Assistant Data Scientist',
     detail: "A startup, so I'm part of a team of three and involved in a lot early on. In February 2026 our CTO trusted me to lead the animal detector project for two to three months. I build and version the clip datasets, generate synthetic video with custom ComfyUI pipelines, and test every change against fixed evaluation and test clips.",
   },
@@ -138,6 +139,6 @@ export const attributes = [
 ];
 
 export const interests = [
-  "I like using technology on problems that actually matter, and for me that mostly means data and machine learning. I'm most interested in how data can help people make better decisions, especially in sustainability, finance and social development, because that's where a good model can change something real. It's also why quantitative research appeals to me: it rewards the same careful testing I do on the detector.",
+  "I like using technology on problems that actually matter, and for me that mostly means data and machine learning. I'm most interested in how data can help people make better decisions, especially in sustainability, finance and social development, because a good model can make a practical difference there. Quantitative research appeals to me for the same reason, and it rewards the kind of careful testing I do on the detector.",
   "Longer term, I want to help grow tech in Zimbabwe. My water points dissertation is a small example of what I mean, and I'd like to build more things like it there, especially around resource management and access to basic services.",
 ];

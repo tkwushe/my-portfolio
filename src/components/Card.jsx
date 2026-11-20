@@ -107,10 +107,9 @@ export function Card({ tier = 'gold', rating, ratingLabel, position, crest, art,
 // Reverse of the player card: only facts already in profile.js.
 function PlayerBack() {
   const facts = [
-    ['Based', profile.location],
     ['Nation', profile.nation],
     ['Supports', profile.supports],
-    ['Cricket', profile.cricket],
+    ['Cricket', 'AUS & ZIM'],
     ['Fave', profile.cricketFavourite],
   ];
   return (
@@ -128,7 +127,9 @@ function PlayerBack() {
       <dl className="card__marks">
         {modules.map((m) => (
           <div key={m.code}>
-            <dt>{m.name}</dt>
+            <dt>
+              <abbr title={m.name}>{m.code}</abbr>
+            </dt>
             <dd>{m.mark}</dd>
           </div>
         ))}

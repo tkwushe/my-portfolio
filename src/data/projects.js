@@ -11,11 +11,11 @@ export const squad = [
     report: {
       problem: 'Decide, one second at a time, whether a particular animal is in a video frame.',
       approach: 'Versioned clip datasets with strict splits, around 10,000 synthetic one-second clips from custom ComfyUI pipelines for the scenes it struggled with, and every change tested against the same evaluation and test clips.',
-      result: 'F1 0.920 on 687 held-out clips, plus a real-world check on around 670 10-second clips. Synthetic holdout F1 0.909. A hard-case retest reached 93.3 percent against a 95 percent target.',
+      result: 'F1 0.920 on 687 held-out clips, plus a real-world check on around 670 10-second clips. A synthetic test set scored F1 0.909. A hard-case retest reached 93.3 percent against a 95 percent target.',
     },
     name: 'Animal Detector',
     title: 'Animal Detector: taking a video detection model from dataset to locked evaluation',
-    summary: 'My work at Pegara, in a team of three: a deep learning model that watches video and decides, second by second, whether a particular animal is in frame.',
+    summary: 'My work at Pegara: a deep learning model that watches video and decides, second by second, whether a particular animal is in frame.',
     category: 'Deep Learning',
     position: 'DL',
     tier: 'special',
@@ -91,6 +91,16 @@ export const squad = [
     ],
     technologies: ['React 18', 'TypeScript', 'Vite', 'Tailwind CSS', 'Shadcn/ui', 'React Router', 'Supabase', 'Netlify', 'Google Analytics', 'SEO'],
     links: { live: 'https://19onbaynoakes.com', liveLabel: 'Visit 19onbaynoakes.com' },
+    // Figures from the owner's write-up of the site.
+    diagram: {
+      title: 'Before and after',
+      caption: 'Lighthouse and loading figures from my write-up, first test against the finished site.',
+      groups: [
+        { name: 'Before', items: ['Lighthouse performance 48', 'Largest Contentful Paint over 23s', 'Blocking time 680ms'] },
+        { name: 'What I changed', items: ['Lazy-loaded the gallery', 'Split the JavaScript', 'Loaded analytics after the page', 'Fixed robots.txt and crawlable links'] },
+        { name: 'After', items: ['Lighthouse performance 75 and above', 'Largest Contentful Paint just over 4s', 'Blocking time 250ms', 'JavaScript bundle 15% smaller', 'SEO and accessibility in the mid-90s'] },
+      ],
+    },
     image: { src: bayNoakesShot, alt: 'Home page of the 19 On Bay Noakes hotel website', caption: 'The live site, 19onbaynoakes.com' },
   },
   {
@@ -112,7 +122,7 @@ export const squad = [
     stats: [
       { value: '0.93', label: 'ROC-AUC' },
       { value: '78%', label: 'Accuracy' },
-      { value: '20', label: 'Features' },
+      { value: '~20', label: 'Features' },
       { value: '3', label: 'Datasets' },
     ],
     technologies: ['Python', 'XGBoost', 'Random Forest', 'SHAP', 'SMOTE', 'Feature Engineering'],
@@ -207,7 +217,7 @@ export const lab = [
     name: 'Mine Surveillance',
     icon: 'satellite',
     status: 'In development',
-    description: 'Detecting possible artisanal-mining disturbance in Zimbabwe from Sentinel-1 and Sentinel-2 satellite change signals. An offline demonstrator works on test fixtures. Humans decide; the software never rules on legality.',
+    description: 'Detecting possible artisanal-mining disturbance in Zimbabwe from Sentinel-1 and Sentinel-2 satellite change signals. An offline demonstrator works on test fixtures. An offline demo runs on test data, and a person makes every final decision.',
     stats: [
       { value: 'Sentinel', label: 'Data' },
       { value: 'Demo', label: 'Stage' },
@@ -227,7 +237,7 @@ export const lab = [
     name: 'Knowledge Distillation',
     icon: 'distill',
     status: 'Current interest',
-    description: "Training small models to do what large ones can, so useful AI can run on cheap hardware where it's needed. I want it to run through the projects I take on next.",
+    description: "Training small models to do what large ones can, so useful AI can run on cheap hardware where it's needed. I'd like to use it in my next projects.",
     stats: [
       { value: 'Research', label: 'Type' },
       { value: 'Interest', label: 'Stage' },
@@ -254,12 +264,6 @@ export const bench = [
     lang: 'C',
     description: 'Dealership management in C: inventory tracking, sales processing, pricing calculations and business reports.',
     github: 'https://github.com/tkwushe/CarSales',
-  },
-  {
-    name: 'This Portfolio',
-    lang: 'React',
-    description: "The site you're on: a static React and Vite build themed around football cards and cricket scorecards.",
-    github: 'https://github.com/tkwushe/my-portfolio',
   },
 ];
 

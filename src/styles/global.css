@@ -24,7 +24,7 @@
   --wrap: 1160px;
   --gutter: 20px;
   --nav-h: 60px;
-  --ticker-h: 40px;
+  --ticker-h: 44px;
   --skew: -10deg;
   --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
 }
@@ -339,6 +339,11 @@ svg {
   gap: 22px;
 }
 
+/* The badge comes off while the back of the card is showing. */
+.hero__cardwrap:has(.card--flipped) .hero__crest {
+  opacity: 0;
+}
+
 .hero__crest {
   position: absolute;
   z-index: 2;
@@ -420,6 +425,11 @@ svg {
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
+}
+
+/* Held still until the walkout has gone, so the pulse is actually seen. */
+.hero--waiting .live__dot {
+  animation: none;
 }
 
 .live__dot {
@@ -1023,7 +1033,21 @@ svg {
 }
 
 .case__head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas: 'text card';
+  align-items: center;
+  gap: 48px;
   padding: 28px 0 40px;
+}
+
+.case__head-text {
+  grid-area: text;
+  min-width: 0;
+}
+
+.case__head-card {
+  grid-area: card;
 }
 
 .case__head h1 {
@@ -1133,7 +1157,7 @@ svg {
   position: sticky;
   top: calc(var(--nav-h) + 24px);
   display: grid;
-  justify-items: center;
+  align-content: start;
   gap: 16px;
 }
 
@@ -1256,8 +1280,8 @@ svg {
 }
 
 .ticker__state {
-  width: 11px;
-  height: 11px;
+  width: 14px;
+  height: 14px;
   fill: currentColor;
 }
 
@@ -1319,11 +1343,11 @@ svg {
   z-index: 100;
   overflow: hidden;
   background: radial-gradient(circle at 50% 45%, #1a2444 0%, #05070d 68%);
-  animation: walkout-out 520ms ease-in 3650ms forwards;
+  animation: walkout-out 400ms ease-in 2300ms forwards;
 }
 
 .walkout__beam {
-  animation: sway 2.4s ease-in-out infinite alternate;
+  rotate: var(--from);
 }
 
 .walkout__stage {
@@ -1341,17 +1365,17 @@ svg {
   font-weight: 900;
   line-height: 1;
   color: var(--white);
-  animation: walkout-step 820ms var(--ease) both;
+  animation: walkout-step 620ms var(--ease) both;
 }
 
-.walkout__step--1 { animation-delay: 150ms; }
-.walkout__step--2 { animation-delay: 950ms; }
-.walkout__step--3 { animation-delay: 1750ms; }
+.walkout__step--1 { animation-delay: 80ms; }
+.walkout__step--2 { animation-delay: 580ms; }
+.walkout__step--3 { animation-delay: 1080ms; }
 
 .walkout__step--4 {
   color: var(--gold);
-  animation-delay: 2550ms;
-  animation-duration: 1150ms;
+  animation-delay: 1580ms;
+  animation-duration: 800ms;
 }
 
 .walkout__flag {
@@ -1443,7 +1467,17 @@ svg {
 
   .case__side {
     position: static;
-    order: -1;
+  }
+
+  .case__head {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: 'card' 'text';
+    justify-items: center;
+    gap: 28px;
+  }
+
+  .case__head-text {
+    justify-self: stretch;
   }
 
   .case__side h2,
@@ -1491,15 +1525,42 @@ svg {
   }
 
   .hero__card .card--player {
-    --card-w: 196px;
+    --card-w: 168px;
   }
 
+  /* Card and its controls side by side, so the name and buttons reach the first screen. */
   .hero__card {
-    gap: 14px;
+    gap: 0;
+  }
+
+  .hero__cardwrap {
+    flex-direction: row;
+    gap: 18px;
   }
 
   .hero__footnote {
-    font-size: 0.6875rem;
+    display: none;
+  }
+
+  .hero__copy {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .hero__actions {
+    order: 1;
+  }
+
+  .hero__tagline {
+    order: 2;
+  }
+
+  .allegiance {
+    order: 3;
+  }
+
+  .hero__title {
+    font-size: clamp(3.25rem, 17vw, 4.5rem);
   }
 
   .hero__beam {

@@ -12,7 +12,9 @@ export default function Lab() {
       <ul className="lab">
         {lab.map((project, i) => (
           <li key={project.name} className="lab__item" data-reveal="deal" style={{ '--d': i }}>
-            <LabCard project={project} />
+            <div aria-hidden="true">
+              <LabCard project={project} />
+            </div>
             <div className="lab__body">
               <p className="chip chip--status">{project.status}</p>
               <h3>{project.name}</h3>
