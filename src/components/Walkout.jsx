@@ -28,7 +28,7 @@ export default function Walkout({ onDone }) {
   }, [onDone]);
 
   return (
-    <div className="walkout">
+    <div className="walkout" role="dialog" aria-modal="true" aria-label="Intro">
       <div className="walkout__beam walkout__beam--left" aria-hidden="true" />
       <div className="walkout__beam walkout__beam--right" aria-hidden="true" />
       <div className="walkout__stage" aria-hidden="true">

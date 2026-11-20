@@ -13,8 +13,8 @@ export default function Squad() {
         Every number on a card comes straight from the match report behind it.
       </SectionHead>
 
-      <div className="keyplayer" data-reveal>
-        {/* The text beside the card carries the same facts, so screen readers skip the card. */}
+      <div className="keyplayer" id={`slot-${keyPlayer.slug}`} data-reveal>
+        {/* The card carries the numbers; screen readers get them in the report instead. */}
         <div aria-hidden="true" style={{ viewTransitionName: `card-${keyPlayer.slug}` }}>
           <ProjectCard project={keyPlayer} className="card--feature" />
         </div>
@@ -22,14 +22,6 @@ export default function Squad() {
           <p className="chip chip--live">{keyPlayer.tierLabel} · {keyPlayer.category}</p>
           <h3>{keyPlayer.name}</h3>
           <p className="keyplayer__summary">{keyPlayer.summary}</p>
-          <dl className="keyplayer__stats">
-            {keyPlayer.stats.map((stat) => (
-              <div key={stat.label}>
-                <dt>{stat.label}</dt>
-                <dd>{stat.value}</dd>
-              </div>
-            ))}
-          </dl>
           <a className="button button--primary" href={`#/case/${keyPlayer.slug}`}>
             Read match report<span className="visually-hidden">: {keyPlayer.name}</span>
           </a>

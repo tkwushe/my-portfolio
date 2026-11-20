@@ -30,7 +30,7 @@ export const squad = [
         { name: '1 · Data', items: ['Versioned clip datasets', 'Strict train, validation and test splits', '1,391-row build with zero split overlap'] },
         { name: '2 · Synthetic video', items: ['Around 10,000 one-second clips', 'Custom ComfyUI pipelines and nodes', 'Aimed at the scenes it struggled with'] },
         { name: '3 · Model', items: ['DINOv3 ConvNeXt-Base encoder', 'BiGRU temporal head', 'Encoders compared under one head'] },
-        { name: '4 · Testing', items: ['Threshold fixed on validation', 'Locked test: F1 0.920 on 687 clips', 'Around 670 real-world 10-second clips', 'Hard-case retest: 93.3% against a 95% target'] },
+        { name: '4 · Testing', items: ['Threshold fixed on validation', 'Locked test on 687 held-out clips', 'Around 670 real-world 10-second clips', 'Hard-case retest: 93.3% against a 95% target'] },
       ],
     },
     stats: [
@@ -217,7 +217,7 @@ export const lab = [
     name: 'Mine Surveillance',
     icon: 'satellite',
     status: 'In development',
-    description: 'Detecting possible artisanal-mining disturbance in Zimbabwe from Sentinel-1 and Sentinel-2 satellite change signals. An offline demonstrator works on test fixtures. An offline demo runs on test data, and a person makes every final decision.',
+    description: 'Detecting possible artisanal-mining disturbance in Zimbabwe from Sentinel-1 and Sentinel-2 satellite change signals. An offline demo runs on test data, and a person makes every final decision.',
     stats: [
       { value: 'Sentinel', label: 'Data' },
       { value: 'Demo', label: 'Stage' },

@@ -42,7 +42,7 @@ export const ticker = [
 
 // How the interest in machine learning started, in my own words.
 export const whyML =
-  "In the second year of my degree, one module went worse than the others, so I focused my dissertation on machine learning to prove I could do it. That's what pulled me into practical data science, deep learning and Python.";
+  "In the second year of my degree, one module went worse than the others, so I focused my dissertation on machine learning to prove I could do it. That's how I got into data science and deep learning.";
 
 // The away fixture: what working for a Japanese startup has taught me.
 export const japan = {
@@ -64,9 +64,6 @@ export const modules = [
   { code: 'DBS', name: 'Database Design', mark: 75, note: 'Database architecture and implementation' },
   { code: 'OOP', name: 'Object-Oriented Programming', mark: 70, note: 'Modular, reusable code' },
 ];
-
-// UK university bands: 70+ is a First (A).
-export const gradeFor = (mark) => (mark >= 70 ? 'A' : mark >= 60 ? 'B' : mark >= 50 ? 'C' : mark >= 40 ? 'D' : 'F');
 
 export const inningsTotal = modules.reduce((sum, m) => sum + m.mark, 0);
 export const inningsAverage = inningsTotal / modules.length;
@@ -135,10 +132,9 @@ export const attributes = [
   { group: 'Databases', items: ['Database design', 'Data modelling', 'ER diagrams', 'JSON', 'NoSQL'] },
   { group: 'Visualisation', items: ['Matplotlib', 'Seaborn', 'Interactive dashboards', 'Geospatial visualisation'] },
   { group: 'Tooling', items: ['Git', 'GitHub', 'Command line', 'VS Code', 'Jupyter'] },
-  { group: 'Dressing room', items: ['Problem-solving', 'Communication', 'Teamwork', 'Leadership', 'Research', 'Technical writing'] },
 ];
 
 export const interests = [
-  "I like using technology on problems that actually matter, and for me that mostly means data and machine learning. I'm most interested in how data can help people make better decisions, especially in sustainability, finance and social development, because a good model can make a practical difference there. Quantitative research appeals to me for the same reason, and it rewards the kind of careful testing I do on the detector.",
+  "I'm most interested in how data can help people make better decisions, especially in sustainability, finance and social development. Quantitative research appeals to me because it rewards the same careful testing I do on the detector.",
   "Longer term, I want to help grow tech in Zimbabwe. My water points dissertation is a small example of what I mean, and I'd like to build more things like it there, especially around resource management and access to basic services.",
 ];

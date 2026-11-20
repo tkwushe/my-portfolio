@@ -22,6 +22,7 @@ export default function Lineup({ projects }) {
         {projects.map((project, i) => (
           <li
             key={project.slug}
+            id={`slot-${project.slug}`}
             className={`formation__player formation__player--${SLOTS[project.position] ?? SPARE_SLOTS[i % SPARE_SLOTS.length]}`}
             data-reveal="deal"
             style={{ '--d': i }}

@@ -12,7 +12,16 @@ export default function CountUp({ value, paused = false }) {
   const text = String(value);
   const match = text.match(/^(\D*)(\d+(?:\.\d+)?)(.*)$/);
   const ref = useRef(null);
-  const [shown, setShown] = useState(text);
+  const [shown, setShown] = useState(() => {
+    const willAnimate =
+      match &&
+      typeof IntersectionObserver === 'function' &&
+      !window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    if (!willAnimate) return text;
+    const [, prefix, number, suffix] = match;
+    const places = number.includes('.') ? number.split('.')[1].length : 0;
+    return `${prefix}${(0).toFixed(places)}${suffix}`;
+  });
 
   useEffect(() => {
     const el = ref.current;

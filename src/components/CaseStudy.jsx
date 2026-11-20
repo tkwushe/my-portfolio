@@ -9,7 +9,7 @@ export default function CaseStudy({ project }) {
 
   return (
     <article className="case">
-      <a className="case__back" href="#squad">
+      <a className="case__back" href={`#slot-${project.slug}`}>
         <FaArrowLeft aria-hidden="true" /> Back to squad
       </a>
 
@@ -19,7 +19,7 @@ export default function CaseStudy({ project }) {
         </div>
         <div className="case__head-text">
           <p className="chip chip--live">Match report · {project.category}</p>
-          <h1>{project.title}</h1>
+          <h1 tabIndex={-1}>{project.title}</h1>
           <p className="section__lead">{project.summary}</p>
           <div className="case__actions">
             {links.live && (

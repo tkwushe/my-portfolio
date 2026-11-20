@@ -97,4 +97,4 @@ Every dataset and every model version is tracked, and each change gets checked a
 
 Not everything hit its target. On a separate hard-case retest the best run reached 93.3 percent accuracy, short of the 95 percent I was aiming for. Most of my progress since has come from working out why it misses those clips.
 
-A lot of this is background work for my employer, so I've kept the details of the data and the deployment out of this write-up. It has changed how I work, though. I now think about evaluation before I think about models, and I'm much more interested in small models that do one job reliably. That's what pulled me towards knowledge distillation, and it's the direction I want to keep going in.`;
+A lot of this is background work for my employer, so I've kept the details of the data and the deployment out of this write-up. It has changed how I work, though. I now think about evaluation before I think about models, and I'm much more interested in small models that do one job reliably. That's what pulled me towards knowledge distillation, and it's the technical area I most want to get better at.`;

@@ -21,7 +21,12 @@
   --card-w: 252px;
 }
 
-/* Once the walkout video lifts, the card flips in to pick up where the render left off. */
+/* Hidden behind the intro so it only appears once, as it flips in. */
+.hero--waiting .card--player {
+  opacity: 0;
+}
+
+/* Once the intro has gone, the card flips in. */
 .hero--entrance .card--player {
   animation: card-in 950ms cubic-bezier(0.2, 0.9, 0.2, 1) backwards;
 }
@@ -234,7 +239,7 @@
   margin-top: 1cqw;
   padding-top: 1.8cqw;
   border-top: 1px solid color-mix(in srgb, currentColor 45%, transparent);
-  font-size: 7cqw;
+  font-size: max(12px, 7cqw);
   font-weight: 800;
   line-height: 1;
 }
@@ -246,7 +251,7 @@
 }
 
 .card__club {
-  font-size: 5.6cqw;
+  font-size: max(12px, 5.6cqw);
   font-weight: 800;
   letter-spacing: 0.04em;
   line-height: 1;
@@ -325,7 +330,7 @@
 }
 
 .card__stat dt {
-  font-size: 7cqw;
+  font-size: max(12px, 7cqw);
   font-weight: 600;
   line-height: 1.08;
 }

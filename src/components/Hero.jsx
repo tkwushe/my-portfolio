@@ -19,7 +19,7 @@ export default function Hero({ entrance = false, waiting = false }) {
             <span className="live__dot" aria-hidden="true" />
             Live · {profile.location}
           </p>
-          <h1 className="hero__title">
+          <h1 className="hero__title" tabIndex={-1}>
             <span className="hero__first">{profile.firstName}</span>
             <span className="hero__last">{profile.lastName}</span>
           </h1>

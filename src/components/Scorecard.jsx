@@ -1,5 +1,5 @@
 import SectionHead from './SectionHead';
-import { career, gradeFor, inningsAverage, inningsTotal, japan, modules, seasons, whyML } from '../data/profile';
+import { career, inningsAverage, inningsTotal, japan, modules, seasons, whyML } from '../data/profile';
 
 export default function Scorecard() {
   return (
@@ -24,7 +24,6 @@ export default function Scorecard() {
               <tr>
                 <th scope="col">Module</th>
                 <th scope="col" className="num">Mark</th>
-                <th scope="col" className="num">Grade</th>
               </tr>
             </thead>
             <tbody>
@@ -36,21 +35,20 @@ export default function Scorecard() {
                     <span className="scorecard__bar" style={{ '--runs': `${module.mark}%` }} aria-hidden="true" />
                   </th>
                   <td className="num scorecard__runs">{module.mark}</td>
-                  <td className="num">{gradeFor(module.mark)}</td>
                 </tr>
               ))}
             </tbody>
             <tfoot>
               <tr>
                 <th scope="row">Total <span className="scorecard__note">{modules.length} modules, declared</span></th>
-                <td className="num scorecard__runs" colSpan="2">{inningsTotal}/{modules.length}d</td>
+                <td className="num scorecard__runs">{inningsTotal}/{modules.length}d</td>
               </tr>
               <tr>
                 <th scope="row">Average</th>
-                <td className="num scorecard__runs" colSpan="2">{inningsAverage.toFixed(2)}</td>
+                <td className="num scorecard__runs">{inningsAverage.toFixed(2)}</td>
               </tr>
               <tr className="scorecard__result">
-                <th scope="row" colSpan="3">Result: First Class Honours</th>
+                <th scope="row" colSpan="2">Result: First Class Honours</th>
               </tr>
             </tfoot>
           </table>
