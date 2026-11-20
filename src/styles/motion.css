@@ -1,0 +1,67 @@
+/* Scroll entrances and page transitions. Loaded last.
+   Only the ticker runs constantly; everything here plays once, on arrival.
+   Nothing is hidden until JavaScript has added `motion-ready`, and the reduced-motion
+   block at the end of global.css shortens every animation to nothing. */
+
+/* ---------- Scroll entrances ---------- */
+.motion-ready [data-reveal]:not(.is-in) {
+  opacity: 0;
+}
+
+.motion-ready [data-reveal].is-in {
+  animation: rise-in 700ms var(--ease) calc(var(--d, 0) * 90ms) both;
+}
+
+/* Cards are dealt onto the table: a quarter turn and a drop, like a pack being opened. */
+.motion-ready [data-reveal='deal'].is-in {
+  animation: deal-in 760ms cubic-bezier(0.2, 0.9, 0.25, 1.1) calc(var(--d, 0) * 120ms) both;
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    translate: 0 28px;
+  }
+}
+
+@keyframes deal-in {
+  from {
+    opacity: 0;
+    transform: perspective(900px) translateY(-46px) rotateX(38deg) rotateZ(-6deg) scale(0.92);
+  }
+}
+
+/* ---------- Scorecard: the bars fill as the innings comes into view ---------- */
+.motion-ready .scorecard:not(.is-in) .scorecard__bar::after {
+  width: 0;
+}
+
+.motion-ready .scorecard.is-in .scorecard__bar::after {
+  transition: width 1100ms var(--ease);
+}
+
+.motion-ready .scorecard.is-in tbody tr:nth-child(2) .scorecard__bar::after { transition-delay: 80ms; }
+.motion-ready .scorecard.is-in tbody tr:nth-child(3) .scorecard__bar::after { transition-delay: 160ms; }
+.motion-ready .scorecard.is-in tbody tr:nth-child(4) .scorecard__bar::after { transition-delay: 240ms; }
+.motion-ready .scorecard.is-in tbody tr:nth-child(5) .scorecard__bar::after { transition-delay: 320ms; }
+.motion-ready .scorecard.is-in tbody tr:nth-child(6) .scorecard__bar::after { transition-delay: 400ms; }
+.motion-ready .scorecard.is-in tbody tr:nth-child(7) .scorecard__bar::after { transition-delay: 480ms; }
+
+/* ---------- Page transitions: a card grows into its match report ---------- */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 320ms;
+}
+
+::view-transition-group(*) {
+  animation-duration: 520ms;
+  animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}

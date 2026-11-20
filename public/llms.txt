@@ -1,0 +1,16 @@
+# Takudzwa Wushe
+
+> Assistant Data Scientist at Pegara (a startup, team of three) and MSc Applied AI student at the University of Warwick, with a First Class BSc in Software Engineering from Anglia Ruskin University. Based in Coventry, UK. Interested in deep learning, video detection and knowledge distillation.
+
+## Projects
+
+- [Animal Detector](https://takudzwawushe.com/#/case/animal-detector): video detection model taken from dataset to locked evaluation, F1 0.920 on 687 held-out clips; around 10,000 synthetic one-second training clips from custom ComfyUI pipelines.
+- [19 On Bay Noakes](https://takudzwawushe.com/#/case/bay-noakes): production website for a boutique hotel in Harare.
+- [Water Points ML](https://takudzwawushe.com/#/case/water-points): dissertation predicting rural water point failure in Zimbabwe, ROC-AUC 0.93.
+- [Fantasy Dungeon](https://takudzwawushe.com/#/case/fantasy-dungeon): Java game demonstrating layered, event-driven architecture.
+- [MindCareDB](https://takudzwawushe.com/#/case/mindcare-db): relational database for a mental health chatbot.
+
+## Contact
+
+- [GitHub](https://github.com/tkwushe)
+- [LinkedIn](https://www.linkedin.com/in/takudzwa-wushe-5a874b30a)

@@ -1,0 +1,10 @@
+# Static site: no backend, no environment variables.
+[build]
+  command = "npm run build"
+  publish = "build"
+
+# Vite fingerprints everything under /assets, so it can be cached forever.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

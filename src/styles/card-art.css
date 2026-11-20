@@ -1,0 +1,188 @@
+/* Card artwork and card backs (owned by the cards task). Loaded after global.css and card.css, so rules here win ties. */
+
+/* ---------- Project artwork ---------- */
+/* The viewBox matches the 58:54 art box, so the drawing fills it edge to edge. */
+.card-art {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  /* Same offset print shadow the old glyph had, so the art sits on the stock. */
+  filter: drop-shadow(0 0.8cqw 0 rgba(0, 0, 0, 0.16));
+}
+
+/* ---------- Two-sided card ---------- */
+/* The tilt transform on .card__body has to keep its 3D context, or the
+   flip below it is flattened and backface-visibility does nothing. */
+.card--flippable .card__body {
+  transform-style: preserve-3d;
+}
+
+.card__flip {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transition: transform 560ms cubic-bezier(0.45, 0.05, 0.2, 1);
+}
+
+.card--flipped .card__flip {
+  transform: rotateY(180deg);
+}
+
+.card__side {
+  position: absolute;
+  inset: 0;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: rotateY(0deg);
+}
+
+.card__side--back {
+  transform: rotateY(180deg);
+}
+
+/* ---------- Back face ---------- */
+/* Same gold tier, but a flatter, lighter wash: the back is mostly small text,
+   and the darker corners of the front gradient would drop it under 4.5:1. */
+.card__back {
+  --face: radial-gradient(130% 100% at 50% 0%, #fff6cc 0%, #f1d47d 38%, #dcb25a 78%, #c99a3e 100%);
+}
+
+/* Every text size here is at least 4.4cqw: 11.3px on the 256px mobile card. */
+.card__back-inner {
+  position: absolute;
+  top: 13cqw;
+  left: 10cqw;
+  right: 10cqw;
+  display: flex;
+  flex-direction: column;
+  gap: 1.4cqw;
+  text-align: left;
+}
+
+.card__back-kicker {
+  font-family: var(--font-mono);
+  font-size: 4.4cqw;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  line-height: 1.2;
+  text-align: center;
+  text-transform: uppercase;
+  margin-top: 0.6cqw;
+}
+
+.card__back-name {
+  padding-bottom: 2cqw;
+  border-bottom: 1px solid color-mix(in srgb, currentColor 40%, transparent);
+  font-size: 8cqw;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.card__facts,
+.card__marks {
+  display: grid;
+  gap: 0.4cqw;
+}
+
+.card__facts div,
+.card__marks div {
+  display: grid;
+  align-items: baseline;
+  gap: 2.4cqw;
+}
+
+.card__facts div {
+  grid-template-columns: max-content minmax(0, 1fr);
+}
+
+.card__facts dt {
+  font-family: var(--font-mono);
+  font-size: 4.4cqw;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.card__facts dd {
+  font-size: 5.2cqw;
+  font-weight: 800;
+  line-height: 1.12;
+}
+
+.card__marks {
+  padding-top: 1.4cqw;
+  border-top: 1px solid color-mix(in srgb, currentColor 40%, transparent);
+}
+
+.card__marks div {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.card__marks dt {
+  font-size: 4.6cqw;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.card__marks dd {
+  font-size: 5.4cqw;
+  font-weight: 900;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Flip button ---------- */
+/* Sits on the red stand under the hero card, so it is white on red like the other broadcast controls. */
+.card-flip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 0 18px;
+  border: 2px solid var(--white);
+  background: var(--red-deep);
+  color: var(--white);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 160ms var(--ease), color 160ms var(--ease);
+}
+
+.card-flip:hover {
+  background: var(--white);
+  color: var(--red-deep);
+}
+
+.card-flip__icon {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* No rotation for people who asked for less motion: the faces simply swap. */
+@media (prefers-reduced-motion: reduce) {
+  .card__flip,
+  .card--flipped .card__flip,
+  .card__side--back {
+    transform: none;
+    transition: none;
+  }
+
+  .card--flipped .card__side--front,
+  .card--flippable:not(.card--flipped) .card__side--back {
+    visibility: hidden;
+  }
+}

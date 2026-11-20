@@ -1,6 +1,0 @@
-/* Only essential article fixes not in App.css */
-#main article::after {
-  content: '';
-  display: block;
-  height: 2rem;
-}

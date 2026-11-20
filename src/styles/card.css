@@ -1,0 +1,373 @@
+/* The card is a size container: every inner measurement is in cqw,
+   so one --card-w scales the whole thing. Height is 1.4 x width.
+   The silhouette comes from the #card-shield clipPath rendered by <CardDefs />. */
+.card {
+  --card-w: 228px;
+
+  position: relative;
+  flex: none;
+  width: var(--card-w);
+  max-width: 100%;
+  aspect-ratio: 5 / 7;
+  container-type: inline-size;
+  filter: drop-shadow(0 22px 24px rgba(0, 0, 0, 0.6));
+}
+
+.card--player {
+  --card-w: 276px;
+}
+
+.card--feature {
+  --card-w: 252px;
+}
+
+/* Once the walkout video lifts, the card flips in to pick up where the render left off. */
+.hero--entrance .card--player {
+  animation: card-in 950ms cubic-bezier(0.2, 0.9, 0.2, 1) backwards;
+}
+
+@keyframes card-in {
+  from {
+    opacity: 0;
+    transform: perspective(900px) translateY(60px) scale(1.5) rotateY(-200deg);
+  }
+  to {
+    opacity: 1;
+    transform: perspective(900px) translateY(0) scale(1) rotateY(0deg);
+  }
+}
+
+/* Pointer tilt (custom properties set by useTilt). */
+.card__body {
+  position: absolute;
+  inset: 0;
+  transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform 180ms ease-out;
+}
+
+/* ---------- Tiers ---------- */
+.card--gold {
+  --edge: linear-gradient(135deg, #6b4a10 0%, #fbeeb0 28%, #b88a2c 55%, #fff3c4 78%, #6b4a10 100%);
+  --face: radial-gradient(125% 90% at 28% 0%, #fff6cc 0%, #f1d47d 28%, #d2a548 60%, #9a6e1e 100%);
+  --ink: #2b1d03;
+  --ray: rgba(255, 255, 255, 0.2);
+}
+
+.card--silver {
+  --edge: linear-gradient(135deg, #4b5563 0%, #ffffff 28%, #9aa3af 55%, #f3f4f6 78%, #4b5563 100%);
+  --face: radial-gradient(125% 90% at 28% 0%, #ffffff 0%, #dde2e8 28%, #a9b1bc 62%, #6f7885 100%);
+  --ink: #151b26;
+  --ray: rgba(255, 255, 255, 0.28);
+}
+
+.card--inform {
+  --edge: linear-gradient(135deg, #6b4a10 0%, #fbeeb0 28%, #b88a2c 55%, #fff3c4 78%, #6b4a10 100%);
+  --face: radial-gradient(125% 90% at 28% 0%, #4a5063 0%, #1b1e28 45%, #050608 100%);
+  --ink: #f6d982;
+  --ray: rgba(246, 217, 130, 0.1);
+}
+
+/* Arsenal red: reserved for the key player. */
+.card--special {
+  --edge: linear-gradient(135deg, #6b4a10 0%, #fbeeb0 28%, #b88a2c 55%, #fff3c4 78%, #6b4a10 100%);
+  /* Kept dark enough everywhere for white type to pass 4.5:1; the rays carry the highlight. */
+  --face: radial-gradient(125% 90% at 28% 0%, #d40008 0%, #b70006 34%, #8a0005 64%, #4d0003 100%);
+  --ink: #ffffff;
+  --ray: rgba(255, 255, 255, 0.12);
+}
+
+.card--special .card__rating,
+.card--special .card__name {
+  color: #fff2c9;
+}
+
+/* In development: no result yet, so no foil and no shine. */
+.card--dev {
+  --card-w: 204px;
+  --edge: linear-gradient(135deg, #27345e 0%, #8b9ac8 30%, #3a4a80 60%, #27345e 100%);
+  --face: repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0 10px, transparent 10px 20px),
+    radial-gradient(125% 90% at 28% 0%, #2a3c78 0%, #121c40 50%, #070b1a 100%);
+  --ink: #e6ecff;
+  --ray: transparent;
+}
+
+.card--dev .card__shine,
+.card--dev .card__foil,
+.card--dev .card__glare {
+  display: none;
+}
+
+/* ---------- Shell ---------- */
+.card__edge,
+.card__face {
+  position: absolute;
+  -webkit-clip-path: url(#card-shield);
+  clip-path: url(#card-shield);
+}
+
+.card__edge {
+  inset: 0;
+  background: var(--edge);
+}
+
+.card__face {
+  inset: 1.7cqw;
+  background: var(--face);
+  color: var(--ink);
+  font-family: var(--font-display);
+}
+
+/* Sunburst from the crown, as on a rare card. */
+.card__rays {
+  position: absolute;
+  inset: 0;
+  background: repeating-conic-gradient(from 0deg at 50% 4%, var(--ray) 0deg 3deg, transparent 3deg 8deg);
+  -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 4%, #000 20%, transparent 90%);
+  mask-image: radial-gradient(ellipse 90% 70% at 50% 4%, #000 20%, transparent 90%);
+}
+
+/* Print grain, so the face reads as card stock and not a flat gradient. */
+.card__grain {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E");
+  mix-blend-mode: soft-light;
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+/* Holographic foil: banded spectrum whose position follows the pointer,
+   the same layering real trading-card holo effects use. */
+.card__foil {
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    115deg,
+    #ff4d6d 0%, #ffd166 7%, #5cf2c0 14%, #4dabf7 21%, #c77dff 28%, #ff4d6d 35%
+  );
+  background-size: 320% 320%;
+  background-position: var(--mx, 50%) var(--my, 50%);
+  filter: brightness(0.85) contrast(1.5);
+  mix-blend-mode: color-dodge;
+  opacity: 0;
+  transition: opacity 260ms ease-out;
+  pointer-events: none;
+}
+
+/* Glare: a spotlight under the pointer, darker towards the far edge. */
+.card__glare {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    farthest-corner circle at var(--mx, 50%) var(--my, 30%),
+    rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.18) 28%, rgba(0, 0, 0, 0.5) 95%
+  );
+  mix-blend-mode: overlay;
+  opacity: 0;
+  transition: opacity 260ms ease-out;
+  pointer-events: none;
+}
+
+.card:hover .card__foil {
+  opacity: 0.3;
+}
+
+.card:hover .card__glare {
+  opacity: 0.75;
+}
+
+/* A light sweep every few seconds on the two headline cards; the rest sweep once on hover.
+   Keeping ambient motion to one element per view stops the page feeling busy. */
+.card__shine {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 42%, rgba(255, 255, 255, 0.6) 50%, transparent 58%);
+  background-size: 300% 100%;
+  background-position: 130% 0;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
+.card--player .card__shine,
+.card--feature .card__shine {
+  /* One sweep on arrival; after that only on hover. The ticker is the page's one ambient animation. */
+  animation: card-sweep 900ms ease-out 600ms 1 backwards;
+}
+
+.card:hover .card__shine {
+  animation: card-sweep 700ms ease-out 1;
+}
+
+@keyframes card-sweep {
+  from { background-position: 130% 0; }
+  to { background-position: -30% 0; }
+}
+
+/* ---------- Rating column ---------- */
+.card__id {
+  position: absolute;
+  top: 13.5cqw;
+  left: 8cqw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2cqw;
+  width: 25cqw;
+}
+
+.card__rating {
+  font-size: 20cqw;
+  font-weight: 900;
+  line-height: 0.82;
+}
+
+.card__rating-label {
+  font-size: 5.2cqw;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  line-height: 1;
+}
+
+.card__position {
+  margin-top: 1cqw;
+  padding-top: 1.8cqw;
+  border-top: 1px solid color-mix(in srgb, currentColor 45%, transparent);
+  font-size: 7cqw;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.card__flag {
+  width: 12cqw;
+  margin-top: 1cqw;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+}
+
+.card__club {
+  font-size: 5.6cqw;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  line-height: 1;
+}
+
+/* ---------- Art ---------- */
+.card__art {
+  position: absolute;
+  top: 12cqw;
+  right: 6cqw;
+  display: grid;
+  place-items: center;
+  width: 58cqw;
+  height: 54cqw;
+}
+
+/* The portrait takes its tone from the card, like an engraved icon card. */
+.card__art img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 18%;
+  /* A warm wash ties the photo to the card stock while keeping the face clear. */
+  filter: sepia(0.25) saturate(0.95) contrast(1.05);
+  -webkit-mask-image: radial-gradient(ellipse 50% 54% at 50% 46%, #000 58%, transparent 100%);
+  mask-image: radial-gradient(ellipse 50% 54% at 50% 46%, #000 58%, transparent 100%);
+}
+
+/* ---------- Name and stats ---------- */
+.card__lower {
+  position: absolute;
+  top: 67cqw;
+  left: 9cqw;
+  right: 9cqw;
+}
+
+.card__name {
+  margin-bottom: 3cqw;
+  padding: 2cqw 0 2.4cqw;
+  border-top: 1px solid color-mix(in srgb, currentColor 40%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, currentColor 40%, transparent);
+  overflow: hidden;
+  /* Long names shrink to fit instead of being cut off. */
+  font-size: calc(10.5cqw * 13 / var(--name-len, 13));
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-align: center;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.card__stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1cqw 0;
+}
+
+.card__stat {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: baseline;
+  justify-content: center;
+  gap: 2.6cqw;
+}
+
+.card__stat:nth-child(even) {
+  border-left: 1px solid color-mix(in srgb, currentColor 32%, transparent);
+}
+
+.card__stat dd {
+  font-size: 8.4cqw;
+  font-weight: 900;
+  line-height: 1.08;
+}
+
+.card__stat dt {
+  font-size: 7cqw;
+  font-weight: 600;
+  line-height: 1.08;
+}
+
+.card__stats--stacked {
+  gap: 2.4cqw 0;
+}
+
+.card__stats--stacked .card__stat {
+  flex-direction: column-reverse;
+  align-items: center;
+  gap: 0.4cqw;
+  padding: 0 1cqw;
+}
+
+.card__stats--stacked dd {
+  font-size: 7.4cqw;
+}
+
+.card__stats--stacked dt {
+  font-family: var(--font-body);
+  font-size: max(12px, 5.6cqw);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-align: center;
+  text-transform: uppercase;
+  /* One line per label keeps every card's footer clear of the point. */
+  white-space: nowrap;
+}
+
+.card__foot {
+  margin-top: 2.6cqw;
+  font-family: var(--font-mono);
+  font-size: max(12px, 4.8cqw);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-align: center;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+@media (max-width: 600px) {
+  .card--player,
+  .card--feature {
+    --card-w: 256px;
+  }
+}
