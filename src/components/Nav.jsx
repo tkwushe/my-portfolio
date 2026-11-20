@@ -3,6 +3,7 @@ import { overall } from '../data/profile';
 const LINKS = [
   { href: '#squad', label: 'Squad' },
   { href: '#lab', label: 'In dev' },
+  { href: '#form', label: 'Form', wide: true },
   { href: '#career', label: 'Career' },
   { href: '#contact', label: 'Contact' },
 ];
@@ -22,7 +23,7 @@ export default function Nav() {
         <nav aria-label="Primary">
           <ul className="nav__links">
             {LINKS.map((link) => (
-              <li key={link.href}>
+              <li key={link.href} className={link.wide ? 'nav__wide' : undefined}>
                 <a href={link.href}>{link.label}</a>
               </li>
             ))}

@@ -1024,17 +1024,57 @@ svg {
   border-top-color: var(--red);
 }
 
-/* Season 1 walkthrough: a main frame plus thumbnail steps. */
+/* Seasons stack, one per row. */
+.seasons li {
+  grid-column: 1 / -1;
+}
+
+/* Season 1 walkthrough: text and step buttons on one side, the current shot on the other. */
 .walkthrough {
   display: grid;
+  gap: 16px;
+}
+
+.walkthrough__side {
+  display: grid;
+  align-content: start;
+  gap: 6px;
+}
+
+.walkthrough__figure {
+  display: grid;
   gap: 10px;
-  margin: 14px 0 0;
+  margin: 0;
+}
+
+.walkthrough__frame {
+  position: relative;
+  display: block;
 }
 
 .walkthrough__frame img {
+  display: block;
   width: 100%;
   height: auto;
   border: 1px solid var(--line-strong);
+}
+
+.walkthrough__expand {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 32px;
+  padding: 0 10px;
+  background: var(--bg);
+  color: var(--white);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 .walkthrough__caption {
@@ -1053,6 +1093,7 @@ svg {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 8px;
+  margin-top: 14px;
 }
 
 .walkthrough__step {
@@ -1080,25 +1121,10 @@ svg {
   border-color: var(--red);
 }
 
-/* Seasons stack; the one with a walkthrough puts its text beside the screenshots. */
-.seasons li {
-  grid-column: 1 / -1;
-}
-
 @media (min-width: 900px) {
-  .seasons li:has(.walkthrough) {
+  .walkthrough {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1.7fr);
-    column-gap: 32px;
-  }
-
-  .seasons li:has(.walkthrough) > :not(.walkthrough) {
-    grid-column: 1;
-  }
-
-  .seasons li:has(.walkthrough) .walkthrough {
-    grid-column: 2;
-    grid-row: 1 / span 4;
-    margin-top: 0;
+    gap: 32px;
   }
 }
 
@@ -1623,8 +1649,10 @@ svg {
     padding: 2px 16px 6px;
   }
 
-  /* Beats `.bug span:not(.visually-hidden)` on specificity. */
-  .bug span.bug__name {
+  /* The surname stays; the initials block and the Form link make room for it.
+     Beats `.bug span:not(.visually-hidden)` on specificity. */
+  .bug span.bug__team,
+  .nav__wide {
     display: none;
   }
 
@@ -1695,11 +1723,11 @@ svg {
     flex-direction: column;
   }
 
-  .hero__actions {
+  .hero__tagline {
     order: 1;
   }
 
-  .hero__tagline {
+  .hero__actions {
     order: 2;
   }
 

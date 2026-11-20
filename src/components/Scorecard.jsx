@@ -104,10 +104,19 @@ export default function Scorecard() {
         <ul>
           {seasons.map((season, i) => (
             <li key={season.label} data-reveal style={{ '--d': i }}>
-              <p className="seasons__label">{season.label} · {season.period}</p>
-              <h4>{season.name}</h4>
-              <p>{season.detail}</p>
-              {season.shots && <Walkthrough title={season.name} shots={season.shots} />}
+              {season.shots ? (
+                <Walkthrough title={season.name} shots={season.shots}>
+                  <p className="seasons__label">{season.label} · {season.period}</p>
+                  <h4>{season.name}</h4>
+                  <p>{season.detail}</p>
+                </Walkthrough>
+              ) : (
+                <>
+                  <p className="seasons__label">{season.label} · {season.period}</p>
+                  <h4>{season.name}</h4>
+                  <p>{season.detail}</p>
+                </>
+              )}
             </li>
           ))}
         </ul>

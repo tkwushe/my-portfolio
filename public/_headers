@@ -1,0 +1,4 @@
+# Cloudflare Pages headers (netlify.toml does the same job on Netlify).
+# Vite fingerprints everything under /assets, so it can be cached forever.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable

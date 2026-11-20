@@ -69,23 +69,23 @@ export default function Hero({ entrance = false, waiting = false, returning = fa
         </div>
       </div>
 
-      {/* What I'm drawn to and open to, ahead of any one project. */}
+      {/* Where I am now and what I work with; the tagline above says what I'm after. */}
       <dl className="statbar statbar--words">
         <div>
-          <dt>Most interested in</dt>
-          <dd>Analysing data</dd>
+          <dt>Day job</dt>
+          <dd>Pegara, team of three</dd>
         </div>
         <div>
-          <dt>Also into</dt>
-          <dd>Deep learning</dd>
+          <dt>Studying</dt>
+          <dd>MSc at Warwick</dd>
         </div>
         <div>
-          <dt>What I like doing</dt>
-          <dd>Raw data → meaning</dd>
+          <dt>Toolkit</dt>
+          <dd>PyTorch · Python · SQL</dd>
         </div>
         <div>
-          <dt>Open to</dt>
-          <dd>DS · DL · Quant</dd>
+          <dt>Before that</dt>
+          <dd>BSc, First Class</dd>
         </div>
       </dl>
     </section>

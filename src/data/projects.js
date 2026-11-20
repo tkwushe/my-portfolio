@@ -49,7 +49,7 @@ export const squad = [
       rows: [
         {
           name: 'DINOv3 ConvNeXt-Base',
-          result: 'F1 0.920 on the 687-clip locked test',
+          result: 'The headline result above, on the locked test',
           outcome: 'Selected',
           selected: true,
         },

@@ -11,6 +11,12 @@ export const monthlyCommits = [
   ['2026-11', 27],
 ];
 
+// The last month is still being played.
+export const countedTo = { month: '2026-11', label: 'to 20 Nov' };
+
+// When my work moved into Pegara's private repositories.
+export const pegaraFrom = '2025-11';
+
 // "Wickets" on the Manhattan: moments that changed what I was working on.
 export const milestones = {
   '2024-11': 'Season 1 portfolio built',
@@ -18,5 +24,3 @@ export const milestones = {
   '2025-11': 'Joined Pegara',
   '2026-11': 'Season 2 rebuild',
 };
-
-export const countedFrom = 'my own repositories (Pegara work is private and not counted)';

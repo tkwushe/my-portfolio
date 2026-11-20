@@ -52,20 +52,58 @@
   font-size: 12px;
 }
 
+.chart svg:focus-visible {
+  outline: 3px solid var(--white);
+  outline-offset: 4px;
+}
+
+/* Bars wear their year's colour. 2024 is only drawn in outline, so it never
+   needs a third hue that would fail the colour-vision checks. */
 .chart__bar {
-  fill: var(--series-2026);
   transition: opacity 160ms var(--ease);
 }
 
-.chart__plot:hover .chart__bar:not(.is-hover) {
-  opacity: 0.55;
+.chart__bar--2024 {
+  fill: none;
+  stroke: var(--text-muted);
+  stroke-width: 1.5;
 }
 
-/* A wicket: white ball with a surface ring so it reads against the bar. */
-.chart__wicket {
+.chart__bar--2025 {
+  fill: var(--series-2025);
+}
+
+.chart__bar--2026 {
+  fill: var(--series-2026);
+}
+
+.chart__plot:has(.is-active) .chart__bar:not(.is-active) {
+  opacity: 0.45;
+}
+
+/* The months when my work was in Pegara's private repositories. */
+.chart__band {
+  fill: color-mix(in srgb, var(--white) 4%, transparent);
+}
+
+.chart__band-label {
+  fill: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+/* A wicket: white ball, numbered against the list under the chart. */
+.chart__wicket circle {
   fill: var(--white);
   stroke: var(--panel);
   stroke-width: 2;
+}
+
+.chart__wicket text {
+  fill: var(--bg);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
 }
 
 .chart__worm polyline {
@@ -148,15 +186,65 @@
   border-radius: 2px;
 }
 
-.chart__key--2026 {
+.chart__key--bar {
+  width: 10px;
+  height: 12px;
+}
+
+.chart__key--bar.chart__key--2024 {
+  border: 1.5px solid var(--text-muted);
+  background: none;
+}
+
+.chart__key:not(:first-child) {
   margin-left: 14px;
 }
 
-.chart__key--wicket {
-  width: 10px;
-  height: 10px;
+.chart__wickets {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px 16px;
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: wicket;
+  font-size: 0.8125rem;
+  color: var(--text-soft);
+}
+
+.chart__wickets li {
+  counter-increment: wicket;
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+}
+
+.chart__wickets li::before {
+  content: counter(wicket);
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
   background: var(--white);
+  color: var(--bg);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.chart__wickets-date {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.chart__note {
+  margin-top: 8px;
+  font-size: 0.8125rem;
+  color: var(--text-muted);
 }
 
 .chart__key--2025 {
@@ -206,6 +294,12 @@
 
 @media (max-width: 900px) {
   .form-guide {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .chart__wickets {
     grid-template-columns: minmax(0, 1fr);
   }
 }
