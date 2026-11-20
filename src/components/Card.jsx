@@ -50,7 +50,7 @@ const hiddenProps = (hidden) => (hidden ? { inert: '', 'aria-hidden': true } : {
 
 // Card shell shared by the player card, project cards and in-development cards.
 // A `back` turns it into a two-sided card; `flipped` says which side faces out.
-export function Card({ tier = 'gold', rating, ratingLabel, position, crest, art, name, stats, stacked = false, foot, back, flipped = false, id, className = '' }) {
+export function Card({ tier = 'gold', rating, ratingLabel, position, crest, art, name, stats, stacked = false, note, foot, back, flipped = false, id, className = '' }) {
   const ref = useTilt();
   const front = (
     <>
@@ -74,6 +74,7 @@ export function Card({ tier = 'gold', rating, ratingLabel, position, crest, art,
               </div>
             ))}
           </dl>
+          {note && <p className="card__note">{note}</p>}
           {foot && <p className="card__foot">{foot}</p>}
         </div>
         <Finish />
@@ -139,6 +140,10 @@ function PlayerBack() {
           <dd>{overall}</dd>
         </div>
       </dl>
+      {/* Where the season is being played now; dropped on small cards, where there's no room. */}
+      <p className="card__back-now">
+        <span>Now</span> {profile.study} · Warwick
+      </p>
     </div>
   );
 }
@@ -212,6 +217,7 @@ export function LabCard({ project }) {
       art={<CardArt name={project.icon} />}
       name={project.name}
       stats={project.stats}
+      note={project.cardLine}
       foot="In the lab"
       stacked
     />

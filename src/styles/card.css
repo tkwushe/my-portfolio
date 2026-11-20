@@ -373,6 +373,17 @@
   white-space: nowrap;
 }
 
+/* A one-line brief on cards that have no results to show yet. */
+.card__note {
+  margin-top: 1.6cqw;
+  padding: 0 4cqw;
+  font-family: var(--font-body);
+  font-size: max(12px, 5cqw);
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+}
+
 .card__foot {
   margin-top: 2.6cqw;
   /* Condensed face: long tier names fit inside the shield's point even at the 12px floor. */

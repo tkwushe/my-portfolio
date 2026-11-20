@@ -3,9 +3,10 @@ import { ZimFlag } from './Card';
 import crest from '../assets/arsenal-crest.svg';
 import { overall, profile } from '../data/profile';
 
-const DURATION_MS = 2700;
+const DURATION_MS = 3000;
 
-// Pack-walkout intro: nation, club allegiance, position, rating, then the curtain lifts on the card.
+// Pack-walkout intro: nation, club allegiance, position and rating, then the card itself
+// lands and the curtain lifts on the same card in the hero.
 // Shown once per browser session; App decides whether to mount it at all.
 export default function Walkout({ onDone }) {
   const skipRef = useRef(null);
@@ -40,6 +41,11 @@ export default function Walkout({ onDone }) {
         </div>
         <p className="walkout__step walkout__step--3">{profile.position}</p>
         <p className="walkout__step walkout__step--4">{overall}</p>
+        <div className="walkout__step walkout__step--5 walkout__card">
+          <span className="walkout__card-ovr">{overall}</span>
+          <span className="walkout__card-pos">{profile.position}</span>
+          <span className="walkout__card-name">{profile.cardName}</span>
+        </div>
       </div>
       <button ref={skipRef} type="button" className="walkout__skip" onClick={onDone}>
         Skip intro

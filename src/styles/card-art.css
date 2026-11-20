@@ -207,6 +207,10 @@
 /* On small cards the 12px text floor leaves no room for everything, so the back drops the
    name strip (the front already shows it) and tightens its rows. */
 @container (max-width: 200px) {
+  .card__back-now {
+    display: none;
+  }
+
   /* The 12px floor makes the rating stack taller than the card's own scale, so it tightens to clear the name line. */
   .card__id {
     top: 12cqw;
@@ -252,4 +256,23 @@
 
 .card-flip[aria-pressed='true'] .card-flip__icon {
   transform: rotate(180deg);
+}
+
+/* Closing line on the back: the current season, so large cards don't end on empty gold. */
+.card__back-now {
+  margin-top: 1.6cqw;
+  padding-top: 1.6cqw;
+  border-top: 1px solid color-mix(in srgb, currentColor 40%, transparent);
+  font-size: max(13px, 5.2cqw);
+  font-weight: 800;
+  line-height: 1.1;
+  text-align: center;
+}
+
+.card__back-now span {
+  font-family: var(--font-mono);
+  font-size: max(12px, 4.4cqw);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }

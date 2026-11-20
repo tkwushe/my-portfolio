@@ -1495,7 +1495,7 @@ svg {
   z-index: 100;
   overflow: hidden;
   background: radial-gradient(circle at 50% 45%, #1a2444 0%, #05070d 68%);
-  animation: walkout-out 400ms ease-in 2300ms forwards;
+  animation: walkout-out 400ms ease-in 2600ms forwards;
 }
 
 .walkout__beam {
@@ -1521,13 +1521,51 @@ svg {
 }
 
 .walkout__step--1 { animation-delay: 80ms; }
-.walkout__step--2 { animation-delay: 580ms; }
-.walkout__step--3 { animation-delay: 1080ms; }
+.walkout__step--2 { animation-delay: 520ms; }
+.walkout__step--3 { animation-delay: 960ms; }
 
 .walkout__step--4 {
   color: var(--gold);
-  animation-delay: 1580ms;
-  animation-duration: 800ms;
+  animation-delay: 1400ms;
+  animation-duration: 640ms;
+}
+
+/* The last beat is the card itself, held until the curtain lifts on the hero card. */
+.walkout__step--5 {
+  animation: walkout-card 560ms var(--ease) 1940ms both;
+}
+
+.walkout__card {
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  justify-items: center;
+  width: min(56vw, 240px);
+  height: calc(min(56vw, 240px) * 1.4);
+  padding: calc(min(56vw, 240px) * 0.24) 0 calc(min(56vw, 240px) * 0.26);
+  font-size: 1rem;
+  background: radial-gradient(130% 100% at 50% 0%, #fff6cc 0%, #f1d47d 38%, #dcb25a 78%, #c99a3e 100%);
+  color: #2a1d05;
+  -webkit-clip-path: url(#card-shield);
+  clip-path: url(#card-shield);
+  filter: drop-shadow(0 0 60px rgba(227, 192, 106, 0.45));
+}
+
+.walkout__card-ovr {
+  font-size: clamp(4rem, 18vw, 6.5rem);
+  line-height: 0.9;
+}
+
+.walkout__card-pos {
+  font-size: clamp(1.5rem, 6vw, 2.25rem);
+}
+
+.walkout__card-name {
+  grid-row: 4;
+  padding-top: 8px;
+  border-top: 1px solid rgba(42, 29, 5, 0.4);
+  font-size: clamp(2.25rem, 10vw, 3.5rem);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .walkout__flag {
@@ -1563,6 +1601,11 @@ svg {
   28% { opacity: 1; transform: scale(1); filter: blur(0); }
   78% { opacity: 1; transform: scale(1); }
   100% { opacity: 0; transform: scale(0.82); }
+}
+
+@keyframes walkout-card {
+  0% { opacity: 0; transform: translateY(40px) rotateY(80deg) scale(0.9); }
+  100% { opacity: 1; transform: none; }
 }
 
 @keyframes walkout-out {

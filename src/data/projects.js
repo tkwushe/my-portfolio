@@ -230,6 +230,7 @@ export const lab = [
     icon: 'satellite',
     status: 'In development',
     description: 'Detecting possible artisanal-mining disturbance in Zimbabwe from Sentinel-1 and Sentinel-2 satellite change signals. An offline demo runs on test data, and a person makes every final decision.',
+    cardLine: 'Spotting mining scars in Sentinel-1 and -2 change',
     stats: [{ value: 'Demo', label: 'Stage' }],
   },
   {
@@ -237,6 +238,7 @@ export const lab = [
     icon: 'radio',
     status: 'Planning',
     description: 'An AI-assisted production system for a sports radio show in Zimbabwe.',
+    cardLine: 'AI help behind a Zimbabwean sports show',
     stats: [{ value: 'Planning', label: 'Stage' }],
   },
   {
@@ -244,6 +246,7 @@ export const lab = [
     icon: 'distill',
     status: 'Current interest',
     description: "Training small models to do what large ones can, so useful AI can run on cheap hardware where it's needed. I'd like to use it in my next projects.",
+    cardLine: 'Big-model skill in small, cheap models',
     stats: [{ value: 'Reading', label: 'Stage' }],
   },
 ];
