@@ -212,7 +212,7 @@ export function LabCard({ project }) {
       art={<CardArt name={project.icon} />}
       name={project.name}
       stats={project.stats}
-      foot={project.status}
+      foot="In the lab"
       stacked
     />
   );

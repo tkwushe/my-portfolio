@@ -1685,7 +1685,7 @@ svg {
   }
 
   .hero__card .card--player {
-    --card-w: 150px;
+    --card-w: 168px;
   }
 
   /* Card and its controls side by side, so the name and buttons reach the first screen. */
@@ -1720,7 +1720,7 @@ svg {
   }
 
   .hero__crest {
-    left: 108px;
+    left: 124px;
     right: auto;
     width: 54px;
   }
@@ -1738,6 +1738,25 @@ svg {
 
   .hero__tagline {
     order: 1;
+  }
+
+  /* Less air above and between the hero blocks, so the full-size card still leaves room for the buttons. */
+  .hero__inner {
+    gap: 32px;
+    padding-top: 24px;
+  }
+
+  /* The full-size badge shrinks to its icon so it covers less of the screenshot. */
+  .walkthrough__expand {
+    right: 6px;
+    bottom: 6px;
+    min-height: 28px;
+    padding: 0 8px;
+    font-size: 0;
+  }
+
+  .walkthrough__expand svg {
+    font-size: 0.875rem;
   }
 
   /* Both role plates on one line. */

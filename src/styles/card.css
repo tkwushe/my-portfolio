@@ -181,7 +181,7 @@
 }
 
 .card:hover .card__foil {
-  opacity: 0.3;
+  opacity: 0.16;
 }
 
 .card:hover .card__glare {
@@ -375,7 +375,8 @@
 
 .card__foot {
   margin-top: 2.6cqw;
-  font-family: var(--font-mono);
+  /* Condensed face: long tier names fit inside the shield's point even at the 12px floor. */
+  font-family: var(--font-display);
   font-size: max(12px, 4.8cqw);
   font-weight: 700;
   /* Tighter on small pitch cards so long tier names clear the shield. */

@@ -87,7 +87,10 @@ export default function App() {
         // Land in the right place before the new view is captured, so the card has somewhere
         // on screen to grow into: the top of a report, or the project's own slot going back.
         if (next.project) window.scrollTo({ top: 0, behavior: 'instant' });
-        else document.getElementById(next.anchor)?.scrollIntoView({ block: 'center', behavior: 'instant' });
+        else {
+          const target = document.getElementById(next.anchor);
+          target?.scrollIntoView({ block: target.id.startsWith('slot-') ? 'center' : 'start', behavior: 'instant' });
+        }
         // Anything now on screen is shown straight away, so the card morphs into a settled slot.
         document.querySelectorAll('[data-reveal]').forEach((el) => {
           if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add('is-in', 'is-instant');

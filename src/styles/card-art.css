@@ -203,3 +203,29 @@
 .card__marks-ovr {
   border-left: 1px solid color-mix(in srgb, currentColor 40%, transparent);
 }
+
+/* On small cards the 12px text floor leaves no room for everything, so the back drops the
+   name strip (the front already shows it) and tightens its rows. */
+@container (max-width: 200px) {
+  .card__back-name {
+    display: none;
+  }
+
+  .card__back-inner {
+    top: 9cqw;
+    bottom: 19cqw;
+    gap: 0.8cqw;
+  }
+
+  .card__facts {
+    row-gap: 0;
+  }
+}
+
+/* Project cards on the pitch are too small for a tier line inside the point; the plate
+   and category under each card already say what it is. */
+@container (max-width: 200px) {
+  .card__stats--stacked + .card__foot {
+    display: none;
+  }
+}

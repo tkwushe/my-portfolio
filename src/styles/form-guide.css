@@ -241,6 +241,16 @@
   align-items: baseline;
 }
 
+.chart__wickets a {
+  color: var(--text-soft);
+  text-decoration-color: var(--red);
+  text-underline-offset: 3px;
+}
+
+.chart__wickets a:hover {
+  color: var(--white);
+}
+
 .chart__wickets li::before {
   content: counter(wicket);
   flex: none;

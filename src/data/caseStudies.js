@@ -83,7 +83,7 @@ In the end, MindCareDB is not just a technical artefact. It is a foundation that
 };
 
 // Written from the career evidence register's cleared wording, in the owner's voice. Employer detail is left out on purpose.
-caseStudies['animal-detector'] = `This is the work I do at Pegara, where I'm part of a team of three. In February our CTO trusted me to lead the project for two to three months, and it's the most demanding deep learning project I've taken on so far. The task is to watch a video feed and decide, one second at a time, whether a particular animal is in the frame. A big part of my job was to properly understand the model, including how to test it and what its numbers mean.
+caseStudies['animal-detector'] = `This is the work I do at Pegara, where I'm part of a team of three. In February our CTO trusted me to lead the project for two to three months, and it's the most demanding deep learning project I've taken on so far. A big part of my job was to properly understand the model, including how to test it and what its numbers mean.
 
 I started with the data. I built the clip datasets under version control and kept the training, validation and test splits strictly apart, because if test clips leak into training, every result after that is worthless. One of the main dataset builds came to 1,391 rows with zero recorded overlap between the splits. It took a lot of time, but it meant I could trust the comparisons that came after.
 

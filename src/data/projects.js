@@ -29,7 +29,7 @@ export const squad = [
       groups: [
         { name: '1 · Data', items: ['Versioned clip datasets', 'Strict train, validation and test splits', '1,391-row build with zero split overlap'] },
         { name: '2 · Synthetic video', items: ['Around 10,000 one-second clips', 'Custom ComfyUI pipelines and nodes', 'Aimed at the scenes it struggled with'] },
-        { name: '3 · Model', items: ['DINOv3 ConvNeXt-Base encoder', 'BiGRU temporal head', 'Encoders compared under one head'] },
+        { name: '3 · Model', items: ['DINOv3 ConvNeXt-Base encoder', 'BiGRU temporal head', 'Three encoders tried'] },
         { name: '4 · Testing', items: ['Threshold fixed on validation', 'Locked one-second test set', 'Real-world 10-second clips', 'Separate hard-case retest'] },
       ],
     },
@@ -120,7 +120,7 @@ export const squad = [
     icon: 'water',
     headline: { value: '93', label: 'AUC %' },
     stats: [
-      { value: '3/6/12', label: 'Rain months' },
+      { value: '12', label: 'Months rain' },
       { value: '78%', label: 'Accuracy' },
       { value: '~20', label: 'Features' },
       { value: '3', label: 'Datasets' },
@@ -224,29 +224,27 @@ export const squad = [
 ].map((project) => ({ ...project, body: caseStudies[project.slug].split('\n\n') }));
 
 // In development and current interests. Nothing here makes a results claim yet.
-const noResultsYet = [{ value: 'TBC', label: 'Results' }];
-
 export const lab = [
   {
     name: 'Mine Surveillance',
     icon: 'satellite',
     status: 'In development',
     description: 'Detecting possible artisanal-mining disturbance in Zimbabwe from Sentinel-1 and Sentinel-2 satellite change signals. An offline demo runs on test data, and a person makes every final decision.',
-    stats: noResultsYet,
+    stats: [{ value: 'Demo', label: 'Stage' }],
   },
   {
     name: 'AI Radio Station',
     icon: 'radio',
     status: 'Planning',
     description: "An AI-assisted production system for a sports radio show in Zimbabwe. It's still at the planning stage.",
-    stats: noResultsYet,
+    stats: [{ value: 'Planning', label: 'Stage' }],
   },
   {
     name: 'Knowledge Distillation',
     icon: 'distill',
     status: 'Current interest',
     description: "Training small models to do what large ones can, so useful AI can run on cheap hardware where it's needed. I'd like to use it in my next projects.",
-    stats: noResultsYet,
+    stats: [{ value: 'Reading', label: 'Stage' }],
   },
 ];
 
