@@ -1,0 +1,211 @@
+/* Form guide: Manhattan and worm charts. Series colours were checked with the
+   dataviz palette validator against the panel surface (both pass every check). */
+.form-guide {
+  --series-2025: #4f8fe0;
+  --series-2026: #ee4f59;
+
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.chart {
+  margin: 0;
+  min-width: 0;
+  padding: 20px 20px 16px;
+  border-top: 4px solid var(--red);
+  background: var(--panel);
+}
+
+.chart__title {
+  margin-bottom: 8px;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.chart__plot {
+  position: relative;
+}
+
+.chart svg {
+  display: block;
+  max-width: 100%;
+  overflow: visible;
+}
+
+.chart__grid {
+  stroke: var(--line);
+  stroke-width: 1;
+}
+
+.chart__axis {
+  stroke: var(--line-strong);
+  stroke-width: 1;
+}
+
+.chart__tick {
+  fill: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.chart__bar {
+  fill: var(--series-2026);
+  transition: opacity 160ms var(--ease);
+}
+
+.chart__plot:hover .chart__bar:not(.is-hover) {
+  opacity: 0.55;
+}
+
+/* A wicket: white ball with a surface ring so it reads against the bar. */
+.chart__wicket {
+  fill: var(--white);
+  stroke: var(--panel);
+  stroke-width: 2;
+}
+
+.chart__worm polyline {
+  fill: none;
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.chart__worm circle {
+  stroke: var(--panel);
+  stroke-width: 2;
+}
+
+.chart__worm--2025 polyline {
+  stroke: var(--series-2025);
+}
+
+.chart__worm--2025 circle {
+  fill: var(--series-2025);
+}
+
+.chart__worm--2026 polyline {
+  stroke: var(--series-2026);
+}
+
+.chart__worm--2026 circle {
+  fill: var(--series-2026);
+}
+
+.chart__end {
+  fill: var(--text);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.chart__cross {
+  stroke: var(--line-strong);
+  stroke-dasharray: 3 3;
+}
+
+.chart__tip {
+  position: absolute;
+  z-index: 1;
+  display: grid;
+  gap: 2px;
+  min-width: 120px;
+  padding: 8px 10px;
+  border-left: 3px solid var(--red);
+  background: var(--bg);
+  font-size: 0.8125rem;
+  pointer-events: none;
+  transform: translate(-50%, -100%);
+}
+
+.chart__tip strong {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.chart__tip-note {
+  color: var(--text-muted);
+}
+
+.chart__legend {
+  margin-top: 10px;
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+
+.chart__key {
+  display: inline-block;
+  margin-right: 6px;
+  vertical-align: middle;
+  width: 14px;
+  height: 3px;
+  border-radius: 2px;
+}
+
+.chart__key--2026 {
+  margin-left: 14px;
+}
+
+.chart__key--wicket {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--white);
+}
+
+.chart__key--2025 {
+  background: var(--series-2025);
+}
+
+.chart__key--2026 {
+  background: var(--series-2026);
+}
+
+.form-guide__table {
+  margin-top: 20px;
+}
+
+.form-guide__table summary {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--red-bright);
+  cursor: pointer;
+}
+
+.form-guide__table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+}
+
+.form-guide__table caption {
+  padding: 10px 0;
+  text-align: left;
+  color: var(--text-muted);
+}
+
+.form-guide__table th,
+.form-guide__table td {
+  padding: 6px 12px 6px 0;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+}
+
+@media (max-width: 900px) {
+  .form-guide {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

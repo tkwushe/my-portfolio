@@ -188,7 +188,7 @@
   }
 
   .formation__player .card {
-    --card-w: 184px;
+    --card-w: 176px;
   }
 
   /* On the pitch each card keeps its position and category; the one-liner is in the report. */

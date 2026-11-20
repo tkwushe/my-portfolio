@@ -30,14 +30,14 @@ export const squad = [
         { name: '1 · Data', items: ['Versioned clip datasets', 'Strict train, validation and test splits', '1,391-row build with zero split overlap'] },
         { name: '2 · Synthetic video', items: ['Around 10,000 one-second clips', 'Custom ComfyUI pipelines and nodes', 'Aimed at the scenes it struggled with'] },
         { name: '3 · Model', items: ['DINOv3 ConvNeXt-Base encoder', 'BiGRU temporal head', 'Encoders compared under one head'] },
-        { name: '4 · Testing', items: ['Threshold fixed on validation', 'Locked test on 687 held-out clips', 'Around 670 real-world clips, 10 seconds each', 'Hard-case retest: 93.3% against a 95% target'] },
+        { name: '4 · Testing', items: ['Threshold fixed on validation', 'Locked one-second test set', 'Real-world 10-second clips', 'Separate hard-case retest'] },
       ],
     },
     stats: [
-      { value: '0.920', label: 'Locked-test F1' },
       { value: '687', label: 'Test clips' },
       { value: '3', label: 'Encoders' },
       { value: '~10k', label: 'Synthetic' },
+      { value: '0.909', label: 'Synth F1' },
     ],
     technologies: ['Deep Learning', 'DINOv3', 'ConvNeXt', 'BiGRU', 'ComfyUI', 'Synthetic Video', 'Locked Evaluation', 'ONNX', 'Jetson'],
     links: {},
@@ -84,7 +84,7 @@ export const squad = [
     icon: 'hotel',
     headline: { value: '75', label: 'PERF' },
     stats: [
-      { value: '48→75', label: 'Lighthouse' },
+      { value: 'Mid-90s', label: 'SEO' },
       { value: '>23s→4s', label: 'LCP' },
       { value: '250ms', label: 'Blocking' },
       { value: '−15%', label: 'JS bundle' },
@@ -120,7 +120,7 @@ export const squad = [
     icon: 'water',
     headline: { value: '93', label: 'AUC %' },
     stats: [
-      { value: '0.93', label: 'ROC-AUC' },
+      { value: 'SHAP', label: 'Explained' },
       { value: '78%', label: 'Accuracy' },
       { value: '~20', label: 'Features' },
       { value: '3', label: 'Datasets' },
@@ -162,7 +162,7 @@ export const squad = [
     icon: 'dungeon',
     headline: { value: '4', label: 'PATTERNS' },
     stats: [
-      { value: '4', label: 'Patterns' },
+      { value: 'Observer', label: 'Events' },
       { value: 'SQLite', label: 'Saves' },
       { value: 'Swing', label: 'Renderer' },
       { value: 'JUnit 5', label: 'Tests' },
@@ -201,7 +201,7 @@ export const squad = [
     icon: 'database',
     headline: { value: '15', label: 'TABLES' },
     stats: [
-      { value: '15', label: 'Tables' },
+      { value: 'JSON', label: 'Flex columns' },
       { value: '5', label: 'Queries' },
       { value: 'GDPR', label: 'Privacy' },
       { value: 'Faker', label: 'Test data' },
@@ -231,18 +231,18 @@ export const lab = [
     status: 'In development',
     description: 'Detecting possible artisanal-mining disturbance in Zimbabwe from Sentinel-1 and Sentinel-2 satellite change signals. An offline demo runs on test data, and a person makes every final decision.',
     stats: [
-      { value: 'Sentinel', label: 'Data' },
+      { value: 'Sentinel', label: 'Satellites' },
       { value: 'Demo', label: 'Stage' },
     ],
   },
   {
     name: 'AI Radio Station',
     icon: 'radio',
-    status: 'In development',
+    status: 'Planning',
     description: "An AI-assisted production system for a sports radio show in Zimbabwe. It's still at the planning stage.",
     stats: [
-      { value: 'Audio', label: 'Field' },
-      { value: 'Idea', label: 'Stage' },
+      { value: 'Sport', label: 'Radio' },
+      { value: 'Planning', label: 'Stage' },
     ],
   },
   {
@@ -251,8 +251,8 @@ export const lab = [
     status: 'Current interest',
     description: "Training small models to do what large ones can, so useful AI can run on cheap hardware where it's needed. I'd like to use it in my next projects.",
     stats: [
-      { value: 'Research', label: 'Type' },
-      { value: 'Interest', label: 'Stage' },
+      { value: 'Small', label: 'Models' },
+      { value: 'Reading', label: 'Stage' },
     ],
   },
 ];

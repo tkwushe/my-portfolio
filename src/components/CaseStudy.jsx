@@ -1,4 +1,4 @@
-import { FaArrowLeft, FaArrowRight, FaCheck, FaExternalLinkAlt, FaGithub } from 'react-icons/fa';
+import { FaArrowLeft, FaCheck, FaExternalLinkAlt, FaGithub } from 'react-icons/fa';
 import { ProjectCard } from './Card';
 import { squad } from '../data/projects';
 
@@ -146,19 +146,13 @@ export default function CaseStudy({ project }) {
       {links.demo && (
         <section className="case__demo" aria-labelledby="demo-title">
           <h2 id="demo-title">Interactive demo</h2>
-          <iframe src={links.demo} title={links.demoTitle} loading="lazy" />
+          <iframe src={links.demo} title={links.demoTitle} width="1280" height="580" loading="lazy" />
           <a href={links.demo} target="_blank" rel="noopener noreferrer">
             Open the demo in a new tab <FaExternalLinkAlt aria-hidden="true" />
           </a>
         </section>
       )}
 
-      <a className="case__next" href={`#/case/${next.slug}`}>
-        <span className="chip">Next fixture</span>
-        <span className="case__next-name">
-          {next.name} <FaArrowRight aria-hidden="true" />
-        </span>
-      </a>
     </article>
   );
 }

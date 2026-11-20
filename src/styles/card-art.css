@@ -193,3 +193,13 @@
     visibility: hidden;
   }
 }
+
+/* OVR closes the marks grid, so the last row isn't left with a gap. */
+.card__marks-ovr dt,
+.card__marks-ovr dd {
+  color: inherit;
+}
+
+.card__marks-ovr {
+  border-left: 1px solid color-mix(in srgb, currentColor 40%, transparent);
+}

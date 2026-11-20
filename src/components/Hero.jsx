@@ -1,15 +1,13 @@
 import { PlayerCard, ZimFlag } from './Card';
-import CountUp from './CountUp';
 import { MdSportsCricket } from 'react-icons/md';
+import { FaFileDownload } from 'react-icons/fa';
 import { modules, profile } from '../data/profile';
-import { squad } from '../data/projects';
 import crest from '../assets/arsenal-crest.svg';
 
-const keyPlayer = squad[0];
 
-export default function Hero({ entrance = false, waiting = false }) {
+export default function Hero({ entrance = false, waiting = false, returning = false }) {
   return (
-    <section className={`hero${entrance ? ' hero--entrance' : ''}${waiting ? ' hero--waiting' : ''}`} id="top">
+    <section className={`hero${entrance ? ' hero--entrance' : ''}${waiting ? ' hero--waiting' : ''}${returning ? ' hero--returning' : ''}`} id="top">
       <div className="hero__beam hero__beam--left" aria-hidden="true" />
       <div className="hero__beam hero__beam--right" aria-hidden="true" />
 
@@ -30,7 +28,9 @@ export default function Hero({ entrance = false, waiting = false }) {
           <p className="hero__tagline">{profile.tagline}</p>
           <div className="hero__actions">
             <a className="button button--primary" href="#squad">View the squad</a>
-            <a className="button" href="#contact">Transfer enquiries</a>
+            <a className="button" href={profile.cv} download>
+              <FaFileDownload aria-hidden="true" /> Download CV
+            </a>
           </div>
           <ul className="allegiance">
             <li>
@@ -69,22 +69,23 @@ export default function Hero({ entrance = false, waiting = false }) {
         </div>
       </div>
 
-      <dl className="statbar">
+      {/* What I'm drawn to and open to, ahead of any one project. */}
+      <dl className="statbar statbar--words">
         <div>
-          <dt>{keyPlayer.name}, locked-test F1</dt>
-          <dd><CountUp value={keyPlayer.stats[0].value} paused={waiting} /></dd>
+          <dt>Most interested in</dt>
+          <dd>Analysing data</dd>
         </div>
         <div>
-          <dt>Degree</dt>
-          <dd>1st</dd>
+          <dt>Also into</dt>
+          <dd>Deep learning</dd>
         </div>
         <div>
-          <dt>Dataset rows, zero split overlap</dt>
-          <dd><CountUp value="1,391" paused={waiting} /></dd>
+          <dt>What I like doing</dt>
+          <dd>Raw data → meaning</dd>
         </div>
         <div>
-          <dt>Synthetic clips, ComfyUI</dt>
-          <dd><CountUp value="~10k" paused={waiting} /></dd>
+          <dt>Open to</dt>
+          <dd>DS · DL · Quant</dd>
         </div>
       </dl>
     </section>

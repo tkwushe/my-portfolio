@@ -191,9 +191,13 @@
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
-/* An odd last tile stretches across the row instead of sitting alone. */
+/* A short last row stretches to fill, so no tile sits alone. */
 .scout__lead-list li:last-child:nth-child(3n + 1) {
   grid-column: 1 / -1;
+}
+
+.scout__lead-list li:last-child:nth-child(3n + 2) {
+  grid-column: span 2;
 }
 
 .scout__lead-list li {

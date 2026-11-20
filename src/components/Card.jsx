@@ -134,6 +134,10 @@ function PlayerBack() {
             <dd>{m.mark}</dd>
           </div>
         ))}
+        <div className="card__marks-ovr">
+          <dt>OVR</dt>
+          <dd>{overall}</dd>
+        </div>
       </dl>
     </div>
   );

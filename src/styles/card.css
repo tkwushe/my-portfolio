@@ -21,6 +21,13 @@
   --card-w: 252px;
 }
 
+/* Arrival effects are for the first look only: no shine while the intro covers the card,
+   and none on a return to the home page. */
+.hero--waiting .card__shine,
+.hero--returning .card__shine {
+  animation: none;
+}
+
 /* Hidden behind the intro so it only appears once, as it flips in. */
 .hero--waiting .card--player {
   opacity: 0;

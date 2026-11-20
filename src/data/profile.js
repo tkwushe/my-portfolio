@@ -1,3 +1,7 @@
+import season1Landing from '../assets/season1-1.jpg';
+import season1Projects from '../assets/season1-2.jpg';
+import season1Cases from '../assets/season1-3.jpg';
+
 // Single source of truth for everything personal on the site.
 // Card ratings are real module marks; nothing here is invented.
 
@@ -17,7 +21,9 @@ export const profile = {
   cricket: 'Australia & Zimbabwe',
   cricketFavourite: 'Steve Smith',
   football: 'Watches loads of football',
-  tagline: "I work at Pegara, a startup, in a team of three on an animal detector. I build its datasets, make synthetic video for the scenes it struggles with, and test every change against the same clips.",
+  tagline: "I'm most interested in analysing data and in deep learning, taking raw data and turning it into something meaningful that people can act on. I'm open to a range of roles in data science, deep learning and quantitative research.",
+  // The public CV: the master CV with the phone number taken out.
+  cv: '/Takudzwa-Wushe-CV.pdf',
   // Where I want to go next, said the same way wherever it comes up.
   nextStep: 'data science, deep learning and quantitative research roles',
   email: 'tk.wushe@gmail.com',
@@ -34,7 +40,7 @@ export const ticker = [
   'Around 10,000 synthetic one-second clips generated with custom ComfyUI pipelines',
   'MSc Applied AI at Warwick: Applied Statistics for AI in progress',
   'In development: Mine Surveillance, satellite change detection for Zimbabwe',
-  'In development: an AI radio station',
+  'Planning: an AI production system for sports radio',
   'Current interest: knowledge distillation',
   'Football: supports Arsenal and watches loads of it',
   'Cricket: Australia and Zimbabwe, favourite player Steve Smith',
@@ -121,11 +127,17 @@ export const seasons = [
     period: '2024 – 2026',
     name: 'The full-stack years',
     detail: 'A React front end with an Express and MySQL back end, plus an admin panel behind a JWT login for managing projects. Building it taught me how the whole stack fits together, and the code is still in the repository history.',
+    // Screenshots of the Season 1 build, taken from the main branch on 20 Nov 2026.
+    shots: [
+      { src: season1Landing, alt: 'Season 1 landing page: name, a long intro paragraph and five navigation buttons', caption: 'The landing page, with everything behind five buttons.' },
+      { src: season1Projects, alt: 'Season 1 projects list served from the MySQL database', caption: 'Quick Projects, loaded live from the MySQL database through the Express API.' },
+      { src: season1Cases, alt: 'Season 1 case studies page with four project tiles', caption: 'The first versions of the case studies that are now match reports.' },
+    ],
   },
 ];
 
 export const attributes = [
-  { group: 'Deep learning', items: ['Video classification', 'Frozen vision encoders', 'Temporal models', 'Synthetic video in ComfyUI', 'Dataset versioning', 'Locked evaluation', 'ONNX export'] },
+  { group: 'Deep learning', items: ['PyTorch', 'Video classification', 'Frozen vision encoders', 'Temporal models', 'Synthetic video in ComfyUI', 'Dataset versioning', 'Locked evaluation', 'ONNX export'] },
   { group: 'Data & ML', items: ['Applied statistics', 'Machine learning', 'Feature engineering', 'XGBoost', 'Random Forest', 'SHAP', 'Scikit-learn', 'Pandas', 'NumPy'] },
   { group: 'Languages', items: ['Python', 'JavaScript', 'Java', 'C', 'SQL', 'HTML/CSS'] },
   { group: 'Web', items: ['React', 'Node.js', 'Express', 'RESTful APIs', 'Full-stack development'] },

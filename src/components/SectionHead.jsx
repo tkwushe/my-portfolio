@@ -2,7 +2,7 @@ import { useReveal } from '../hooks/useReveal';
 
 // Broadcast lower-third: a red tab over a white title slab that wipes in on scroll.
 export default function SectionHead({ id, tab, title, children }) {
-  const ref = useReveal();
+  const ref = useReveal(id);
   return (
     <header ref={ref} className="l3">
       <p className="l3__tab"><span>{tab}</span></p>

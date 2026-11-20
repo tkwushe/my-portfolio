@@ -5,6 +5,7 @@ import Hero from './components/Hero';
 import Squad from './components/Squad';
 import Lab from './components/Lab';
 import Scorecard from './components/Scorecard';
+import FormGuide from './components/FormGuide';
 import Attributes from './components/Attributes';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
@@ -76,11 +77,13 @@ export default function App() {
         const el = document.querySelector(`[data-vt-card="${slug}"]`);
         if (el) el.style.viewTransitionName = on ? 'active-card' : '';
       };
-      nameCard(true);
+      // Leaving a report for anywhere but that project's own slot: no morph, just the swap.
+      const landsOnSlot = next.project || next.anchor === `slot-${slug}`;
+      if (landsOnSlot) nameCard(true);
       document.documentElement.classList.add('vt-running');
       const transition = document.startViewTransition(() => {
         flushSync(() => setRoute(next));
-        nameCard(true);
+        if (landsOnSlot) nameCard(true);
         // Land in the right place before the new view is captured, so the card has somewhere
         // on screen to grow into: the top of a report, or the project's own slot going back.
         if (next.project) window.scrollTo({ top: 0, behavior: 'instant' });
@@ -100,6 +103,12 @@ export default function App() {
   }, [route]);
 
   const firstRoute = useRef(true);
+  // Set once the home page has been seen, so its arrival effects don't replay on every return.
+  const homeSeen = useRef(false);
+  const returningHome = !route.project && homeSeen.current;
+  useEffect(() => {
+    if (!route.project) homeSeen.current = true;
+  }, [route.project]);
 
   useEffect(() => {
     document.title = route.project ? `${route.project.name} · Takudzwa Wushe` : SITE_TITLE;
@@ -129,10 +138,11 @@ export default function App() {
             <CaseStudy project={route.project} />
           ) : (
             <>
-              <Hero entrance={playedIntro && !walkoutOpen} waiting={walkoutOpen} />
+              <Hero entrance={playedIntro && !walkoutOpen && !returningHome} waiting={walkoutOpen} returning={returningHome} />
               <Squad />
               <Lab />
               <Scorecard />
+            <FormGuide />
               <Attributes />
               <Contact />
             </>

@@ -1,4 +1,6 @@
+import CountUp from './CountUp';
 import SectionHead from './SectionHead';
+import Walkthrough from './Walkthrough';
 import { career, inningsAverage, inningsTotal, japan, modules, profile, seasons, whyML } from '../data/profile';
 
 export default function Scorecard() {
@@ -41,11 +43,11 @@ export default function Scorecard() {
             <tfoot>
               <tr>
                 <th scope="row">Total <span className="scorecard__note">{modules.length} modules, declared</span></th>
-                <td className="num scorecard__runs">{inningsTotal}/{modules.length}d</td>
+                <td className="num scorecard__runs"><CountUp value={inningsTotal} />/{modules.length}d</td>
               </tr>
               <tr>
                 <th scope="row">Average</th>
-                <td className="num scorecard__runs">{inningsAverage.toFixed(2)}</td>
+                <td className="num scorecard__runs"><CountUp value={inningsAverage.toFixed(2)} /></td>
               </tr>
               <tr className="scorecard__result">
                 <th scope="row" colSpan="2">Result: First Class Honours</th>
@@ -105,6 +107,7 @@ export default function Scorecard() {
               <p className="seasons__label">{season.label} · {season.period}</p>
               <h4>{season.name}</h4>
               <p>{season.detail}</p>
+              {season.shots && <Walkthrough title={season.name} shots={season.shots} />}
             </li>
           ))}
         </ul>

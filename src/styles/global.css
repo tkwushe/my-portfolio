@@ -423,7 +423,8 @@ svg {
 }
 
 /* Held still until the walkout has gone, so the pulse is actually seen. */
-.hero--waiting .live__dot {
+.hero--waiting .live__dot,
+.hero--returning .live__dot {
   animation: none;
 }
 
@@ -529,6 +530,7 @@ svg {
 }
 
 .hero__footnote {
+  text-wrap: balance;
   position: relative;
   max-width: 32ch;
   font-family: var(--font-mono);
@@ -584,6 +586,13 @@ svg {
   font-variant-numeric: tabular-nums;
 }
 
+/* Words, not figures: the stat bar says what I'm drawn to. */
+.statbar--words dd {
+  font-size: clamp(1.5rem, 2.6vw, 2.25rem);
+  line-height: 1.05;
+  text-transform: uppercase;
+}
+
 /* ---------- Sections and lower-thirds ---------- */
 .section {
   max-width: var(--wrap);
@@ -635,6 +644,11 @@ svg {
   margin-top: 22px;
   font-size: 1.125rem;
   color: var(--text-muted);
+}
+
+.l3.is-instant .l3__tab,
+.l3.is-instant .l3__title {
+  animation: none !important;
 }
 
 .l3.is-in .l3__tab {
@@ -1010,6 +1024,84 @@ svg {
   border-top-color: var(--red);
 }
 
+/* Season 1 walkthrough: a main frame plus thumbnail steps. */
+.walkthrough {
+  display: grid;
+  gap: 10px;
+  margin: 14px 0 0;
+}
+
+.walkthrough__frame img {
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--line-strong);
+}
+
+.walkthrough__caption {
+  font-size: 0.875rem;
+  color: var(--text-soft);
+}
+
+.walkthrough__count {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--red-bright);
+}
+
+.walkthrough__steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.walkthrough__step {
+  min-height: 44px;
+  padding: 0;
+  border: 2px solid transparent;
+  background: none;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 160ms var(--ease), border-color 160ms var(--ease);
+}
+
+.walkthrough__step img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.walkthrough__step:hover,
+.walkthrough__step[aria-pressed='true'] {
+  opacity: 1;
+}
+
+.walkthrough__step[aria-pressed='true'] {
+  border-color: var(--red);
+}
+
+/* Seasons stack; the one with a walkthrough puts its text beside the screenshots. */
+.seasons li {
+  grid-column: 1 / -1;
+}
+
+@media (min-width: 900px) {
+  .seasons li:has(.walkthrough) {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.7fr);
+    column-gap: 32px;
+  }
+
+  .seasons li:has(.walkthrough) > :not(.walkthrough) {
+    grid-column: 1;
+  }
+
+  .seasons li:has(.walkthrough) .walkthrough {
+    grid-column: 2;
+    grid-row: 1 / span 4;
+    margin-top: 0;
+  }
+}
+
 .seasons h4 {
   font-size: 1.75rem;
 }
@@ -1236,37 +1328,6 @@ svg {
   align-items: center;
   gap: 8px;
   min-height: 44px;
-  color: var(--red-bright);
-}
-
-.case__next {
-  display: grid;
-  justify-items: start;
-  gap: 10px;
-  margin-top: 72px;
-  padding-top: 28px;
-  border-top: 1px solid var(--line);
-  text-decoration: none;
-}
-
-.case__next-name {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  font-family: var(--font-display);
-  font-size: clamp(2.25rem, 7vw, 4rem);
-  font-weight: 900;
-  line-height: 1;
-  text-transform: uppercase;
-  transition: color 160ms var(--ease);
-}
-
-.case__next-name svg {
-  width: 0.55em;
-  height: 0.55em;
-}
-
-.case__next:hover .case__next-name {
   color: var(--red-bright);
 }
 

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FaArrowRight, FaEnvelope, FaGithub, FaLinkedin } from 'react-icons/fa';
+import { FaArrowRight, FaEnvelope, FaFileDownload, FaGithub, FaLinkedin } from 'react-icons/fa';
 import SectionHead from './SectionHead';
 import { profile } from '../data/profile';
 
@@ -7,6 +7,7 @@ const METHODS = [
   { icon: FaEnvelope, title: 'Email', value: profile.email, href: `mailto:${profile.email}` },
   { icon: FaLinkedin, title: 'LinkedIn', value: 'Takudzwa Wushe', href: profile.links.linkedin },
   { icon: FaGithub, title: 'GitHub', value: '@tkwushe', href: profile.links.github },
+  { icon: FaFileDownload, title: 'CV', value: 'Download as PDF', href: profile.cv, download: true },
 ];
 
 // The deal sheet strip: "Window: Open" restates the open-to-roles line above; the rest comes from the profile.
@@ -90,9 +91,12 @@ export default function Contact() {
           <div className="deal__lines">
             <h3 className="deal__heading">Direct lines</h3>
             <ul>
-              {METHODS.map(({ icon: Icon, title, value, href }) => (
+              {METHODS.map(({ icon: Icon, title, value, href, download }) => (
                 <li key={title}>
-                  <a href={href} {...(href.startsWith('mailto:') ? {} : { target: '_blank', rel: 'noopener noreferrer' })}>
+                  <a
+                    href={href}
+                    {...(download ? { download: true } : href.startsWith('mailto:') ? {} : { target: '_blank', rel: 'noopener noreferrer' })}
+                  >
                     <span className="deal__icon"><Icon aria-hidden="true" /></span>
                     <span className="deal__text">
                       <span className="deal__label">{title}</span>
