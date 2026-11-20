@@ -70,7 +70,6 @@ export default function Scorecard() {
       </div>
 
       <article className="away" data-reveal>
-        <p className="chip chip--live">Pegara · Nov 2025 – present</p>
         <h3>{japan.title}</h3>
         <div className="away__body">
           {japan.paragraphs.map((paragraph) => (

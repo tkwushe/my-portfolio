@@ -17,7 +17,7 @@ export const profile = {
   cricket: 'Australia & Zimbabwe',
   cricketFavourite: 'Steve Smith',
   football: 'Watches loads of football',
-  tagline: "At Pegara, a startup where I work in a team of three on an animal detector, I build its datasets, generate synthetic video for the scenes it struggles with, and test every change against the same clips.",
+  tagline: "I work at Pegara, a startup, in a team of three on an animal detector. I build its datasets, make synthetic video for the scenes it struggles with, and test every change against the same clips.",
   // Where I want to go next, said the same way wherever it comes up.
   nextStep: 'data science, deep learning and quantitative research roles',
   email: 'tk.wushe@gmail.com',
@@ -86,7 +86,7 @@ export const career = [
     period: 'Nov 2025 – present',
     club: 'Pegara',
     role: 'Assistant Data Scientist',
-    detail: 'In February 2026 our CTO trusted me to lead the animal detector project for two to three months. The full story is in its match report.',
+    detail: 'Working on the animal detector, which our CTO trusted me to lead from February 2026. The full story is in its match report.',
   },
   {
     period: '2022 – 2025',

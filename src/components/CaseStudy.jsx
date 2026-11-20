@@ -1,16 +1,6 @@
 import { FaArrowLeft, FaArrowRight, FaCheck, FaExternalLinkAlt, FaGithub } from 'react-icons/fa';
-import { Fragment } from 'react';
 import { ProjectCard } from './Card';
 import { squad } from '../data/projects';
-
-// Splits a long report into its opening, middle and close without touching the owner's words.
-const phaseAt = (i, total) => {
-  if (total < 6) return null;
-  if (i === 0) return 'Kick-off';
-  if (i === Math.floor(total / 2)) return 'Second half';
-  if (i === total - 1) return 'Full time';
-  return null;
-};
 
 export default function CaseStudy({ project }) {
   const index = squad.findIndex((p) => p.slug === project.slug);
@@ -24,7 +14,7 @@ export default function CaseStudy({ project }) {
       </a>
 
       <header className="case__head">
-        <div className="case__head-card" style={{ viewTransitionName: `card-${project.slug}` }}>
+        <div className="case__head-card" data-vt-card={project.slug}>
           <ProjectCard project={project} />
         </div>
         <div className="case__head-text">
@@ -89,33 +79,6 @@ export default function CaseStudy({ project }) {
         </figure>
       )}
 
-      <div className="case__grid">
-        <div className="case__body">
-          {project.body.map((paragraph, i) => (
-            <Fragment key={i}>
-              {phaseAt(i, project.body.length) && <h2 className="case__phase">{phaseAt(i, project.body.length)}</h2>}
-              <p>{paragraph}</p>
-            </Fragment>
-          ))}
-
-          {project.runNote && (
-            <aside className="case__note">
-              <h2>How to play</h2>
-              <p>{project.runNote}</p>
-            </aside>
-          )}
-        </div>
-
-        <aside className="case__side" aria-label="Project summary">
-          <h2>Kit list</h2>
-          <ul className="chips">
-            {project.technologies.map((tech) => (
-              <li key={tech}>{tech}</li>
-            ))}
-          </ul>
-        </aside>
-      </div>
-
       {comparison && (
         <div className="league">
           <div className="league__scroll" role="region" aria-label={comparison.title} tabIndex={0}>
@@ -148,6 +111,37 @@ export default function CaseStudy({ project }) {
           <p className="league__note">{comparison.footnote}</p>
         </div>
       )}
+
+      <div className="case__grid">
+        <div className="case__body">
+          {project.body.map((paragraph, i) => (
+            <p key={i}>{paragraph}</p>
+          ))}
+
+          {project.runNote && (
+            <aside className="case__note">
+              <h2>How to play</h2>
+              <p>{project.runNote}</p>
+            </aside>
+          )}
+        </div>
+
+        <aside className="case__side" aria-label="Project summary">
+          <h2>Kit list</h2>
+          <ul className="chips">
+            {project.technologies.map((tech) => (
+              <li key={tech}>{tech}</li>
+            ))}
+          </ul>
+          <h2>Next fixture</h2>
+          <a className="side-next" href={`#/case/${next.slug}`}>
+            <span className="side-next__pos">{next.position}</span>
+            <span className="side-next__name">{next.name}</span>
+            <span className="side-next__summary">{next.summary}</span>
+          </a>
+        </aside>
+      </div>
+
 
       {links.demo && (
         <section className="case__demo" aria-labelledby="demo-title">

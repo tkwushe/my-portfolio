@@ -6,8 +6,13 @@ import { ticker } from '../data/profile';
 // as a pause button, so touch and keyboard users can stop it too.
 export default function Ticker() {
   const [paused, setPaused] = useState(false);
+  // Nothing moves under reduced motion, so there is no pause control to offer.
+  const still = typeof window.matchMedia === 'function' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   return (
     <aside className={`ticker${paused ? ' is-paused' : ''}`} aria-label="Latest">
+      {still ? (
+        <p className="ticker__label">Latest</p>
+      ) : (
       <button type="button" className="ticker__label" aria-pressed={paused} onClick={() => setPaused((p) => !p)}>
         Latest
         <svg className="ticker__state" viewBox="0 0 12 12" aria-hidden="true" focusable="false">
@@ -15,6 +20,7 @@ export default function Ticker() {
         </svg>
         <span className="visually-hidden">: pause ticker</span>
       </button>
+      )}
       <div className="ticker__window">
         <div className="ticker__track">
           {[false, true].map((isCopy) => (

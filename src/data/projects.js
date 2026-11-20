@@ -11,7 +11,7 @@ export const squad = [
     report: {
       problem: 'Decide, one second at a time, whether a particular animal is in a video frame.',
       approach: 'Versioned clip datasets with strict splits, around 10,000 synthetic one-second clips from custom ComfyUI pipelines for the scenes it struggled with, and every change tested against the same evaluation and test clips.',
-      result: 'F1 0.920 on 687 held-out clips, plus a real-world check on around 670 10-second clips. A 1,658-clip synthetic set, scored with the frozen detector, reached F1 0.909. A hard-case retest reached 93.3 percent against a 95 percent target.',
+      result: 'F1 0.920 on 687 held-out clips, plus a real-world check on around 670 clips of 10 seconds each. A 1,658-clip synthetic set, scored with the frozen detector, reached F1 0.909. A hard-case retest reached 93.3 percent against a 95 percent target.',
     },
     name: 'Animal Detector',
     title: 'Animal Detector: taking a video detection model from dataset to locked evaluation',
@@ -30,7 +30,7 @@ export const squad = [
         { name: '1 · Data', items: ['Versioned clip datasets', 'Strict train, validation and test splits', '1,391-row build with zero split overlap'] },
         { name: '2 · Synthetic video', items: ['Around 10,000 one-second clips', 'Custom ComfyUI pipelines and nodes', 'Aimed at the scenes it struggled with'] },
         { name: '3 · Model', items: ['DINOv3 ConvNeXt-Base encoder', 'BiGRU temporal head', 'Encoders compared under one head'] },
-        { name: '4 · Testing', items: ['Threshold fixed on validation', 'Locked test on 687 held-out clips', 'Around 670 real-world 10-second clips', 'Hard-case retest: 93.3% against a 95% target'] },
+        { name: '4 · Testing', items: ['Threshold fixed on validation', 'Locked test on 687 held-out clips', 'Around 670 real-world clips, 10 seconds each', 'Hard-case retest: 93.3% against a 95% target'] },
       ],
     },
     stats: [
@@ -94,7 +94,7 @@ export const squad = [
     // Figures from the owner's write-up of the site.
     diagram: {
       title: 'Before and after',
-      caption: 'Lighthouse and loading figures from my write-up, first test against the finished site.',
+      caption: 'Lighthouse and loading figures from my write-up: the first test, then the finished site.',
       groups: [
         { name: 'Before', items: ['Lighthouse performance 48', 'Largest Contentful Paint over 23s', 'Blocking time 680ms'] },
         { name: 'What I changed', items: ['Lazy-loaded the gallery', 'Split the JavaScript', 'Loaded analytics after the page', 'Fixed robots.txt and crawlable links'] },
@@ -239,7 +239,7 @@ export const lab = [
     name: 'AI Radio Station',
     icon: 'radio',
     status: 'In development',
-    description: "An AI-assisted production system for radio. It's still at an early stage.",
+    description: "An AI-assisted production system for a sports radio show in Zimbabwe. It's still at the planning stage.",
     stats: [
       { value: 'Audio', label: 'Field' },
       { value: 'Idea', label: 'Stage' },

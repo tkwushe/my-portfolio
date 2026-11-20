@@ -15,7 +15,7 @@ export default function Squad() {
 
       <div className="keyplayer" id={`slot-${keyPlayer.slug}`} data-reveal>
         {/* The card carries the numbers; screen readers get them in the report instead. */}
-        <div aria-hidden="true" style={{ viewTransitionName: `card-${keyPlayer.slug}` }}>
+        <div aria-hidden="true" data-vt-card={keyPlayer.slug}>
           <ProjectCard project={keyPlayer} className="card--feature" />
         </div>
         <div className="keyplayer__body">

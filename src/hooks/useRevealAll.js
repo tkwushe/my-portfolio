@@ -14,7 +14,7 @@ export function useRevealAll(routeKey) {
     // Anything already on screen when the page loads shows straight away instead of animating.
     const fold = window.innerHeight;
     targets.forEach((el) => {
-      if (el.getBoundingClientRect().top < fold * 0.9) el.classList.add('is-in');
+      if (el.getBoundingClientRect().top < fold * 0.9) el.classList.add('is-in', 'is-instant');
     });
     root.classList.add('motion-ready');
 

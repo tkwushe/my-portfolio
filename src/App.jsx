@@ -70,16 +70,29 @@ export default function App() {
         setRoute(next);
         return;
       }
-      document.startViewTransition(() => {
+      // Only the card being opened or returned to morphs; every other card just cross-fades.
+      const slug = next.project?.slug ?? route.project?.slug;
+      const nameCard = (on) => {
+        const el = document.querySelector(`[data-vt-card="${slug}"]`);
+        if (el) el.style.viewTransitionName = on ? 'active-card' : '';
+      };
+      nameCard(true);
+      document.documentElement.classList.add('vt-running');
+      const transition = document.startViewTransition(() => {
         flushSync(() => setRoute(next));
+        nameCard(true);
         // Land in the right place before the new view is captured, so the card has somewhere
         // on screen to grow into: the top of a report, or the project's own slot going back.
         if (next.project) window.scrollTo({ top: 0, behavior: 'instant' });
         else document.getElementById(next.anchor)?.scrollIntoView({ block: 'center', behavior: 'instant' });
         // Anything now on screen is shown straight away, so the card morphs into a settled slot.
         document.querySelectorAll('[data-reveal]').forEach((el) => {
-          if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add('is-in');
+          if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add('is-in', 'is-instant');
         });
+      });
+      transition.finished.finally(() => {
+        nameCard(false);
+        document.documentElement.classList.remove('vt-running');
       });
     };
     window.addEventListener('hashchange', handleHashChange);

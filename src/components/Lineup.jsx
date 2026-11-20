@@ -29,7 +29,7 @@ export default function Lineup({ projects }) {
           >
             <a className="formation__link" href={`#/case/${project.slug}`}>
               {/* The card repeats the report's numbers; the plate below names the link. */}
-              <div className="formation__card" aria-hidden="true" style={{ viewTransitionName: `card-${project.slug}` }}>
+              <div className="formation__card" aria-hidden="true" data-vt-card={project.slug}>
                 <ProjectCard project={project} />
               </div>
               <span className="formation__plate">

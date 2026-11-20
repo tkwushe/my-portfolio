@@ -157,7 +157,7 @@ export function PlayerCard() {
             <span className="card__club">{profile.club}</span>
           </>
         }
-        art={<img src={profileImage} alt={`${profile.firstName} ${profile.lastName}`} width="560" height="560" />}
+        art={<img src={profileImage} alt={`${profile.firstName} ${profile.lastName}`} width="560" height="560" {...{ fetchpriority: 'high' }} />}
         name={profile.cardName}
         stats={cardStats}
         foot="Rare gold"

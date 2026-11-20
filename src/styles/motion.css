@@ -31,6 +31,17 @@
   }
 }
 
+/* Lower-third heads stay hidden until their wipe plays, instead of flashing first. */
+.motion-ready .l3:not(.is-in) .l3__tab,
+.motion-ready .l3:not(.is-in) .l3__title {
+  clip-path: inset(0 100% 0 0);
+}
+
+/* Already on screen when the view appeared: shown as-is, no entrance. */
+.motion-ready [data-reveal].is-instant {
+  animation: none;
+}
+
 /* ---------- Scorecard: the bars fill as the innings comes into view ---------- */
 .motion-ready .scorecard:not(.is-in) .scorecard__bar::after {
   width: 0;
@@ -55,6 +66,21 @@
 
 .ticker {
   view-transition-name: site-ticker;
+}
+
+/* The ticker is frozen for the swap and its old frame dropped, so it never shows twice. */
+.vt-running .ticker__track {
+  animation-play-state: paused;
+}
+
+::view-transition-old(site-ticker),
+::view-transition-old(site-nav) {
+  display: none;
+}
+
+::view-transition-new(site-ticker),
+::view-transition-new(site-nav) {
+  animation: none;
 }
 
 ::view-transition-old(root),

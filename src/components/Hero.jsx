@@ -1,7 +1,7 @@
 import { PlayerCard, ZimFlag } from './Card';
 import CountUp from './CountUp';
 import { MdSportsCricket } from 'react-icons/md';
-import { inningsAverage, modules, profile } from '../data/profile';
+import { modules, profile } from '../data/profile';
 import { squad } from '../data/projects';
 import crest from '../assets/arsenal-crest.svg';
 
@@ -79,12 +79,12 @@ export default function Hero({ entrance = false, waiting = false }) {
           <dd>1st</dd>
         </div>
         <div>
-          <dt>Module average</dt>
-          <dd><CountUp value={inningsAverage.toFixed(1)} paused={waiting} /></dd>
+          <dt>Dataset rows, zero split overlap</dt>
+          <dd><CountUp value="1,391" paused={waiting} /></dd>
         </div>
         <div>
-          <dt>Match reports</dt>
-          <dd><CountUp value={squad.length} paused={waiting} /></dd>
+          <dt>Synthetic clips, ComfyUI</dt>
+          <dd><CountUp value="~10k" paused={waiting} /></dd>
         </div>
       </dl>
     </section>
