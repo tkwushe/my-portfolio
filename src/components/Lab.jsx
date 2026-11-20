@@ -16,7 +16,6 @@ export default function Lab() {
               <LabCard project={project} />
             </div>
             <div className="lab__body">
-              <p className="chip chip--status">{project.status}</p>
               <h3>{project.name}</h3>
               <p>{project.description}</p>
             </div>

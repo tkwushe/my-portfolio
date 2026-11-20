@@ -1,6 +1,16 @@
 import { FaArrowLeft, FaArrowRight, FaCheck, FaExternalLinkAlt, FaGithub } from 'react-icons/fa';
+import { Fragment } from 'react';
 import { ProjectCard } from './Card';
 import { squad } from '../data/projects';
+
+// Splits a long report into its opening, middle and close without touching the owner's words.
+const phaseAt = (i, total) => {
+  if (total < 6) return null;
+  if (i === 0) return 'Kick-off';
+  if (i === Math.floor(total / 2)) return 'Second half';
+  if (i === total - 1) return 'Full time';
+  return null;
+};
 
 export default function CaseStudy({ project }) {
   const index = squad.findIndex((p) => p.slug === project.slug);
@@ -82,7 +92,10 @@ export default function CaseStudy({ project }) {
       <div className="case__grid">
         <div className="case__body">
           {project.body.map((paragraph, i) => (
-            <p key={i}>{paragraph}</p>
+            <Fragment key={i}>
+              {phaseAt(i, project.body.length) && <h2 className="case__phase">{phaseAt(i, project.body.length)}</h2>}
+              <p>{paragraph}</p>
+            </Fragment>
           ))}
 
           {project.runNote && (

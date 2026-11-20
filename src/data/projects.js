@@ -11,7 +11,7 @@ export const squad = [
     report: {
       problem: 'Decide, one second at a time, whether a particular animal is in a video frame.',
       approach: 'Versioned clip datasets with strict splits, around 10,000 synthetic one-second clips from custom ComfyUI pipelines for the scenes it struggled with, and every change tested against the same evaluation and test clips.',
-      result: 'F1 0.920 on 687 held-out clips, plus a real-world check on around 670 10-second clips. A synthetic test set scored F1 0.909. A hard-case retest reached 93.3 percent against a 95 percent target.',
+      result: 'F1 0.920 on 687 held-out clips, plus a real-world check on around 670 10-second clips. A 1,658-clip synthetic set, scored with the frozen detector, reached F1 0.909. A hard-case retest reached 93.3 percent against a 95 percent target.',
     },
     name: 'Animal Detector',
     title: 'Animal Detector: taking a video detection model from dataset to locked evaluation',
@@ -21,7 +21,7 @@ export const squad = [
     tier: 'special',
     tierLabel: 'Key player',
     icon: 'paw',
-    headline: { value: '92', label: 'F1' },
+    headline: { value: '92', label: 'F1 %' },
     // Only figures already cleared for the site; no species, names or data details.
     diagram: {
       title: 'How the detector is built',
@@ -85,7 +85,7 @@ export const squad = [
     headline: { value: '75', label: 'PERF' },
     stats: [
       { value: '48→75', label: 'Lighthouse' },
-      { value: '23s→4s', label: 'LCP' },
+      { value: '>23s→4s', label: 'LCP' },
       { value: '250ms', label: 'Blocking' },
       { value: '−15%', label: 'JS bundle' },
     ],
@@ -118,7 +118,7 @@ export const squad = [
     tier: 'inform',
     tierLabel: 'Dissertation',
     icon: 'water',
-    headline: { value: '93', label: 'AUC' },
+    headline: { value: '93', label: 'AUC %' },
     stats: [
       { value: '0.93', label: 'ROC-AUC' },
       { value: '78%', label: 'Accuracy' },
@@ -130,6 +130,18 @@ export const squad = [
       github: 'https://github.com/tkwushe/ml-final-year-project',
       demo: 'https://tkwushe.github.io/water-points-map/',
       demoTitle: 'Water point prediction interactive map',
+    },
+    // Stages and figures from the owner's dissertation write-up.
+    diagram: {
+      title: 'How the framework fits together',
+      caption: 'From raw records to a map decision-makers can use.',
+      groups: [
+        { name: '1 · Data', items: ['Water Point Data Exchange records', 'CHIRPS rainfall', 'Hydrogeological attributes'] },
+        { name: '2 · Features', items: ['Around 20 engineered features', '3, 6 and 12-month rainfall totals', 'Pump technology and infrastructure age'] },
+        { name: '3 · Models', items: ['XGBoost and Random Forest', 'SMOTE for class imbalance', 'Tuned with RandomizedSearchCV'] },
+        { name: '4 · Results', items: ['78% accuracy', 'ROC-AUC 0.93 on a held-out test set'] },
+        { name: '5 · Explain', items: ['SHAP for every prediction', 'Feature ablation study'] },
+      ],
     },
     image: { src: waterPointsShot, alt: 'Interactive map of predicted water point clusters across Zimbabwe', caption: 'The interactive water points map, tkwushe.github.io/water-points-map' },
   },

@@ -191,6 +191,11 @@
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+/* An odd last tile stretches across the row instead of sitting alone. */
+.scout__lead-list li:last-child:nth-child(3n + 1) {
+  grid-column: 1 / -1;
+}
+
 .scout__lead-list li {
   display: flex;
   align-items: flex-end;

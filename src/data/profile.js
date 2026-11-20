@@ -17,7 +17,7 @@ export const profile = {
   cricket: 'Australia & Zimbabwe',
   cricketFavourite: 'Steve Smith',
   football: 'Watches loads of football',
-  tagline: "I'm an assistant data scientist at Pegara, a startup where I work in a team of three on an animal detector. I build its datasets, generate synthetic video for the scenes it struggles with, and test every change against the same clips.",
+  tagline: "At Pegara, a startup where I work in a team of three on an animal detector, I build its datasets, generate synthetic video for the scenes it struggles with, and test every change against the same clips.",
   // Where I want to go next, said the same way wherever it comes up.
   nextStep: 'data science, deep learning and quantitative research roles',
   email: 'tk.wushe@gmail.com',
@@ -86,7 +86,7 @@ export const career = [
     period: 'Nov 2025 – present',
     club: 'Pegara',
     role: 'Assistant Data Scientist',
-    detail: "A startup, so I'm part of a team of three and involved in a lot early on. In February 2026 our CTO trusted me to lead the animal detector project for two to three months. I build and version the clip datasets, generate synthetic video with custom ComfyUI pipelines, and test every change against fixed evaluation and test clips.",
+    detail: 'In February 2026 our CTO trusted me to lead the animal detector project for two to three months. The full story is in its match report.',
   },
   {
     period: '2022 – 2025',
@@ -102,7 +102,7 @@ export const career = [
   },
   {
     period: '2016 – 2021',
-    club: 'St. Georges Senior School, Zimbabwe',
+    club: "St George's Senior School, Zimbabwe",
     role: 'A Levels',
     detail: '',
   },
@@ -135,6 +135,6 @@ export const attributes = [
 ];
 
 export const interests = [
-  "I'm most interested in how data can help people make better decisions, especially in sustainability, finance and social development. Quantitative research appeals to me because it rewards the same careful testing I do on the detector.",
+  "I'm most interested in how data can help people make better decisions, mainly in sustainability and social development, and more and more in finance. Quantitative research appeals to me because it rewards the same careful testing I do on the detector.",
   "Longer term, I want to help grow tech in Zimbabwe. My water points dissertation is a small example of what I mean, and I'd like to build more things like it there, especially around resource management and access to basic services.",
 ];

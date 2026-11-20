@@ -48,6 +48,15 @@
 .motion-ready .scorecard.is-in tbody tr:nth-child(7) .scorecard__bar::after { transition-delay: 480ms; }
 
 /* ---------- Page transitions: a card grows into its match report ---------- */
+/* The fixed chrome is captured on its own, so it holds still instead of cross-fading. */
+.nav {
+  view-transition-name: site-nav;
+}
+
+.ticker {
+  view-transition-name: site-ticker;
+}
+
 ::view-transition-old(root),
 ::view-transition-new(root) {
   animation-duration: 320ms;

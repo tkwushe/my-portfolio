@@ -1,5 +1,5 @@
 import SectionHead from './SectionHead';
-import { career, inningsAverage, inningsTotal, japan, modules, seasons, whyML } from '../data/profile';
+import { career, inningsAverage, inningsTotal, japan, modules, profile, seasons, whyML } from '../data/profile';
 
 export default function Scorecard() {
   return (
@@ -78,6 +78,24 @@ export default function Scorecard() {
           ))}
         </div>
         <p className="away__ambition">{japan.ambition}</p>
+        <dl className="away__fixture">
+          <div>
+            <dt>Home</dt>
+            <dd>{profile.location}</dd>
+          </div>
+          <div>
+            <dt>Away</dt>
+            <dd>Pegara, a Japanese startup</dd>
+          </div>
+          <div>
+            <dt>Position</dt>
+            <dd>{profile.role}</dd>
+          </div>
+          <div>
+            <dt>Since</dt>
+            <dd>November 2025</dd>
+          </div>
+        </dl>
       </article>
 
       <div className="seasons">

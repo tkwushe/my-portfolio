@@ -52,9 +52,12 @@ export default function App() {
       // Storage can be blocked; the intro then simply plays again next visit.
     }
     setWalkoutOpen(false);
-    // Hand keyboard focus to the page once the intro has gone.
-    requestAnimationFrame(() => document.querySelector('.hero__title')?.focus({ preventScroll: true }));
   }, []);
+
+  // Hand keyboard focus to the page once the intro has gone and the page is no longer inert.
+  useEffect(() => {
+    if (playedIntro && !walkoutOpen) document.querySelector('.hero__title')?.focus({ preventScroll: true });
+  }, [playedIntro, walkoutOpen]);
 
   useEffect(() => {
     // Where the browser supports it, the route swap runs as a view transition, so a project
@@ -73,6 +76,10 @@ export default function App() {
         // on screen to grow into: the top of a report, or the project's own slot going back.
         if (next.project) window.scrollTo({ top: 0, behavior: 'instant' });
         else document.getElementById(next.anchor)?.scrollIntoView({ block: 'center', behavior: 'instant' });
+        // Anything now on screen is shown straight away, so the card morphs into a settled slot.
+        document.querySelectorAll('[data-reveal]').forEach((el) => {
+          if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add('is-in');
+        });
       });
     };
     window.addEventListener('hashchange', handleHashChange);

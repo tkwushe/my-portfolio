@@ -34,7 +34,7 @@
 @keyframes card-in {
   from {
     opacity: 0;
-    transform: perspective(900px) translateY(60px) scale(1.5) rotateY(-200deg);
+    transform: perspective(900px) translateY(40px) scale(1.1) rotateY(-180deg);
   }
   to {
     opacity: 1;

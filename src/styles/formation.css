@@ -185,7 +185,12 @@
   }
 
   .formation__player .card {
-    --card-w: 220px;
+    --card-w: 196px;
+  }
+
+  /* On the pitch each card keeps its position and category; the one-liner is in the report. */
+  .formation__summary {
+    display: none;
   }
 
   .formation__player--back-top {

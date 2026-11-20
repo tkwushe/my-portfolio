@@ -111,6 +111,7 @@ function PlayerBack() {
     ['Supports', profile.supports],
     ['Cricket', 'AUS & ZIM'],
     ['Fave', profile.cricketFavourite],
+    ['Degree', 'First Class'],
   ];
   return (
     <div className="card__back-inner">

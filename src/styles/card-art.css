@@ -50,9 +50,12 @@
 /* Text never drops under 12px, whatever the card width. */
 .card__back-inner {
   position: absolute;
+  /* Sits between the crown and the point, centred in the space. */
   top: 11cqw;
+  bottom: 22cqw;
   left: 10cqw;
   right: 10cqw;
+  justify-content: center;
   display: flex;
   flex-direction: column;
   gap: 1.4cqw;

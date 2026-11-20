@@ -65,6 +65,8 @@ export default function Contact() {
         <div className="deal__grid">
           <form className="deal__form" action={profile.formEndpoint} method="POST" onSubmit={handleSubmit}>
             <h3 className="deal__heading">Make an approach</h3>
+            {/* Spam trap: people never see or fill this, bots often do. */}
+            <input type="text" name="_gotcha" tabIndex={-1} autoComplete="off" aria-hidden="true" className="visually-hidden" />
             <div className="deal__field">
               <label htmlFor="name">Name</label>
               <input type="text" id="name" name="name" autoComplete="name" required />

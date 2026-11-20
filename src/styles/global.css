@@ -325,11 +325,6 @@ svg {
   --to: -26deg;
 }
 
-@keyframes sway {
-  from { rotate: var(--from); }
-  to { rotate: var(--to); }
-}
-
 /* The club crest sits on the red stand above the card, like the badge over a player's name. */
 .hero__cardwrap {
   position: relative;
@@ -380,7 +375,7 @@ svg {
 .allegiance__label {
   display: block;
   font-family: var(--font-mono);
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.12em;
   color: var(--text-muted);
@@ -914,12 +909,53 @@ svg {
 /* The Japan story: a feature panel between the career table and the archive. */
 .away {
   display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 300px);
   justify-items: start;
-  gap: 18px;
+  column-gap: 48px;
+  row-gap: 18px;
   margin-top: 80px;
   padding: 44px 48px;
   border-left: 6px solid var(--red);
   background: linear-gradient(105deg, rgba(239, 1, 7, 0.2), rgba(239, 1, 7, 0) 60%), var(--panel);
+}
+
+.away > :not(.away__fixture) {
+  grid-column: 1;
+}
+
+/* The fixture card runs down the right-hand side of the panel. */
+.away__fixture {
+  grid-column: 2;
+  grid-row: 1 / span 4;
+  align-self: start;
+  justify-self: stretch;
+  display: grid;
+  border-top: 4px solid var(--red);
+  background: rgba(7, 10, 18, 0.55);
+}
+
+.away__fixture div {
+  display: grid;
+  gap: 2px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--line);
+}
+
+.away__fixture dt {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.away__fixture dd {
+  font-family: var(--font-display);
+  font-size: 1.375rem;
+  font-weight: 800;
+  line-height: 1.15;
+  text-transform: uppercase;
 }
 
 .away h3 {
@@ -1105,6 +1141,20 @@ svg {
   font-size: 1.0625rem;
   line-height: 1.75;
   color: var(--text-soft);
+}
+
+.case__phase {
+  margin: 1.6em 0 0.6em;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--red-bright);
+}
+
+.case__phase:first-child {
+  margin-top: 0;
 }
 
 .case__body p + p {
@@ -1435,7 +1485,13 @@ svg {
   }
 
   .away {
+    grid-template-columns: minmax(0, 1fr);
     padding: 32px 24px;
+  }
+
+  .away__fixture {
+    grid-column: 1;
+    grid-row: auto;
   }
 
   .scorecard-grid,
@@ -1511,9 +1567,30 @@ svg {
     gap: 0;
   }
 
+  /* Card on the left; the flip button and the "real marks" note stacked beside it. */
+  .hero__card {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    column-gap: 18px;
+  }
+
   .hero__cardwrap {
-    flex-direction: row;
-    gap: 18px;
+    display: contents;
+  }
+
+  .hero__card .card--player {
+    grid-row: 1 / 3;
+  }
+
+  .hero__card .card-flip {
+    align-self: end;
+    justify-self: start;
+  }
+
+  .hero__footnote {
+    grid-column: 2;
+    align-self: start;
   }
 
   .hero__crest {
@@ -1523,7 +1600,9 @@ svg {
   }
 
   .hero__footnote {
-    display: none;
+    max-width: 18ch;
+    margin-top: 16px;
+    text-align: left;
   }
 
   .hero__copy {
@@ -1583,6 +1662,15 @@ svg {
 
   .ticker__track {
     animation: none;
+  }
+
+  /* Nothing moves, so there is nothing to pause. */
+  .ticker__label {
+    pointer-events: none;
+  }
+
+  .ticker__state {
+    display: none;
   }
 
   .ticker__window {
