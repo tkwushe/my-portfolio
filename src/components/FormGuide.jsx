@@ -7,7 +7,6 @@ const monthName = (key) => `${MONTHS[Number(key.slice(5)) - 1]} ${key.slice(0, 4
 const partial = (key) => (key === countedTo.month ? ` (${countedTo.label})` : '');
 const HEIGHT = 260;
 const PAD = { top: 34, right: 12, bottom: 34, left: 36 };
-const TIP_W = 200;
 const commits = (n) => `${n} commit${n === 1 ? '' : 's'}`;
 const wicketKeys = Object.keys(milestones);
 const first = monthlyCommits[0][0];
@@ -73,9 +72,13 @@ function Gridlines({ max, step, x1, x2, y }) {
   ));
 }
 
-function Tip({ x, y, width, children }) {
-  const left = Math.min(Math.max(x, TIP_W / 2), width - TIP_W / 2);
-  return <div className="chart__tip" style={{ left, top: y }} aria-hidden="true">{children}</div>;
+// One readout line under each plot, rather than tooltips on it, so nothing covers the data.
+function Readout({ children }) {
+  return (
+    <p className="chart__readout" aria-hidden="true">
+      {children || 'Hover, tap or use the arrow keys.'}
+    </p>
+  );
 }
 
 // Always mounted, so the first arrow-key step is read out too.
@@ -165,15 +168,17 @@ function Manhattan() {
           })}
           <line className="chart__axis" x1={PAD.left} x2={width - PAD.right} y1={y(0)} y2={y(0)} />
         </svg>
-        {active !== null && (
-          <Tip x={x(active) + barW / 2} y={Math.max(84, y(monthlyCommits[active][1]) - 26)} width={width}>
-            <strong>{monthName(activeKey)}{partial(activeKey)}</strong>
-            <span>{commits(monthlyCommits[active][1])}</span>
-            {milestones[activeKey] && <span className="chart__tip-note">{milestones[activeKey]}</span>}
-          </Tip>
-        )}
         <Announcer text={fromKeys ? activeText : ''} />
       </div>
+      <Readout>
+        {activeKey && (
+          <>
+            <strong>{monthName(activeKey)}{partial(activeKey)}</strong>
+            <span>{commits(monthlyCommits[active][1])}</span>
+            {milestones[activeKey] && <span>{milestones[activeKey]}</span>}
+          </>
+        )}
+      </Readout>
       <p className="chart__legend">
         <span className="chart__key chart__key--bar chart__key--2024" aria-hidden="true" />2024
         <span className="chart__key chart__key--bar chart__key--2025" aria-hidden="true" />2025
@@ -213,7 +218,7 @@ function Worm() {
   const [ref, width] = useWidth();
   const narrow = width < 420;
   const max = 150;
-  const right = PAD.right + (narrow ? 36 : 84);
+  const right = PAD.right + (narrow ? 44 : 84);
   const inner = width - PAD.left - right;
   const x = (month) => PAD.left + ((month - 1) / 11) * inner;
   const y = (v) => PAD.top + (HEIGHT - PAD.top - PAD.bottom) * (1 - v / max);
@@ -238,7 +243,7 @@ function Worm() {
         >
           <Gridlines max={max} step={50} x1={PAD.left} x2={width - right} y={y} />
           {MONTHS.map((label, i) =>
-            i % (narrow ? 3 : 2) === 0 ? (
+            (narrow ? [0, 3, 6, 10].includes(i) : i % 2 === 0) ? (
               <text key={label} className="chart__tick" x={x(i + 1)} y={HEIGHT - PAD.bottom + 18} textAnchor="middle">{label}</text>
             ) : null
           )}
@@ -250,7 +255,14 @@ function Worm() {
                 <polyline points={points.map(([m, v]) => `${x(m)},${y(v)}`).join(' ')} />
                 <circle cx={x(last[0])} cy={y(last[1])} r="4.5" />
                 <text className="chart__end" x={x(last[0]) + 9} y={y(last[1])} dy="0.32em">
-                  {narrow ? total : `${year} · ${total}`}
+                  {narrow ? (
+                    <>
+                      <tspan x={x(last[0]) + 9} dy="-0.4em">{year}</tspan>
+                      <tspan x={x(last[0]) + 9} dy="1.2em">{total}</tspan>
+                    </>
+                  ) : (
+                    `${year} · ${total}`
+                  )}
                 </text>
               </g>
             );
@@ -265,23 +277,27 @@ function Worm() {
         <Announcer text={fromKeys ? activeText : ''} />
       </div>
       {/* A readout under the plot rather than a tooltip on it, so it never covers the lines. */}
-      <p className="chart__readout" aria-hidden="true">
-        {month ? (
+      <Readout>
+        {month && (
           <>
             <strong>{MONTHS[month - 1]}</strong>
             {rows.map((r) => (
-              <span key={r.year} className={`chart__readout-${r.year}`}>{r.year}: {r.text}</span>
+              <span key={r.year}>
+                <span className={`chart__key chart__key--${r.year}`} aria-hidden="true" />
+                {r.year}: {r.text}
+              </span>
             ))}
           </>
-        ) : (
-          'Hover, tap or use the arrow keys to read a month.'
         )}
-      </p>
+      </Readout>
       <p className="chart__legend">
         <span className="chart__key chart__key--2025" aria-hidden="true" />2025
         <span className="chart__key chart__key--2026" aria-hidden="true" />2026 so far
       </p>
-      <p className="chart__note">Wicket 3 marks joining Pegara in Nov 2025. From then on most of my work is in private repositories and isn&apos;t counted.</p>
+      <p className="chart__note">
+        Wicket {pegaraWicket} marks joining Pegara in {monthName(pegaraFrom)}. From then on most of my work is in private
+        repositories and isn&apos;t counted.
+      </p>
     </figure>
   );
 }

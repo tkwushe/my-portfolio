@@ -57,8 +57,8 @@
   outline-offset: 4px;
 }
 
-/* Bars wear their year's colour. 2024 is only drawn in outline, so it never
-   needs a third hue that would fail the colour-vision checks. */
+/* Bars wear their year's colour. 2024 is a neutral grey outline with a light fill,
+   so it never needs a third hue that would fail the colour-vision checks. */
 .chart__bar {
   transition: opacity 160ms var(--ease);
 }
@@ -167,32 +167,6 @@
   stroke-dasharray: 3 3;
 }
 
-.chart__tip {
-  position: absolute;
-  z-index: 1;
-  display: grid;
-  gap: 2px;
-  min-width: 120px;
-  padding: 8px 10px;
-  border-left: 3px solid var(--red);
-  background: var(--bg);
-  font-size: 0.8125rem;
-  pointer-events: none;
-  transform: translate(-50%, -100%);
-}
-
-.chart__tip strong {
-  white-space: nowrap;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.chart__tip-note {
-  color: var(--text-muted);
-}
-
 .chart__legend {
   margin-top: 10px;
   font-size: 0.8125rem;
@@ -215,7 +189,7 @@
 
 .chart__key--bar.chart__key--2024 {
   border: 1.5px solid var(--text-muted);
-  background: none;
+  background: color-mix(in srgb, var(--text-muted) 35%, transparent);
 }
 
 .chart__key:not(:first-child) {
@@ -280,8 +254,11 @@
 .chart__readout {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 4px 14px;
-  min-height: 24px;
+  /* Room for two lines, so the first tap never moves the content below. */
+  min-height: 3.6em;
+  align-content: flex-start;
   margin-top: 8px;
   font-family: var(--font-mono);
   font-size: 0.8125rem;

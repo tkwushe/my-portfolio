@@ -243,3 +243,13 @@
     display: none;
   }
 }
+
+/* Pressed (showing the back): solid white, icon turned, so the state reads at a glance. */
+.card-flip[aria-pressed='true'] {
+  background: var(--white);
+  color: var(--red-deep);
+}
+
+.card-flip[aria-pressed='true'] .card-flip__icon {
+  transform: rotate(180deg);
+}

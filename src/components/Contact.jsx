@@ -50,7 +50,7 @@ export default function Contact() {
   return (
     <section className="section" id="contact" aria-labelledby="contact-title">
       <SectionHead id="contact-title" tab="Transfer window" title="Contact">
-        If you&apos;re hiring for a data, deep learning or quant role, or want to talk about a project, send me a message or use any of the links below.
+        If you want to talk about a role or a project, send me a message or use any of the links below.
       </SectionHead>
 
       <div className="deal" data-reveal>

@@ -10,7 +10,7 @@ export const squad = [
     slug: 'animal-detector',
     report: {
       problem: 'Decide, one second at a time, whether a particular animal is in a video frame.',
-      approach: 'Versioned clip datasets with strict splits, around 10,000 synthetic one-second clips from custom ComfyUI pipelines for the scenes it struggled with, and every change tested against the same evaluation and test clips.',
+      approach: 'Versioned clip datasets with strict splits, synthetic one-second clips from custom ComfyUI pipelines for the scenes it struggled with, and every change tested against the same evaluation and test clips.',
       result: 'F1 0.920 on 687 held-out clips, plus a real-world check on around 670 clips of 10 seconds each. A 1,658-clip synthetic set, scored with the frozen detector, reached F1 0.909. A hard-case retest reached 93.3 percent against a 95 percent target.',
     },
     name: 'Animal Detector',
@@ -44,7 +44,7 @@ export const squad = [
     // Owner-approved figures and wording only. Do not add ranks, totals or other numbers.
     comparison: {
       title: 'Encoder comparison',
-      intro: 'Each encoder was tried under the same conditions.',
+      intro: 'Each encoder sat under the same temporal head, though they weren\'t all scored on the same clips.',
       columns: ['Encoder', 'Result', 'Outcome'],
       rows: [
         {
@@ -236,7 +236,7 @@ export const lab = [
     name: 'AI Radio Station',
     icon: 'radio',
     status: 'Planning',
-    description: "An AI-assisted production system for a sports radio show in Zimbabwe. It's still at the planning stage.",
+    description: 'An AI-assisted production system for a sports radio show in Zimbabwe.',
     stats: [{ value: 'Planning', label: 'Stage' }],
   },
   {

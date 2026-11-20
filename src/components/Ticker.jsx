@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ticker } from '../data/profile';
 
 // Rolling news bar pinned to the bottom of the screen. The list is rendered twice
@@ -7,7 +7,17 @@ import { ticker } from '../data/profile';
 export default function Ticker() {
   const [paused, setPaused] = useState(false);
   // Nothing moves under reduced motion, so there is no pause control to offer.
-  const still = typeof window.matchMedia === 'function' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Follows the setting live, in case it changes while the page is open.
+  const [still, setStill] = useState(
+    () => typeof window.matchMedia === 'function' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  );
+  useEffect(() => {
+    if (typeof window.matchMedia !== 'function') return undefined;
+    const query = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const update = () => setStill(query.matches);
+    query.addEventListener?.('change', update);
+    return () => query.removeEventListener?.('change', update);
+  }, []);
   return (
     <aside className={`ticker${paused ? ' is-paused' : ''}`} aria-label="Latest">
       {still ? (

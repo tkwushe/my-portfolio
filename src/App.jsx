@@ -73,12 +73,18 @@ export default function App() {
       }
       // Only the card being opened or returned to morphs; every other card just cross-fades.
       const slug = next.project?.slug ?? route.project?.slug;
+      const cardEl = () => document.querySelector(`[data-vt-card="${slug}"]`);
       const nameCard = (on) => {
-        const el = document.querySelector(`[data-vt-card="${slug}"]`);
+        const el = cardEl();
         if (el) el.style.viewTransitionName = on ? 'active-card' : '';
       };
-      // Leaving a report for anywhere but that project's own slot: no morph, just the swap.
-      const landsOnSlot = next.project || next.anchor === `slot-${slug}`;
+      // A card only morphs from somewhere you can see it; opened from elsewhere (a chart
+      // milestone, say) the report just swaps in. Leaving a report morphs only back to its own slot.
+      const onScreen = (el) => {
+        const box = el?.getBoundingClientRect();
+        return Boolean(box) && box.bottom > 0 && box.top < window.innerHeight;
+      };
+      const landsOnSlot = next.project ? onScreen(cardEl()) : next.anchor === `slot-${slug}`;
       if (landsOnSlot) nameCard(true);
       document.documentElement.classList.add('vt-running');
       const transition = document.startViewTransition(() => {
