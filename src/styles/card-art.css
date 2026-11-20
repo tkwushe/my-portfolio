@@ -207,6 +207,20 @@
 /* On small cards the 12px text floor leaves no room for everything, so the back drops the
    name strip (the front already shows it) and tightens its rows. */
 @container (max-width: 200px) {
+  /* The 12px floor makes the rating stack taller than the card's own scale, so it tightens to clear the name line. */
+  .card__id {
+    top: 12cqw;
+    gap: 0.4cqw;
+  }
+
+  .card__position {
+    padding-top: 1cqw;
+  }
+
+  .card__flag {
+    margin-top: 0.4cqw;
+  }
+
   .card__back-name {
     display: none;
   }

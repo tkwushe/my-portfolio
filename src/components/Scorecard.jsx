@@ -99,7 +99,7 @@ export default function Scorecard() {
         </dl>
       </article>
 
-      <div className="seasons">
+      <div className="seasons" id="seasons">
         <h3>Season archive</h3>
         <ul>
           {seasons.map((season, i) => (

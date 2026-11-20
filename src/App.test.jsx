@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { act, render, screen } from '@testing-library/react';
 import App from './App';
 import { inningsAverage, inningsTotal, modules, overall } from './data/profile';
@@ -49,6 +49,24 @@ describe('App', () => {
 
     goTo('#squad');
     expect(screen.getByRole('heading', { name: 'The Squad' })).toBeInTheDocument();
+  });
+
+  it('lands a nav link from a report on the section top, with its heading focused', () => {
+    const calls = [];
+    const original = Element.prototype.scrollIntoView;
+    Element.prototype.scrollIntoView = vi.fn(function record(options) {
+      calls.push([this.id, options?.block]);
+    });
+    try {
+      render(<App />);
+      goTo(`#/case/${squad[1].slug}`);
+      goTo('#career');
+      expect(calls).toContainEqual(['career', 'start']);
+      expect(calls.some(([id, block]) => id === 'career' && block === 'center')).toBe(false);
+      expect(document.activeElement).toBe(document.getElementById('career').querySelector('h2'));
+    } finally {
+      Element.prototype.scrollIntoView = original;
+    }
   });
 
   it('falls back to the home page for an unknown case study', () => {

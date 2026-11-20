@@ -8,6 +8,7 @@ const partial = (key) => (key === countedTo.month ? ` (${countedTo.label})` : ''
 const HEIGHT = 260;
 const PAD = { top: 34, right: 12, bottom: 34, left: 36 };
 const TIP_W = 200;
+const commits = (n) => `${n} commit${n === 1 ? '' : 's'}`;
 const wicketKeys = Object.keys(milestones);
 const first = monthlyCommits[0][0];
 const last = monthlyCommits[monthlyCommits.length - 1][0];
@@ -99,7 +100,7 @@ function Manhattan() {
   const tickEvery = narrow ? ['-11'] : ['-05', '-11'];
   const activeKey = active !== null ? monthlyCommits[active][0] : null;
   const activeText = activeKey
-    ? `${monthName(activeKey)}${partial(activeKey)}: ${monthlyCommits[active][1]} commits${milestones[activeKey] ? `. ${milestones[activeKey]}` : ''}`
+    ? `${monthName(activeKey)}${partial(activeKey)}: ${commits(monthlyCommits[active][1])}${milestones[activeKey] ? `. ${milestones[activeKey]}` : ''}`
     : '';
 
   return (
@@ -119,7 +120,8 @@ function Manhattan() {
             </pattern>
           </defs>
           <rect className="chart__band" x={bandX} y={PAD.top - 22} width={width - PAD.right - bandX} height={y(0) - PAD.top + 22} />
-          <text className="chart__band-label" x={bandX + 6} y={PAD.top - 8}>
+          {/* Low in the band, where the 2026 bars leave room, so it never sits on a counted bar. */}
+          <text className="chart__band-label" x={bandX + 6} y={y(narrow ? 38 : 36)}>
             {narrow ? (
               <>
                 <tspan>Pegara work</tspan>
@@ -140,7 +142,7 @@ function Manhattan() {
                   y={y(value)}
                   width={barW}
                   height={Math.max(0, y(0) - y(value))}
-                  rx={Math.min(3, barW / 2)}
+                  rx={key < '2025' ? 0 : Math.min(3, barW / 2)}
                 />
                 {wicket >= 0 && (
                   <g className="chart__wicket">
@@ -149,7 +151,12 @@ function Manhattan() {
                   </g>
                 )}
                 {tickEvery.some((end) => key.endsWith(end)) && (
-                  <text className="chart__tick" x={x(i) + barW / 2} y={HEIGHT - PAD.bottom + 18} textAnchor="middle">
+                  <text
+                    className="chart__tick"
+                    x={i === monthlyCommits.length - 1 ? width - PAD.right : x(i) + barW / 2}
+                    y={HEIGHT - PAD.bottom + 18}
+                    textAnchor={i === monthlyCommits.length - 1 ? 'end' : 'middle'}
+                  >
                     {monthName(key)}
                   </text>
                 )}
@@ -161,7 +168,7 @@ function Manhattan() {
         {active !== null && (
           <Tip x={x(active) + barW / 2} y={Math.max(84, y(monthlyCommits[active][1]) - 26)} width={width}>
             <strong>{monthName(activeKey)}{partial(activeKey)}</strong>
-            <span>{monthlyCommits[active][1]} commits</span>
+            <span>{commits(monthlyCommits[active][1])}</span>
             {milestones[activeKey] && <span className="chart__tip-note">{milestones[activeKey]}</span>}
           </Tip>
         )}
@@ -196,6 +203,11 @@ const innings = ['2025', '2026'].map((year) => {
     });
   return { year, points, total };
 });
+
+const pegaraWicket = wicketKeys.indexOf(pegaraFrom) + 1;
+const pegaraPoint = innings
+  .find(({ year }) => year === pegaraFrom.slice(0, 4))
+  .points.find(([m]) => m === Number(pegaraFrom.slice(5)));
 
 function Worm() {
   const [ref, width] = useWidth();
@@ -243,21 +255,28 @@ function Worm() {
               </g>
             );
           })}
-          {/* Wicket 3 on the 2025 innings: the month I joined Pegara. */}
+          {/* The Pegara wicket, drawn on the innings it fell in. */}
           <g className="chart__wicket">
-            <circle cx={x(11)} cy={y(innings[0].points[10][1])} r="9" />
-            <text x={x(11)} y={y(innings[0].points[10][1])} dy="0.35em" textAnchor="middle">3</text>
+            <circle cx={x(pegaraPoint[0])} cy={y(pegaraPoint[1])} r="9" />
+            <text x={x(pegaraPoint[0])} y={y(pegaraPoint[1])} dy="0.35em" textAnchor="middle">{pegaraWicket}</text>
           </g>
           <line className="chart__axis" x1={PAD.left} x2={width - right} y1={y(0)} y2={y(0)} />
         </svg>
-        {month && (
-          <Tip x={x(month)} y={PAD.top + 84} width={width}>
-            <strong>Running total, {MONTHS[month - 1]}</strong>
-            {rows.map((r) => <span key={r.year}>{r.year}: {r.text}</span>)}
-          </Tip>
-        )}
         <Announcer text={fromKeys ? activeText : ''} />
       </div>
+      {/* A readout under the plot rather than a tooltip on it, so it never covers the lines. */}
+      <p className="chart__readout" aria-hidden="true">
+        {month ? (
+          <>
+            <strong>{MONTHS[month - 1]}</strong>
+            {rows.map((r) => (
+              <span key={r.year} className={`chart__readout-${r.year}`}>{r.year}: {r.text}</span>
+            ))}
+          </>
+        ) : (
+          'Hover, tap or use the arrow keys to read a month.'
+        )}
+      </p>
       <p className="chart__legend">
         <span className="chart__key chart__key--2025" aria-hidden="true" />2025
         <span className="chart__key chart__key--2026" aria-hidden="true" />2026 so far

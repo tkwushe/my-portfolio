@@ -7,7 +7,9 @@ const [lead, ...rest] = attributes;
 export default function Attributes() {
   return (
     <section className="section" id="attributes" aria-labelledby="attributes-title">
-      <SectionHead id="attributes-title" tab="Scouting report" title="Attributes" />
+      <SectionHead id="attributes-title" tab="Scouting report" title="Attributes">
+        The tools and methods I use, grouped by area, with deep learning first because it&apos;s what I do most at the moment.
+      </SectionHead>
 
       <div className="scout">
         <div className="scout__lead" data-reveal>

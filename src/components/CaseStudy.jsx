@@ -1,4 +1,4 @@
-import { FaArrowLeft, FaCheck, FaExternalLinkAlt, FaGithub } from 'react-icons/fa';
+import { FaArrowLeft, FaCheck, FaExternalLinkAlt, FaGithub, FaMapMarkedAlt } from 'react-icons/fa';
 import { ProjectCard } from './Card';
 import { squad } from '../data/projects';
 
@@ -20,7 +20,7 @@ export default function CaseStudy({ project }) {
         <div className="case__head-text">
           <p className="chip chip--live">Match report · {project.category}</p>
           <h1 tabIndex={-1}>{project.title}</h1>
-          <p className="section__lead">{project.summary}</p>
+          {!project.report && <p className="section__lead">{project.summary}</p>}
           <div className="case__actions">
             {links.live && (
               <a className="button button--primary" href={links.live} target="_blank" rel="noopener noreferrer">
@@ -30,6 +30,11 @@ export default function CaseStudy({ project }) {
             {links.github && (
               <a className="button" href={links.github} target="_blank" rel="noopener noreferrer">
                 <FaGithub aria-hidden="true" /> View on GitHub
+              </a>
+            )}
+            {links.demo && (
+              <a className="button" href={links.demo} target="_blank" rel="noopener noreferrer">
+                <FaMapMarkedAlt aria-hidden="true" /> Open the map
               </a>
             )}
           </div>

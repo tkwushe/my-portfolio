@@ -39,12 +39,12 @@ export const squad = [
       { value: '~10k', label: 'Synthetic' },
       { value: '~670', label: 'Real clips' },
     ],
-    technologies: ['Deep Learning', 'DINOv3', 'ConvNeXt', 'BiGRU', 'ComfyUI', 'Synthetic Video', 'Locked Evaluation', 'ONNX', 'Jetson'],
+    technologies: ['Deep Learning', 'DINOv3', 'ConvNeXt', 'BiGRU', 'ComfyUI', 'Synthetic Video', 'Locked Evaluation', 'ONNX'],
     links: {},
     // Owner-approved figures and wording only. Do not add ranks, totals or other numbers.
     comparison: {
       title: 'Encoder comparison',
-      intro: 'Same temporal head each time, so the only thing changing is the encoder.',
+      intro: 'Each encoder was tried under the same conditions.',
       columns: ['Encoder', 'Result', 'Outcome'],
       rows: [
         {
@@ -120,7 +120,7 @@ export const squad = [
     icon: 'water',
     headline: { value: '93', label: 'AUC %' },
     stats: [
-      { value: '12', label: 'Months rain' },
+      { value: 'SMOTE', label: 'Class balance' },
       { value: '78%', label: 'Accuracy' },
       { value: '~20', label: 'Features' },
       { value: '3', label: 'Datasets' },

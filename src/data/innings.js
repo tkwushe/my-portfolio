@@ -27,8 +27,8 @@ export const milestones = {
 
 // Where each milestone is written up on this site.
 export const milestoneLinks = {
-  '2024-11': '#career',
+  '2024-11': '#seasons',
   '2025-01': '#/case/bay-noakes',
   '2025-11': '#/case/animal-detector',
-  '2026-11': '#career',
+  '2026-11': '#seasons',
 };
