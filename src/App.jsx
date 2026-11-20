@@ -64,6 +64,8 @@ export default function App() {
     // Where the browser supports it, the route swap runs as a view transition, so a project
     // card grows into the card on its match report and back again.
     const handleHashChange = () => {
+      // Stop any smooth scroll still running, so the new view lands where it should.
+      window.scrollTo({ top: window.scrollY, behavior: 'instant' });
       const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
       const next = readRoute();
       const sameView = next.project?.slug === route.project?.slug;

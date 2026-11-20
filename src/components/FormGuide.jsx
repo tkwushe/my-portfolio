@@ -72,11 +72,13 @@ function Gridlines({ max, step, x1, x2, y }) {
   ));
 }
 
+const touchOnly = typeof window !== 'undefined' && window.matchMedia?.('(hover: none)').matches;
+
 // One readout line under each plot, rather than tooltips on it, so nothing covers the data.
 function Readout({ children }) {
   return (
     <p className="chart__readout" aria-hidden="true">
-      {children || 'Hover, tap or use the arrow keys.'}
+      {children || (touchOnly ? 'Tap a month to read it.' : 'Hover over a month, or use the arrow keys.')}
     </p>
   );
 }
@@ -90,7 +92,8 @@ function Announcer({ text }) {
 // with milestones marked like wickets and numbered against the list underneath.
 function Manhattan() {
   const [ref, width] = useWidth();
-  const narrow = width < 420;
+  // Below this the six month labels collide, so only the Novembers are labelled.
+  const narrow = width < 600;
   const max = 45;
   const inner = width - PAD.left - PAD.right;
   const slot = inner / monthlyCommits.length;
@@ -269,8 +272,8 @@ function Worm() {
           })}
           {/* The Pegara wicket, drawn on the innings it fell in. */}
           <g className="chart__wicket">
-            <circle cx={x(pegaraPoint[0])} cy={y(pegaraPoint[1])} r="9" />
-            <text x={x(pegaraPoint[0])} y={y(pegaraPoint[1])} dy="0.35em" textAnchor="middle">{pegaraWicket}</text>
+            <circle cx={x(pegaraPoint[0])} cy={y(pegaraPoint[1]) - 16} r="9" />
+            <text x={x(pegaraPoint[0])} y={y(pegaraPoint[1]) - 16} dy="0.35em" textAnchor="middle">{pegaraWicket}</text>
           </g>
           <line className="chart__axis" x1={PAD.left} x2={width - right} y1={y(0)} y2={y(0)} />
         </svg>
@@ -295,8 +298,7 @@ function Worm() {
         <span className="chart__key chart__key--2026" aria-hidden="true" />2026 so far
       </p>
       <p className="chart__note">
-        Wicket {pegaraWicket} marks joining Pegara in {monthName(pegaraFrom)}. From then on most of my work is in private
-        repositories and isn&apos;t counted.
+        Wicket {pegaraWicket}: joined Pegara in {monthName(pegaraFrom)}.
       </p>
     </figure>
   );
