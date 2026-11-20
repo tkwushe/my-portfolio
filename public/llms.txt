@@ -1,6 +1,6 @@
 # Takudzwa Wushe
 
-> Assistant Data Scientist at Pegara (a startup, team of three) and MSc Applied AI student at the University of Warwick, with a First Class BSc in Software Engineering from Anglia Ruskin University. Based in Coventry, UK. Interested in deep learning, video detection and knowledge distillation.
+> Assistant Data Scientist at Pegara (a startup, team of three) and MSc Applied AI student at the University of Warwick, with a First Class BSc in Software Engineering from Anglia Ruskin University. Based in Coventry, UK. Most interested in analysing data and in deep learning, including video detection and knowledge distillation. Open to data science, deep learning and quantitative research roles.
 
 ## Projects
 
@@ -9,6 +9,11 @@
 - [Water Points ML](https://takudzwawushe.com/#/case/water-points): dissertation predicting rural water point failure in Zimbabwe, ROC-AUC 0.93.
 - [Fantasy Dungeon](https://takudzwawushe.com/#/case/fantasy-dungeon): Java game demonstrating layered, event-driven architecture.
 - [MindCareDB](https://takudzwawushe.com/#/case/mindcare-db): relational database for a mental health chatbot.
+
+## More
+
+- [CV (PDF)](https://takudzwawushe.com/Takudzwa-Wushe-CV.pdf)
+- [Form guide](https://takudzwawushe.com/#form): commits per month in my own repositories, drawn as a cricket Manhattan and worm.
 
 ## Contact
 

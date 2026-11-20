@@ -8,7 +8,7 @@ const monthName = (key) => `${MONTHS[Number(key.slice(5)) - 1]} ${key.slice(0, 4
 const partial = (key) => (key === countedTo.month ? ` (${countedTo.label})` : '');
 const HEIGHT = 260;
 const PAD = { top: 34, right: 12, bottom: 34, left: 36 };
-const TIP_W = 170;
+const TIP_W = 200;
 const wicketKeys = Object.keys(milestones);
 
 // Width of the plot box, so text stays at real pixel sizes on every screen.
@@ -55,6 +55,7 @@ function useScrub(count, toIndex) {
     onKeyDown,
     onBlur: () => setActive(null),
     tabIndex: 0,
+    role: 'group',
   };
   return [active, handlers, fromKeys];
 }
@@ -70,14 +71,14 @@ function Gridlines({ max, step, x1, x2, y }) {
   ));
 }
 
-function Tip({ x, y, width, children, announce }) {
+function Tip({ x, y, width, children }) {
   const left = Math.min(Math.max(x, TIP_W / 2), width - TIP_W / 2);
-  return (
-    <>
-      <div className="chart__tip" style={{ left, top: y }} aria-hidden="true">{children}</div>
-      {announce && <p className="visually-hidden" aria-live="polite">{announce}</p>}
-    </>
-  );
+  return <div className="chart__tip" style={{ left, top: y }} aria-hidden="true">{children}</div>;
+}
+
+// Always mounted, so the first arrow-key step is read out too.
+function Announcer({ text }) {
+  return <p className="visually-hidden" aria-live="polite">{text}</p>;
 }
 
 // Manhattan: commits per month as bars, the way a Manhattan shows runs per over,
@@ -103,17 +104,22 @@ function Manhattan() {
   return (
     <figure className="chart">
       <figcaption className="chart__title">Manhattan · commits per month</figcaption>
-      <div className="chart__plot" ref={ref}>
+      <div className="chart__plot" ref={ref} aria-label="Manhattan chart: use the left and right arrow keys to step through the months" {...handlers}>
         <svg
           width={width}
           height={HEIGHT}
           role="img"
-          aria-label="Manhattan of commits per month, May 2024 to November 2026. Use the arrow keys to step through the months; the figures are also in the table below."
-          {...handlers}
+          aria-label="Manhattan of commits per month, May 2024 to November 2026. The figures are also in the table below."
         >
+          <defs>
+            <pattern id="hatch-partial" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+              <rect className="chart__hatch-bg" width="5" height="5" />
+              <line className="chart__hatch" x1="0" y1="0" x2="0" y2="5" />
+            </pattern>
+          </defs>
           <rect className="chart__band" x={bandX} y={PAD.top - 22} width={width - PAD.right - bandX} height={y(0) - PAD.top + 22} />
           <text className="chart__band-label" x={bandX + 6} y={PAD.top - 8}>
-            Pegara (private)
+            {narrow ? 'Pegara hidden' : 'Pegara work not shown'}
           </text>
           <Gridlines max={40} step={10} x1={PAD.left} x2={width - PAD.right} y={y} />
           {monthlyCommits.map(([key, value], i) => {
@@ -121,7 +127,7 @@ function Manhattan() {
             return (
               <g key={key}>
                 <rect
-                  className={`chart__bar chart__bar--${key.slice(0, 4)}${active === i ? ' is-active' : ''}`}
+                  className={`chart__bar chart__bar--${key.slice(0, 4)}${key === countedTo.month ? ' is-partial' : ''}${active === i ? ' is-active' : ''}`}
                   x={x(i)}
                   y={y(value)}
                   width={barW}
@@ -130,8 +136,8 @@ function Manhattan() {
                 />
                 {wicket >= 0 && (
                   <g className="chart__wicket">
-                    <circle cx={x(i) + barW / 2} cy={y(value) - 12} r="8" />
-                    <text x={x(i) + barW / 2} y={y(value) - 12} dy="0.35em" textAnchor="middle">{wicket + 1}</text>
+                    <circle cx={x(i) + barW / 2} cy={y(value) - 13} r="9" />
+                    <text x={x(i) + barW / 2} y={y(value) - 13} dy="0.35em" textAnchor="middle">{wicket + 1}</text>
                   </g>
                 )}
                 {tickEvery.some((end) => key.endsWith(end)) && (
@@ -145,17 +151,19 @@ function Manhattan() {
           <line className="chart__axis" x1={PAD.left} x2={width - PAD.right} y1={y(0)} y2={y(0)} />
         </svg>
         {active !== null && (
-          <Tip x={x(active) + barW / 2} y={y(monthlyCommits[active][1]) - 24} width={width} announce={fromKeys && activeText}>
+          <Tip x={x(active) + barW / 2} y={y(monthlyCommits[active][1]) - 26} width={width}>
             <strong>{monthName(activeKey)}{partial(activeKey)}</strong>
             <span>{monthlyCommits[active][1]} commits</span>
             {milestones[activeKey] && <span className="chart__tip-note">{milestones[activeKey]}</span>}
           </Tip>
         )}
+        <Announcer text={fromKeys ? activeText : ''} />
       </div>
       <p className="chart__legend">
         <span className="chart__key chart__key--bar chart__key--2024" aria-hidden="true" />2024
         <span className="chart__key chart__key--bar chart__key--2025" aria-hidden="true" />2025
         <span className="chart__key chart__key--bar chart__key--2026" aria-hidden="true" />2026
+        <span className="chart__key chart__key--bar chart__key--partial" aria-hidden="true" />Nov 2026, {countedTo.label}
       </p>
       <ol className="chart__wickets">
         {wicketKeys.map((key) => (
@@ -183,7 +191,7 @@ const innings = ['2025', '2026'].map((year) => {
 function Worm() {
   const [ref, width] = useWidth();
   const narrow = width < 420;
-  const max = 140;
+  const max = 150;
   const right = PAD.right + (narrow ? 36 : 84);
   const inner = width - PAD.left - right;
   const x = (month) => PAD.left + ((month - 1) / 11) * inner;
@@ -195,20 +203,19 @@ function Worm() {
     const point = points.find(([m]) => m === month);
     return { year, text: point ? `${point[1]}${partial(lastKey(year))}` : 'not played yet' };
   });
-  const activeText = month ? `End of ${MONTHS[month - 1]}: ${rows.map((r) => `${r.year} ${r.text}`).join(', ')}` : '';
+  const activeText = month ? `Running total, ${MONTHS[month - 1]}: ${rows.map((r) => `${r.year} ${r.text}`).join(', ')}` : '';
 
   return (
     <figure className="chart">
       <figcaption className="chart__title">Worm · running total by year</figcaption>
-      <div className="chart__plot" ref={ref}>
+      <div className="chart__plot" ref={ref} aria-label="Worm chart: use the left and right arrow keys to step through the months" {...handlers}>
         <svg
           width={width}
           height={HEIGHT}
           role="img"
-          aria-label="Worm of running commit totals. 2025 ends on 128; 2026 has 54 so far. Use the arrow keys to step through the months; the figures are also in the table below."
-          {...handlers}
+          aria-label="Worm of running commit totals. 2025 ends on 128; 2026 has 54 so far. The figures are also in the table below."
         >
-          <Gridlines max={max} step={35} x1={PAD.left} x2={width - right} y={y} />
+          <Gridlines max={max} step={50} x1={PAD.left} x2={width - right} y={y} />
           {MONTHS.map((label, i) =>
             i % (narrow ? 3 : 2) === 0 ? (
               <text key={label} className="chart__tick" x={x(i + 1)} y={HEIGHT - PAD.bottom + 18} textAnchor="middle">{label}</text>
@@ -227,20 +234,26 @@ function Worm() {
               </g>
             );
           })}
+          {/* Wicket 3 on the 2025 innings: the month I joined Pegara. */}
+          <g className="chart__wicket">
+            <circle cx={x(11)} cy={y(innings[0].points[10][1]) + 16} r="9" />
+            <text x={x(11)} y={y(innings[0].points[10][1]) + 16} dy="0.35em" textAnchor="middle">3</text>
+          </g>
           <line className="chart__axis" x1={PAD.left} x2={width - right} y1={y(0)} y2={y(0)} />
         </svg>
         {month && (
-          <Tip x={x(month)} y={PAD.top + 8} width={width} announce={fromKeys && activeText}>
-            <strong>End of {MONTHS[month - 1]}</strong>
+          <Tip x={x(month)} y={PAD.top + 8} width={width}>
+            <strong>Running total, {MONTHS[month - 1]}</strong>
             {rows.map((r) => <span key={r.year}>{r.year}: {r.text}</span>)}
           </Tip>
         )}
+        <Announcer text={fromKeys ? activeText : ''} />
       </div>
       <p className="chart__legend">
         <span className="chart__key chart__key--2025" aria-hidden="true" />2025
         <span className="chart__key chart__key--2026" aria-hidden="true" />2026 so far
       </p>
-      <p className="chart__note">2026 leaves out my Pegara work, which is in private repositories.</p>
+      <p className="chart__note">Wicket 3 marks joining Pegara in Nov 2025. From then on most of my work is in private repositories and isn&apos;t counted.</p>
     </figure>
   );
 }

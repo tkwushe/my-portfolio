@@ -37,7 +37,7 @@ export const squad = [
       { value: '687', label: 'Test clips' },
       { value: '3', label: 'Encoders' },
       { value: '~10k', label: 'Synthetic' },
-      { value: '0.909', label: 'Synth F1' },
+      { value: '~670', label: 'Real clips' },
     ],
     technologies: ['Deep Learning', 'DINOv3', 'ConvNeXt', 'BiGRU', 'ComfyUI', 'Synthetic Video', 'Locked Evaluation', 'ONNX', 'Jetson'],
     links: {},
@@ -49,7 +49,7 @@ export const squad = [
       rows: [
         {
           name: 'DINOv3 ConvNeXt-Base',
-          result: 'The headline result above, on the locked test',
+          result: 'F1 0.920 on the locked test',
           outcome: 'Selected',
           selected: true,
         },
@@ -120,7 +120,7 @@ export const squad = [
     icon: 'water',
     headline: { value: '93', label: 'AUC %' },
     stats: [
-      { value: 'SHAP', label: 'Explained' },
+      { value: '3/6/12', label: 'Rain months' },
       { value: '78%', label: 'Accuracy' },
       { value: '~20', label: 'Features' },
       { value: '3', label: 'Datasets' },
@@ -224,36 +224,29 @@ export const squad = [
 ].map((project) => ({ ...project, body: caseStudies[project.slug].split('\n\n') }));
 
 // In development and current interests. Nothing here makes a results claim yet.
+const noResultsYet = [{ value: 'TBC', label: 'Results' }];
+
 export const lab = [
   {
     name: 'Mine Surveillance',
     icon: 'satellite',
     status: 'In development',
     description: 'Detecting possible artisanal-mining disturbance in Zimbabwe from Sentinel-1 and Sentinel-2 satellite change signals. An offline demo runs on test data, and a person makes every final decision.',
-    stats: [
-      { value: 'Sentinel', label: 'Satellites' },
-      { value: 'Demo', label: 'Stage' },
-    ],
+    stats: noResultsYet,
   },
   {
     name: 'AI Radio Station',
     icon: 'radio',
     status: 'Planning',
     description: "An AI-assisted production system for a sports radio show in Zimbabwe. It's still at the planning stage.",
-    stats: [
-      { value: 'Sport', label: 'Radio' },
-      { value: 'Planning', label: 'Stage' },
-    ],
+    stats: noResultsYet,
   },
   {
     name: 'Knowledge Distillation',
     icon: 'distill',
     status: 'Current interest',
     description: "Training small models to do what large ones can, so useful AI can run on cheap hardware where it's needed. I'd like to use it in my next projects.",
-    stats: [
-      { value: 'Small', label: 'Models' },
-      { value: 'Reading', label: 'Stage' },
-    ],
+    stats: noResultsYet,
   },
 ];
 

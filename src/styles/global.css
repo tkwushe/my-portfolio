@@ -293,6 +293,10 @@ svg {
 .hero {
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  /* On wide screens the hero fills the space between the nav and the ticker, so the strip sits on the ticker. */
+  min-height: calc(100svh - var(--nav-h) - var(--ticker-h));
   background: radial-gradient(120% 80% at 80% 30%, #151d36 0%, var(--bg) 60%);
 }
 
@@ -402,6 +406,8 @@ svg {
 
 .hero__inner {
   position: relative;
+  flex: 1 0 auto;
+  width: 100%;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
@@ -1005,6 +1011,11 @@ svg {
   margin-top: 80px;
 }
 
+/* The form guide follows the season archive closely; it continues the same story. */
+#form {
+  padding-top: 32px;
+}
+
 .seasons ul {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -1056,6 +1067,7 @@ svg {
   display: block;
   width: 100%;
   height: auto;
+  aspect-ratio: 1280 / 800;
   border: 1px solid var(--line-strong);
 }
 
@@ -1110,6 +1122,7 @@ svg {
   display: block;
   width: 100%;
   height: auto;
+  aspect-ratio: 1280 / 800;
 }
 
 .walkthrough__step:hover,
@@ -1672,7 +1685,7 @@ svg {
   }
 
   .hero__card .card--player {
-    --card-w: 168px;
+    --card-w: 150px;
   }
 
   /* Card and its controls side by side, so the name and buttons reach the first screen. */
@@ -1707,7 +1720,7 @@ svg {
   }
 
   .hero__crest {
-    left: 124px;
+    left: 108px;
     right: auto;
     width: 54px;
   }
@@ -1727,8 +1740,31 @@ svg {
     order: 1;
   }
 
+  /* Both role plates on one line. */
+  .hero__role {
+    flex-wrap: nowrap;
+    font-size: 1rem;
+  }
+
+  .hero__role span {
+    padding: 4px 10px;
+    white-space: nowrap;
+  }
+
+  /* Both buttons share one row, so name, tagline and buttons all fit the first screen. */
   .hero__actions {
     order: 2;
+    flex-wrap: nowrap;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .hero__actions .button {
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 0 10px;
+    font-size: 1.0625rem;
+    white-space: nowrap;
   }
 
   .allegiance {
@@ -1736,7 +1772,7 @@ svg {
   }
 
   .hero__title {
-    font-size: clamp(3.25rem, 17vw, 4.5rem);
+    font-size: clamp(3rem, 15vw, 4.25rem);
   }
 
   .hero__beam {

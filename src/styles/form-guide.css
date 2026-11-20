@@ -52,7 +52,7 @@
   font-size: 12px;
 }
 
-.chart svg:focus-visible {
+.chart__plot:focus-visible {
   outline: 3px solid var(--white);
   outline-offset: 4px;
 }
@@ -75,6 +75,27 @@
 
 .chart__bar--2026 {
   fill: var(--series-2026);
+}
+
+/* The month still being played: hatched, so it doesn't read as a full month. */
+.chart__bar--2026.is-partial {
+  fill: url(#hatch-partial);
+  stroke: var(--series-2026);
+  stroke-width: 1.5;
+}
+
+.chart__hatch-bg {
+  fill: color-mix(in srgb, var(--series-2026) 30%, transparent);
+}
+
+.chart__hatch {
+  stroke: var(--series-2026);
+  stroke-width: 2.5;
+}
+
+.chart__key--partial {
+  border: 1.5px solid var(--series-2026);
+  background: repeating-linear-gradient(45deg, var(--series-2026) 0 2px, transparent 2px 4px);
 }
 
 .chart__plot:has(.is-active) .chart__bar:not(.is-active) {
@@ -102,7 +123,7 @@
 .chart__wicket text {
   fill: var(--bg);
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
 }
 
@@ -161,6 +182,7 @@
 }
 
 .chart__tip strong {
+  white-space: nowrap;
   font-family: var(--font-mono);
   font-size: 0.75rem;
   letter-spacing: 0.06em;
@@ -224,13 +246,13 @@
   flex: none;
   display: inline-grid;
   place-items: center;
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   background: var(--white);
   color: var(--bg);
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
 }
 

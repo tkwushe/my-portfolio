@@ -21,7 +21,7 @@ export const profile = {
   cricket: 'Australia & Zimbabwe',
   cricketFavourite: 'Steve Smith',
   football: 'Watches loads of football',
-  tagline: "I'm most interested in analysing data and in deep learning, taking raw data and turning it into something meaningful that people can act on. I'm open to a range of roles in data science, deep learning and quantitative research.",
+  tagline: "I'm most interested in analysing data and in deep learning, especially taking messy raw data and getting something useful out of it. I'm open to data science, deep learning and quantitative research roles.",
   // The public CV: the master CV with the phone number taken out.
   cv: '/Takudzwa-Wushe-CV.pdf',
   // Where I want to go next, said the same way wherever it comes up.
@@ -147,6 +147,6 @@ export const attributes = [
 ];
 
 export const interests = [
-  "I'm most interested in how data can help people make better decisions, mainly in sustainability and social development, and more and more in finance. Quantitative research appeals to me because it rewards the same careful testing I do on the detector.",
+  "The areas I care about most are where data can help people make better decisions, mainly in sustainability and social development, and more and more in finance. Quantitative research appeals to me because it rewards the same careful testing I do on the detector.",
   "Longer term, I want to help grow tech in Zimbabwe. My water points dissertation is a small example of what I mean, and I'd like to build more things like it there, especially around resource management and access to basic services.",
 ];

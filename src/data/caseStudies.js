@@ -83,7 +83,7 @@ In the end, MindCareDB is not just a technical artefact. It is a foundation that
 };
 
 // Written from the career evidence register's cleared wording, in the owner's voice. Employer detail is left out on purpose.
-caseStudies['animal-detector'] = `This is the work I do at Pegara, where I'm part of a team of three. In February our CTO trusted me to lead the project for two to three months, and it's the most demanding deep learning project I've taken on so far. The task is to watch a video feed and decide, one second at a time, whether a particular animal is in the frame. A big part of my job was to properly understand the model: how it's built, how it should be tested, and what its numbers actually mean.
+caseStudies['animal-detector'] = `This is the work I do at Pegara, where I'm part of a team of three. In February our CTO trusted me to lead the project for two to three months, and it's the most demanding deep learning project I've taken on so far. The task is to watch a video feed and decide, one second at a time, whether a particular animal is in the frame. A big part of my job was to properly understand the model, including how to test it and what its numbers mean.
 
 I started with the data. I built the clip datasets under version control and kept the training, validation and test splits strictly apart, because if test clips leak into training, every result after that is worthless. One of the main dataset builds came to 1,391 rows with zero recorded overlap between the splits. It took a lot of time, but it meant I could trust the comparisons that came after.
 
@@ -97,4 +97,4 @@ Every dataset and every model version is tracked, and each change gets checked a
 
 On a separate hard-case retest, the best run reached 93.3 percent accuracy, short of the 95 percent I was aiming for. Most of my progress since has come from working out why it misses those clips.
 
-A lot of this is background work for my employer, so I've kept the details of the data and the deployment out of this write-up. It has changed how I work, though. I now set up the evaluation before I choose a model, and I'm much more interested in small models that do one job reliably. That's what pulled me towards knowledge distillation, and it's the technical area I most want to get better at.`;
+A lot of this is background work for my employer, so I've kept the details of the data and the deployment out of this write-up. It has changed how I work, though. I now set up the evaluation before I choose a model, and I'm much more interested in small models that do one job reliably. That's what pulled me towards knowledge distillation, and it's the technical area I want to get better at.`;

@@ -123,7 +123,17 @@ export default function App() {
     // Returning from a case study remounts the sections, so the browser's own anchor jump has nothing to land on.
     const target = route.anchor && !route.anchor.startsWith('/') ? document.getElementById(route.anchor) : null;
     target?.scrollIntoView?.({ block: target.id.startsWith('slot-') ? 'center' : 'start' });
-    if (moveFocus && target?.id.startsWith('slot-')) target.querySelector('a')?.focus({ preventScroll: true });
+    if (!moveFocus || !target) return;
+    if (target.id.startsWith('slot-')) {
+      target.querySelector('a')?.focus({ preventScroll: true });
+      return;
+    }
+    // A nav link from a report lands on the section's heading, not the top of the page.
+    const heading = target.querySelector('h2');
+    if (heading) {
+      heading.setAttribute('tabindex', '-1');
+      heading.focus({ preventScroll: true });
+    }
   }, [route]);
 
   return (
@@ -142,7 +152,7 @@ export default function App() {
               <Squad />
               <Lab />
               <Scorecard />
-            <FormGuide />
+              <FormGuide />
               <Attributes />
               <Contact />
             </>

@@ -3,8 +3,8 @@ import { overall } from '../data/profile';
 const LINKS = [
   { href: '#squad', label: 'Squad' },
   { href: '#lab', label: 'In dev' },
-  { href: '#form', label: 'Form', wide: true },
   { href: '#career', label: 'Career' },
+  { href: '#form', label: 'Form', wide: true },
   { href: '#contact', label: 'Contact' },
 ];
 

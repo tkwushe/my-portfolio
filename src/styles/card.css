@@ -326,6 +326,10 @@
   gap: 2.6cqw;
 }
 
+.card__stat:only-child {
+  grid-column: 1 / -1;
+}
+
 .card__stat:nth-child(even) {
   border-left: 1px solid color-mix(in srgb, currentColor 32%, transparent);
 }
@@ -374,7 +378,8 @@
   font-family: var(--font-mono);
   font-size: max(12px, 4.8cqw);
   font-weight: 700;
-  letter-spacing: 0.14em;
+  /* Tighter on small pitch cards so long tier names clear the shield. */
+  letter-spacing: clamp(0.04em, 0.6cqw, 0.14em);
   text-align: center;
   text-transform: uppercase;
   opacity: 0.8;
