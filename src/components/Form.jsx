@@ -1,16 +1,16 @@
 import SectionHead from './SectionHead';
 import { form } from '../data/profile';
 
-// The pitch is 100 by 46 units. Attack runs left to right.
+// The pitch is 100 by 38 units. Attack runs left to right.
 const W = 100;
-const H = 46;
+const H = 38;
 const MID = H / 2;
 
 // Each stage sits a little higher or lower than the last so the run reads as a path, not a row.
-const LANES = [30, 17, 29, 16];
+const LANES = [25, 13.5, 24, 13];
 
 // Drawn once, in the hero. The section further down carries the same stages in full.
-export function Pitch() {
+export function Pitch({ active }) {
   const points = form.map((stage, i) => ({ x: stage.x, y: LANES[i % LANES.length] }));
   const path = points.map((p, i) => `${i ? 'L' : 'M'}${p.x} ${p.y}`).join(' ');
   const summary = form.map((stage, i) => `${i + 1}, ${stage.title}`).join('; ');
@@ -33,17 +33,22 @@ export function Pitch() {
       <g className="pitch__lines">
         <rect x="0" y="0" width={W} height={H} rx="0.6" />
         <path d={`M${W / 2} 0 V${H}`} />
-        <circle cx={W / 2} cy={MID} r="6" />
-        <rect x="0" y={MID - 12} width="13" height="24" />
-        <rect x="0" y={MID - 5.5} width="4.5" height="11" />
-        <rect x={W - 13} y={MID - 12} width="13" height="24" />
-        <rect x={W - 4.5} y={MID - 5.5} width="4.5" height="11" />
+        <circle cx={W / 2} cy={MID} r="5" />
+        <rect x="0" y={MID - 10} width="13" height="20" />
+        <rect x="0" y={MID - 4.6} width="4.5" height="9.2" />
+        <rect x={W - 13} y={MID - 10} width="13" height="20" />
+        <rect x={W - 4.5} y={MID - 4.6} width="4.5" height="9.2" />
       </g>
       <text className="pitch__end" x="2" y={H - 2.4}>Reactive</text>
       <text className="pitch__end" x={W - 2} y={H - 2.4} textAnchor="end">Proactive</text>
-      <path className="pitch__run" d={path} markerEnd="url(#pitch-arrow)" />
+      <path className="pitch__run" d={path} pathLength="100" markerEnd="url(#pitch-arrow)" />
       {points.map((p, i) => (
-        <g key={form[i].title} className={`pitch__marker${i === points.length - 1 ? ' pitch__marker--now' : ''}`}>
+        <g
+          key={form[i].title}
+          className={`pitch__marker${i === points.length - 1 ? ' pitch__marker--now' : ''}${i === active ? ' pitch__marker--active' : ''}`}
+          style={{ '--i': i }}
+        >
+          {i === active && <circle className="pitch__ring" cx={p.x} cy={p.y} r="5.4" />}
           <circle cx={p.x} cy={p.y} r="3.6" />
           <text x={p.x} y={p.y + 1.5} textAnchor="middle">{i + 1}</text>
         </g>

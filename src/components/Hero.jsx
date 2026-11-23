@@ -1,8 +1,8 @@
 import { ZimFlag } from './Card';
-import { Pitch } from './Form';
+import FormBoard from './FormBoard';
 import { MdSportsCricket } from 'react-icons/md';
 import { FaFileDownload } from 'react-icons/fa';
-import { form, profile } from '../data/profile';
+import { profile } from '../data/profile';
 import crest from '../assets/arsenal-crest.svg';
 
 
@@ -52,22 +52,7 @@ export default function Hero({ entrance = false, waiting = false, returning = fa
           </ul>
         </div>
 
-        {/* The journey the Form section tells in full: from reacting to getting ahead. */}
-        <aside className="hero__board" aria-labelledby="hero-form-title">
-          <p className="hero__board-tab">Form</p>
-          <h2 id="hero-form-title" className="hero__board-title">Reactive to proactive</h2>
-          <Pitch />
-          <ol className="hero__board-list">
-            {form.map((stage, i) => (
-              <li key={stage.title} className={i === form.length - 1 ? 'is-now' : undefined}>
-                <span className="hero__board-num" aria-hidden="true">{i + 1}</span>
-                <span className="hero__board-stage">{stage.title}</span>
-                <span className="hero__board-when">{stage.where}</span>
-              </li>
-            ))}
-          </ol>
-          <a className="hero__board-link" href="#form">Read how my approach changed</a>
-        </aside>
+        <FormBoard />
       </div>
 
       {/* Where I am now and what I work with; the tagline above says what I'm after. */}

@@ -176,3 +176,44 @@ export const form = [
     text: 'I start things myself now: Mine Surveillance, the AI sports show and my reading on knowledge distillation. I want to be independent and start projects that are meaningful.',
   },
 ];
+
+// The playbook: the rules I work by. Each one is something I already say elsewhere on the site,
+// and `proof` points at where. `play` picks the chalkboard drawing.
+export const playbook = [
+  {
+    play: 'lock',
+    title: 'Set up the test first',
+    text: 'I set up the evaluation before I choose a model, and every change is checked against the same locked clips, so I can tell whether it actually helped.',
+    proof: { label: 'Animal Detector', href: '#/case/animal-detector' },
+  },
+  {
+    play: 'build',
+    title: 'Start with the data',
+    text: 'I start with the data: versioned datasets, strict splits, and getting something useful out of messy raw material before any model sees it.',
+    proof: { label: 'Animal Detector', href: '#/case/animal-detector' },
+  },
+  {
+    play: 'small',
+    title: 'Small models that do one job',
+    text: "I'm more interested in a small model that does one job reliably than a big one that does everything. That is what pulled me towards knowledge distillation.",
+    proof: { label: 'In development', href: '#lab' },
+  },
+  {
+    play: 'ref',
+    title: 'A person makes the final call',
+    text: 'In my own projects the system does the repetitive work and a person decides. The mining tool flags, and someone confirms. The sports show writes, and a producer approves.',
+    proof: { label: 'AI Sports Show', href: '#/case/sports-show' },
+  },
+  {
+    play: 'home',
+    title: "Build where it's needed",
+    text: 'I want to help grow tech in Zimbabwe, around resource management and access to basic services. My water points dissertation is a small example of what I mean.',
+    proof: { label: 'Water Points ML', href: '#/case/water-points' },
+  },
+  {
+    play: 'miss',
+    title: 'Report the misses',
+    text: 'On a hard-case retest my best run reached 93.3 percent against a 95 percent target, and I say so. Working out why it misses is where most of my progress has come from.',
+    proof: { label: 'Animal Detector', href: '#/case/animal-detector' },
+  },
+];

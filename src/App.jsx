@@ -6,6 +6,9 @@ import Squad from './components/Squad';
 import Lab from './components/Lab';
 import Scorecard from './components/Scorecard';
 import Form from './components/Form';
+import Playbook from './components/Playbook';
+import Chant from './components/Chant';
+import { useChant } from './hooks/useChant';
 import Attributes from './components/Attributes';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
@@ -41,6 +44,8 @@ const shouldWalkout = () => {
 };
 
 export default function App() {
+  // Arsenal fans know what to type.
+  const chanting = useChant('coyg');
   const [route, setRoute] = useState(readRoute);
   useRevealAll(route.project ? route.project.slug : 'home');
   const [playedIntro] = useState(shouldWalkout);
@@ -151,6 +156,7 @@ export default function App() {
     <>
       <CardDefs />
       {walkoutOpen && <Walkout onDone={closeWalkout} />}
+      {chanting && <Chant />}
       {/* While the intro plays, the page behind it can't be reached by keyboard or screen reader. */}
       <div inert={walkoutOpen ? '' : undefined}>
         <Nav />
@@ -163,6 +169,7 @@ export default function App() {
               <Squad />
               <Lab />
               <Scorecard />
+              <Playbook />
               <Form />
               <Attributes />
               <Contact />

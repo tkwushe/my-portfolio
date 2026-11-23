@@ -1,0 +1,139 @@
+/* The playbook: six rules, each with a chalkboard set piece. */
+.playbook {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.playbook__rule {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  border: 1px solid var(--line-strong);
+  background: var(--panel);
+}
+
+/* Chalk on a dark green board. */
+.chalk {
+  display: block;
+  width: 100%;
+  height: auto;
+  background:
+    radial-gradient(120% 90% at 50% 0%, rgba(255, 255, 255, 0.06), transparent 70%),
+    #10261c;
+  border-bottom: 1px solid var(--line-strong);
+}
+
+.chalk__o,
+.chalk__x,
+.chalk__line,
+.chalk__ref {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.85);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.chalk__o--solid {
+  fill: var(--gold);
+  stroke: var(--gold);
+}
+
+.chalk__x {
+  stroke: var(--red-bright);
+  stroke-width: 2;
+}
+
+.chalk__ref {
+  fill: rgba(227, 192, 106, 0.2);
+  stroke: var(--gold);
+}
+
+.chalk__run {
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 1.6;
+  stroke-dasharray: 4 3;
+  stroke-linecap: round;
+}
+
+.chalk__head {
+  fill: var(--gold);
+}
+
+.playbook__body {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  padding: 20px 20px 16px;
+}
+
+.playbook__num {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--red-bright);
+}
+
+.playbook__body h3 {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 800;
+  line-height: 1.02;
+  text-transform: uppercase;
+}
+
+.playbook__body > p:not(.playbook__num) {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text-soft);
+}
+
+.playbook__proof {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  justify-self: start;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-underline-offset: 4px;
+}
+
+.playbook__proof:hover {
+  color: var(--white);
+}
+
+/* The set piece redraws itself when you point at the card. */
+.playbook__rule:hover .chalk__run {
+  animation: chalk-run 900ms linear;
+}
+
+@keyframes chalk-run {
+  from { stroke-dashoffset: 28; }
+  to { stroke-dashoffset: 0; }
+}
+
+@media (max-width: 1000px) {
+  .playbook {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 620px) {
+  .playbook {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .playbook__rule:hover .chalk__run {
+    animation: none;
+  }
+}
