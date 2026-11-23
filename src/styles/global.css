@@ -411,7 +411,7 @@ svg {
   gap: 56px;
   max-width: var(--wrap);
   margin: 0 auto;
-  padding: 36px var(--gutter) 48px;
+  padding: 26px var(--gutter) 30px;
 }
 
 .live {
@@ -633,6 +633,46 @@ svg {
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--gold);
+}
+
+/* One real result under the tagline, linking to its match report. */
+.hero__result {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
+  min-height: 44px;
+  margin-top: 16px;
+  padding: 8px 14px 8px 12px;
+  border-left: 4px solid var(--gold);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--white);
+  text-decoration: none;
+  transition: background-color 160ms ease-out;
+}
+
+.hero__result:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.hero__result-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.hero__result-value {
+  font-family: var(--font-display);
+  font-size: 1.625rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.hero__result-detail {
+  font-size: 0.9375rem;
+  color: var(--text-soft);
 }
 
 .hero__actions {

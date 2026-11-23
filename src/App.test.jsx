@@ -35,6 +35,8 @@ describe('App', () => {
     // The hero shows the reactive-to-proactive board, and no portrait.
     expect(screen.getByRole('heading', { name: 'Reactive to proactive' })).toBeInTheDocument();
     expect(screen.queryByAltText('Takudzwa Wushe')).not.toBeInTheDocument();
+    // One cleared result in the hero, linking to its report.
+    expect(screen.getByRole('link', { name: /F1 0\.920.*687 held-out clips.*Animal Detector/ })).toHaveAttribute('href', '#/case/animal-detector');
     expect(screen.getAllByText(String(overall)).length).toBeGreaterThan(0);
     squad.forEach((project) => {
       expect(document.querySelector(`a[href="#/case/${project.slug}"]`)).not.toBeNull();

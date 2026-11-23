@@ -27,6 +27,11 @@ export default function Hero({ entrance = false, waiting = false, returning = fa
             <span>{profile.study}</span>
           </p>
           <p className="hero__tagline">{profile.tagline}</p>
+          <a className="hero__result" href={profile.headline.href}>
+            <span className="hero__result-label">Latest result</span>
+            <span className="hero__result-value">{profile.headline.value}</span>
+            <span className="hero__result-detail">{profile.headline.detail} · {profile.headline.project}</span>
+          </a>
           <div className="hero__actions">
             <a className="button button--primary" href="#squad">View the squad</a>
             <a className="button" href={profile.cv} download>

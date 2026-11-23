@@ -22,6 +22,8 @@ export const profile = {
   cricketFavourite: 'Steve Smith',
   football: 'Watches loads of football',
   tagline: "I'm most interested in analysing data and in deep learning, especially taking messy raw data and getting something useful out of it. I'm open to data science, deep learning and quantitative research roles.",
+  // One cleared headline result for the hero; the full story is in its match report.
+  headline: { value: 'F1 0.920', detail: 'on 687 held-out clips', project: 'Animal Detector', href: '#/case/animal-detector' },
   // The public CV: the master CV with the phone number taken out.
   cv: '/Takudzwa-Wushe-CV.pdf',
   // Where I want to go next, said the same way wherever it comes up.
