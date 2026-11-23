@@ -606,15 +606,23 @@ svg {
   color: var(--text-soft);
 }
 
-/* The chosen stage, in a fixed-height box so picking another one never moves the page. */
-.hero__board-story {
-  min-height: 6.6em;
+.hero__board-stories {
+  display: grid;
   margin-top: 10px;
   padding-top: 10px;
   border-top: 1px solid var(--line-strong);
+}
+
+.hero__board-story {
+  grid-area: 1 / 1;
   font-size: 0.9375rem;
   line-height: 1.55;
   color: var(--text-soft);
+  visibility: hidden;
+}
+
+.hero__board-story[data-on='true'] {
+  visibility: visible;
 }
 
 .hero__board-period {

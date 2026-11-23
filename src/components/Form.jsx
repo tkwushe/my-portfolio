@@ -10,7 +10,7 @@ const MID = H / 2;
 const LANES = [25, 13.5, 24, 13];
 
 // Drawn once, in the hero. The section further down carries the same stages in full.
-export function Pitch({ active }) {
+export function Pitch({ active, decorative = false }) {
   const points = form.map((stage, i) => ({ x: stage.x, y: LANES[i % LANES.length] }));
   const path = points.map((p, i) => `${i ? 'L' : 'M'}${p.x} ${p.y}`).join(' ');
   const summary = form.map((stage, i) => `${i + 1}, ${stage.title}`).join('; ');
@@ -18,8 +18,10 @@ export function Pitch({ active }) {
     <svg
       className="pitch"
       viewBox={`-1 -1 ${W + 2} ${H + 2}`}
-      role="img"
-      aria-label={`A football pitch with four positions moving from my own goal to the other end: ${summary}.`}
+      // On the hero board the buttons underneath say the same thing, so the drawing is skipped there.
+      role={decorative ? undefined : 'img'}
+      aria-hidden={decorative ? true : undefined}
+      aria-label={decorative ? undefined : `A football pitch with four positions moving from my own goal to the other end: ${summary}.`}
     >
       <defs>
         <marker id="pitch-arrow" viewBox="0 0 6 6" refX="5" refY="3" markerWidth="5" markerHeight="5" orient="auto">

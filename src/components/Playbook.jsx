@@ -65,7 +65,7 @@ export default function Playbook() {
   return (
     <section className="section" id="playbook" aria-labelledby="playbook-title">
       <SectionHead id="playbook-title" tab="Tactics" title="The Playbook">
-        The rules I work by. Each one comes from a project on this page.
+        The rules I work by, and where you can see each one.
       </SectionHead>
 
       {/* One arrowhead shared by every drawing. */}
@@ -89,6 +89,7 @@ export default function Playbook() {
               <p>{rule.text}</p>
               <a className="playbook__proof" href={rule.proof.href}>
                 Seen in: {rule.proof.label}
+                <span className="visually-hidden"> (for {rule.title})</span>
               </a>
             </div>
           </li>

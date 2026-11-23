@@ -148,7 +148,6 @@
 
 /* On arrival the run is drawn from my own goal outwards and the markers land in order. */
 .hero--entrance .pitch__run {
-  stroke-dasharray: 100;
   animation: pitch-draw 1400ms ease-out 500ms backwards;
 }
 
@@ -158,9 +157,10 @@
   transform-origin: center;
 }
 
+/* Drawn as one unbroken stroke, then it settles back to the dashed run. */
 @keyframes pitch-draw {
-  from { stroke-dashoffset: 100; }
-  to { stroke-dashoffset: 0; }
+  from { stroke-dasharray: 100; stroke-dashoffset: 100; }
+  to { stroke-dasharray: 100; stroke-dashoffset: 0; }
 }
 
 @keyframes pitch-land {

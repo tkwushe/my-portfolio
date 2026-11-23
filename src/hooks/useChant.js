@@ -9,7 +9,8 @@ export function useChant(word, ms = 2600) {
     const onKey = (event) => {
       const el = event.target;
       const typing = el instanceof HTMLElement && (el.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(el.tagName));
-      if (typing || event.key.length !== 1) return;
+      // Shortcuts such as Ctrl+C are not typing.
+      if (typing || event.key.length !== 1 || event.ctrlKey || event.metaKey || event.altKey) return;
       typed = (typed + event.key.toLowerCase()).slice(-word.length);
       if (typed !== word) return;
       typed = '';

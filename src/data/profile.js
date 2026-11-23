@@ -189,14 +189,14 @@ export const playbook = [
   {
     play: 'build',
     title: 'Start with the data',
-    text: 'I start with the data: versioned datasets, strict splits, and getting something useful out of messy raw material before any model sees it.',
+    text: 'I start with the data: versioned datasets, strict splits between training, validation and test, and cleaning up messy raw data until it is useful.',
     proof: { label: 'Animal Detector', href: '#/case/animal-detector' },
   },
   {
     play: 'small',
     title: 'Small models that do one job',
-    text: "I'm more interested in a small model that does one job reliably than a big one that does everything. That is what pulled me towards knowledge distillation.",
-    proof: { label: 'In development', href: '#lab' },
+    text: "I'm much more interested in small models that do one job reliably. That's what pulled me towards knowledge distillation.",
+    proof: { label: 'Animal Detector', href: '#/case/animal-detector' },
   },
   {
     play: 'ref',
@@ -213,7 +213,7 @@ export const playbook = [
   {
     play: 'miss',
     title: 'Report the misses',
-    text: 'On a hard-case retest my best run reached 93.3 percent against a 95 percent target, and I say so. Working out why it misses is where most of my progress has come from.',
+    text: 'On a hard-case retest my best run reached 93.3 percent, short of my 95 percent target. Most of my progress since has come from working out why it misses those clips.',
     proof: { label: 'Animal Detector', href: '#/case/animal-detector' },
   },
 ];

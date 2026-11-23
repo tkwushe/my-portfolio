@@ -10,7 +10,10 @@ describe('Playbook', () => {
     playbook.forEach((rule) => {
       expect(screen.getByRole('heading', { name: rule.title })).toBeInTheDocument();
     });
-    expect(screen.getAllByRole('link')).toHaveLength(playbook.length);
+    const names = screen.getAllByRole('link').map((link) => link.textContent);
+    expect(names).toHaveLength(playbook.length);
+    // Several rules point at the same project, so each link also names its rule.
+    expect(new Set(names).size).toBe(playbook.length);
   });
 
   it('only points at pages that exist', () => {
