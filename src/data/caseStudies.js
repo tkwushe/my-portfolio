@@ -116,4 +116,4 @@ Once the producer approves the script, each line is turned into speech with Elev
 
 Behind the dashboard is a Python service built with FastAPI. Long jobs such as research, script writing and voicing run in the background while the dashboard polls for progress. It has API key authentication, a SQLite store, S3-compatible object storage for the audio, automated tests and a Dockerfile for deployment.
 
-It works end to end as a demo and has produced full 15-minute voiced episodes. It isn't on air. Still to do are a pronunciation list for local names, proper stings and music beds, and a way for the producer to send a script back with notes.`;
+It works end to end as a demo and has produced complete voiced episodes from live news. It isn't on air. Still to do are a pronunciation list for local names, proper stings and music beds, and a way for the producer to send a script back with notes.`;

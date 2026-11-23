@@ -1303,6 +1303,22 @@ svg {
   margin-top: 32px;
 }
 
+/* A few screens of the project, stepped through like the season archive. */
+.case__tour {
+  margin-top: 32px;
+  padding: 24px;
+  border: 1px solid var(--line-strong);
+  background: var(--panel);
+}
+
+.case__tour h2 {
+  font-size: 1.75rem;
+}
+
+.case__tour p {
+  color: var(--text-soft);
+}
+
 .case__shot img {
   width: 100%;
   height: auto;

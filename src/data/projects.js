@@ -1,6 +1,9 @@
 import { caseStudies } from './caseStudies';
 import bayNoakesShot from '../assets/shot-bay-noakes.jpg';
 import waterPointsShot from '../assets/shot-water-points.jpg';
+import sportsInboxShot from '../assets/shot-sports-inbox.jpg';
+import sportsScriptShot from '../assets/shot-sports-script.jpg';
+import sportsVoiceShot from '../assets/shot-sports-voice.jpg';
 
 // Starting line-up: projects with a full case study.
 // `headline` is the big number on the card; every figure comes from the write-up itself.
@@ -249,7 +252,7 @@ const labEntries = [
     report: {
       problem: 'A daily sports show needs fresh stories found, checked, scripted and recorded every day, and most of that work is repetitive.',
       approach: 'An AI-assisted production pipeline. It fetches live news through APIs, ranks it for freshness and source reliability, has a large language model write a two-presenter script, checks the script claim by claim against its sources, and voices it with text-to-speech. A producer approves the stories and the script.',
-      result: "Working as a demo. It has produced full 15-minute voiced episodes. It isn't on air and has no results to report yet, so it has no rating.",
+      result: "Working as a demo. It has produced complete voiced episodes from live news. It isn't on air and has no results to report yet, so it has no rating.",
       resultLabel: 'Where it stands',
     },
     diagram: {
@@ -263,6 +266,12 @@ const labEntries = [
         { name: '5 · Voice', items: ['ElevenLabs text-to-speech', 'One voice per presenter', 'FFmpeg stitching and loudness', 'Cue sheet for the studio'] },
       ],
     },
+    // Screenshots of the producer dashboard, showing output from a real run on 8 July 2026.
+    shots: [
+      { src: sportsInboxShot, alt: 'Story Inbox: a table of ranked sports stories with category, source, freshness, trust score and approve or reject buttons', caption: 'The Story Inbox, where the producer approves or rejects each ranked story.' },
+      { src: sportsScriptShot, alt: 'Script Review: a two-presenter script on the left and a QA passed panel with the source stories on the right', caption: 'Script Review, with the two-presenter script beside its QA result and the stories it drew on.' },
+      { src: sportsVoiceShot, alt: 'Voice Queue: script lines labelled by presenter next to a cue sheet with start times and durations', caption: 'The Voice Queue, with each line assigned to a presenter and the cue sheet timing the show.' },
+    ],
     technologies: ['LLM Pipeline', 'Human-in-the-loop', 'Grounding Checks', 'Gemini 2.5 Flash', 'Exa Search API', 'ElevenLabs TTS', 'FFmpeg', 'Python', 'FastAPI', 'Next.js', 'React', 'TypeScript', 'SQLite', 'S3 Storage', 'Docker'],
     links: {},
   },

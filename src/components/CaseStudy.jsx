@@ -1,5 +1,6 @@
 import { FaArrowLeft, FaCheck, FaExternalLinkAlt, FaGithub, FaMapMarkedAlt } from 'react-icons/fa';
 import { LabCard, ProjectCard } from './Card';
+import Walkthrough from './Walkthrough';
 import { squad } from '../data/projects';
 
 export default function CaseStudy({ project }) {
@@ -61,6 +62,15 @@ export default function CaseStudy({ project }) {
           <img src={project.image.src} alt={project.image.alt} width="1280" height="800" loading="lazy" />
           <figcaption>{project.image.caption}</figcaption>
         </figure>
+      )}
+
+      {project.shots && (
+        <section className="case__tour" aria-labelledby="tour-title" data-reveal>
+          <Walkthrough title="The producer dashboard" shots={project.shots}>
+            <h2 id="tour-title">The producer dashboard</h2>
+            <p>Three screens from the demo, showing the output of a real run.</p>
+          </Walkthrough>
+        </section>
       )}
 
       {project.diagram && (

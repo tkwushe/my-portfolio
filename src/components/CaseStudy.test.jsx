@@ -12,6 +12,8 @@ describe('CaseStudy for in-development work', () => {
     expect(screen.getByText('Where it stands')).toBeInTheDocument();
     expect(screen.queryByText('The result')).not.toBeInTheDocument();
     expect(screen.getByRole('link', { name: /Back to in development/ })).toHaveAttribute('href', '#lab');
+    // Three dashboard screenshots, each with a caption that doubles as its button name.
+    expect(screen.getAllByRole('button', { pressed: false }).length + screen.getAllByRole('button', { pressed: true }).length).toBe(project.shots.length);
   });
 
   it('never says planning for a project that has a working demo', () => {
