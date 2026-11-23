@@ -1,7 +1,4 @@
-import { useId, useState } from 'react';
 import { useTilt } from '../hooks/useTilt';
-import { cardStats, modules, overall, profile } from '../data/profile';
-import profileImage from '../assets/profile-cutout.webp';
 import CardArt from './CardArt';
 
 // The card silhouette, in objectBoundingBox units so one definition fits every size.
@@ -44,13 +41,8 @@ function Finish() {
   );
 }
 
-// The face that is turned away stays in the DOM for the flip, so it is taken out
-// of the tab order and the accessibility tree. React 18 needs inert as a string; on React 19 switch to `inert: true`.
-const hiddenProps = (hidden) => (hidden ? { inert: '', 'aria-hidden': true } : {});
-
-// Card shell shared by the player card, project cards and in-development cards.
-// A `back` turns it into a two-sided card; `flipped` says which side faces out.
-export function Card({ tier = 'gold', rating, ratingLabel, position, crest, art, name, stats, stacked = false, note, foot, back, flipped = false, id, className = '' }) {
+// Card shell shared by project cards and in-development cards.
+export function Card({ tier = 'gold', rating, ratingLabel, position, crest, art, name, stats, stacked = false, note, foot, className = '' }) {
   const ref = useTilt();
   const front = (
     <>
@@ -81,112 +73,10 @@ export function Card({ tier = 'gold', rating, ratingLabel, position, crest, art,
       </div>
     </>
   );
-  const flipClass = back ? ` card--flippable${flipped ? ' card--flipped' : ''}` : '';
   return (
-    <div ref={ref} id={id} className={`card card--${tier}${flipClass} ${className}`.trim()}>
-      <div className="card__body">
-        {back ? (
-          <div className="card__flip">
-            <div className="card__side card__side--front" {...hiddenProps(flipped)}>{front}</div>
-            <div className="card__side card__side--back" {...hiddenProps(!flipped)}>
-              <div className="card__edge" aria-hidden="true" />
-              <div className="card__face card__back">
-                <div className="card__rays" aria-hidden="true" />
-                {back}
-                <Finish />
-              </div>
-            </div>
-          </div>
-        ) : (
-          front
-        )}
-      </div>
+    <div ref={ref} className={`card card--${tier} ${className}`.trim()}>
+      <div className="card__body">{front}</div>
     </div>
-  );
-}
-
-// Reverse of the player card: only facts already in profile.js.
-function PlayerBack() {
-  const facts = [
-    ['Nation', profile.nation],
-    ['Supports', profile.supports],
-    ['Cricket', 'AUS & ZIM'],
-    ['Fave', profile.cricketFavourite],
-    ['Degree', 'First Class'],
-  ];
-  return (
-    <div className="card__back-inner">
-      <p className="card__back-name">{profile.firstName} {profile.lastName}</p>
-      <dl className="card__facts">
-        {facts.map(([label, value]) => (
-          <div key={label}>
-            <dt>{label}</dt>
-            <dd>{value}</dd>
-          </div>
-        ))}
-      </dl>
-      <p className="card__back-kicker">Module marks</p>
-      <dl className="card__marks">
-        {modules.map((m) => (
-          <div key={m.code}>
-            <dt>
-              <abbr title={m.name}>{m.code}</abbr>
-            </dt>
-            <dd>{m.mark}</dd>
-          </div>
-        ))}
-        <div className="card__marks-ovr">
-          <dt>OVR</dt>
-          <dd>{overall}</dd>
-        </div>
-      </dl>
-      {/* Where the season is being played now; dropped on small cards, where there's no room. */}
-      <p className="card__back-now">
-        <span>Now</span> {profile.study} · Warwick
-      </p>
-    </div>
-  );
-}
-
-export function PlayerCard() {
-  const [flipped, setFlipped] = useState(false);
-  const cardId = useId();
-  return (
-    <>
-      <Card
-        tier="icon"
-        id={cardId}
-        className="card--player"
-        rating={overall}
-        ratingLabel="OVR"
-        position={profile.position}
-        crest={
-          <>
-            <ZimFlag />
-            <span className="card__club">{profile.club}</span>
-          </>
-        }
-        art={<img src={profileImage} alt={`${profile.firstName} ${profile.lastName}`} width="480" height="490" {...{ fetchpriority: 'high' }} />}
-        name={profile.cardName}
-        stats={cardStats}
-        foot="Season 26/27"
-        back={<PlayerBack />}
-        flipped={flipped}
-      />
-      {/* A real button, not a clickable card: keyboard and touch users get the same control. */}
-      <button
-        type="button"
-        className="card-flip"
-        aria-controls={cardId}
-        aria-pressed={flipped}
-        onClick={() => setFlipped((f) => !f)}
-      >
-        <svg className="card-flip__icon" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
-          <path d="M4 8a6 6 0 0 1 11-2.5M16 12a6 6 0 0 1-11 2.5M15.5 2v4h-4M4.5 18v-4h4" />
-        </svg>
-        Flip card
-      </button>
-    </>
   );
 }
 

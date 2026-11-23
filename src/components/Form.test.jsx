@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { render, screen, within } from '@testing-library/react';
-import Form from './Form';
+import Form, { Pitch } from './Form';
 import { form } from '../data/profile';
 
 describe('Form', () => {
@@ -17,7 +17,7 @@ describe('Form', () => {
   it('moves up the pitch from one stage to the next', () => {
     const positions = form.map((stage) => stage.x);
     expect(positions).toEqual([...positions].sort((a, b) => a - b));
-    render(<Form />);
+    render(<Pitch />);
     expect(screen.getByRole('img', { name: /four positions/i })).toBeInTheDocument();
   });
 });

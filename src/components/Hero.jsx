@@ -1,7 +1,8 @@
-import { PlayerCard, ZimFlag } from './Card';
+import { ZimFlag } from './Card';
+import { Pitch } from './Form';
 import { MdSportsCricket } from 'react-icons/md';
 import { FaFileDownload } from 'react-icons/fa';
-import { modules, profile } from '../data/profile';
+import { form, profile } from '../data/profile';
 import crest from '../assets/arsenal-crest.svg';
 
 
@@ -51,16 +52,22 @@ export default function Hero({ entrance = false, waiting = false, returning = fa
           </ul>
         </div>
 
-        <div className="hero__card">
-          <div className="hero__cardwrap">
-            {/* The club badge pinned to the card, the way a sticker sits on a collected card. */}
-            <img className="hero__crest" src={crest} alt="" width="292" height="343" />
-            <PlayerCard />
-          </div>
-          <p className="hero__footnote">
-            Ratings are real module marks. OVR is the average across {modules.length} modules.
-          </p>
-        </div>
+        {/* The journey the Form section tells in full: from reacting to getting ahead. */}
+        <aside className="hero__board" aria-labelledby="hero-form-title">
+          <p className="hero__board-tab">Form</p>
+          <h2 id="hero-form-title" className="hero__board-title">Reactive to proactive</h2>
+          <Pitch />
+          <ol className="hero__board-list">
+            {form.map((stage, i) => (
+              <li key={stage.title} className={i === form.length - 1 ? 'is-now' : undefined}>
+                <span className="hero__board-num" aria-hidden="true">{i + 1}</span>
+                <span className="hero__board-stage">{stage.title}</span>
+                <span className="hero__board-when">{stage.where}</span>
+              </li>
+            ))}
+          </ol>
+          <a className="hero__board-link" href="#form">Read how my approach changed</a>
+        </aside>
       </div>
 
       {/* Where I am now and what I work with; the tagline above says what I'm after. */}

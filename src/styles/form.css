@@ -23,13 +23,13 @@
 .pitch__lines {
   fill: none;
   stroke: rgba(255, 255, 255, 0.5);
-  stroke-width: 0.25;
+  stroke-width: 0.35;
 }
 
 .pitch__end {
   fill: var(--white);
   font-family: var(--font-display);
-  font-size: 2.6px;
+  font-size: 4px;
   font-weight: 800;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -39,8 +39,8 @@
 .pitch__run {
   fill: none;
   stroke: var(--gold);
-  stroke-width: 0.45;
-  stroke-dasharray: 1.6 1.2;
+  stroke-width: 0.7;
+  stroke-dasharray: 2.2 1.6;
   stroke-linecap: round;
 }
 
@@ -51,13 +51,13 @@
 .pitch__marker circle {
   fill: var(--white);
   stroke: var(--bg);
-  stroke-width: 0.4;
+  stroke-width: 0.6;
 }
 
 .pitch__marker text {
   fill: var(--bg);
   font-family: var(--font-display);
-  font-size: 3px;
+  font-size: 4.4px;
   font-weight: 900;
 }
 
@@ -136,14 +136,5 @@
 @media (max-width: 600px) {
   .frontfoot__stages {
     grid-template-columns: minmax(0, 1fr);
-  }
-
-  /* Small screens: the end labels need to stay readable at 12px. */
-  .pitch__end {
-    font-size: 3.6px;
-  }
-
-  .pitch__marker text {
-    font-size: 3.4px;
   }
 }

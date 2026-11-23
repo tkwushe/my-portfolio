@@ -13,8 +13,6 @@ export const profile = {
   heroRole: 'Data Scientist',
   study: 'MSc Applied AI',
   position: 'DS',
-  // The name printed on the front of the player card: my nickname.
-  cardName: 'Taku',
   nation: 'Zimbabwe',
   location: 'Coventry, UK',
   // The card's club is where I play now.
@@ -75,12 +73,6 @@ export const modules = [
 export const inningsTotal = modules.reduce((sum, m) => sum + m.mark, 0);
 export const inningsAverage = inningsTotal / modules.length;
 export const overall = Math.round(inningsAverage);
-
-// Six face stats, as on a FUT card. Software Principles sits on the scorecard only.
-export const cardStats = ['ALG', 'SYS', 'OPS', 'MTH', 'DBS', 'OOP'].map((code) => {
-  const m = modules.find((x) => x.code === code);
-  return { label: code, value: m.mark, title: m.name };
-});
 
 export const career = [
   {

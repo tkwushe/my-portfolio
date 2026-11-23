@@ -29,10 +29,13 @@ describe('profile data', () => {
 });
 
 describe('App', () => {
-  it('renders the home page with the player card and squad links', () => {
+  it('renders the home page with the form board and squad links', () => {
     render(<App />);
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(/Takudzwa\s*Wushe/i);
-    expect(screen.getByAltText('Takudzwa Wushe')).toBeInTheDocument();
+    // The hero shows the reactive-to-proactive board, and no portrait.
+    expect(screen.getByRole('heading', { name: 'Reactive to proactive' })).toBeInTheDocument();
+    expect(screen.queryByAltText('Takudzwa Wushe')).not.toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /how my approach changed/i })).toHaveAttribute('href', '#form');
     expect(screen.getAllByText(String(overall)).length).toBeGreaterThan(0);
     squad.forEach((project) => {
       expect(document.querySelector(`a[href="#/case/${project.slug}"]`)).not.toBeNull();
