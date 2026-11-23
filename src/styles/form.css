@@ -1,0 +1,149 @@
+/* Form: four positions moving up a pitch, from my own goal to the other end. */
+.frontfoot {
+  display: grid;
+  gap: 28px;
+}
+
+.pitch {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--line-strong);
+  background: var(--panel);
+}
+
+.pitch__grass {
+  fill: #0f2a1f;
+}
+
+.pitch__stripe {
+  fill: rgba(255, 255, 255, 0.035);
+}
+
+.pitch__lines {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.5);
+  stroke-width: 0.25;
+}
+
+.pitch__end {
+  fill: var(--white);
+  font-family: var(--font-display);
+  font-size: 2.6px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+.pitch__run {
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 0.45;
+  stroke-dasharray: 1.6 1.2;
+  stroke-linecap: round;
+}
+
+.pitch__arrowhead {
+  fill: var(--gold);
+}
+
+.pitch__marker circle {
+  fill: var(--white);
+  stroke: var(--bg);
+  stroke-width: 0.4;
+}
+
+.pitch__marker text {
+  fill: var(--bg);
+  font-family: var(--font-display);
+  font-size: 3px;
+  font-weight: 900;
+}
+
+.pitch__marker--now circle {
+  fill: var(--red);
+  stroke: var(--white);
+}
+
+.pitch__marker--now text {
+  fill: var(--white);
+}
+
+.frontfoot__stages {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.frontfoot__stages li {
+  position: relative;
+  padding: 22px 20px 20px;
+  border: 1px solid var(--line-strong);
+  border-top: 4px solid var(--white);
+  background: var(--panel);
+}
+
+.frontfoot__stages li.is-now {
+  border-top-color: var(--red);
+  background: var(--panel-2);
+}
+
+.frontfoot__num {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  font-weight: 900;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.16);
+}
+
+.frontfoot__when {
+  max-width: calc(100% - 36px);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.frontfoot__stages h3 {
+  margin: 10px 0 8px;
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 800;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.frontfoot__stages li > p:last-child {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text-soft);
+}
+
+@media (max-width: 1000px) {
+  .frontfoot__stages {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .frontfoot__stages {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Small screens: the end labels need to stay readable at 12px. */
+  .pitch__end {
+    font-size: 3.6px;
+  }
+
+  .pitch__marker text {
+    font-size: 3.4px;
+  }
+}

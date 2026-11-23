@@ -517,18 +517,40 @@ svg {
   gap: 22px;
 }
 
-/* Arsenal red stand: a slanted block running from the card to the edge of the screen. */
+/* The card stands in its own pool of light on the dark ground, the way a player is lit
+   for a walkout shot. Gold in the middle, Arsenal red at the rim. */
 .hero__card::before {
   content: '';
   position: absolute;
-  top: -600px;
-  bottom: -600px;
-  left: -150px;
-  right: -100vw;
-  background: linear-gradient(165deg, var(--red) 0%, #c40006 55%, var(--red-deep) 100%);
-  transform: skewX(var(--skew));
-  transform-origin: 0 100%;
+  top: 44%;
+  left: 50%;
+  width: 720px;
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  background:
+    radial-gradient(closest-side, rgba(255, 233, 170, 0.42) 0%, rgba(255, 200, 90, 0.16) 34%, rgba(239, 1, 7, 0.2) 56%, rgba(239, 1, 7, 0) 78%);
   pointer-events: none;
+}
+
+/* Thin rays fanning out behind the card. */
+.hero__card::after {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  top: 44%;
+  left: 50%;
+  width: 760px;
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  background: repeating-conic-gradient(from 0deg, rgba(255, 236, 190, 0.11) 0deg 2deg, transparent 2deg 9deg);
+  -webkit-mask-image: radial-gradient(closest-side, transparent 30%, #000 44%, transparent 92%);
+  mask-image: radial-gradient(closest-side, transparent 30%, #000 44%, transparent 92%);
+  pointer-events: none;
+}
+
+.hero__cardwrap,
+.hero__footnote {
+  z-index: 1;
 }
 
 .hero__card > .card {
@@ -729,8 +751,24 @@ svg {
   font-size: 2rem;
 }
 
-.lab__body p:last-child {
+.lab__body p {
   color: var(--text-soft);
+}
+
+.lab__more {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-underline-offset: 4px;
+}
+
+.lab__more:hover {
+  color: var(--white);
 }
 
 /* ---------- Career ---------- */
@@ -1011,7 +1049,7 @@ svg {
   margin-top: 80px;
 }
 
-/* The form guide follows the season archive closely; it continues the same story. */
+/* Form follows the season archive closely; it continues the same story. */
 #form {
   padding-top: 32px;
 }
@@ -1543,8 +1581,9 @@ svg {
   height: calc(min(56vw, 240px) * 1.4);
   padding: calc(min(56vw, 240px) * 0.24) 0 calc(min(56vw, 240px) * 0.26);
   font-size: 1rem;
-  background: radial-gradient(130% 100% at 50% 0%, #fff6cc 0%, #f1d47d 38%, #dcb25a 78%, #c99a3e 100%);
-  color: #2a1d05;
+  /* Same ivory stock as the player card it hands over to. */
+  background: radial-gradient(120% 85% at 30% 0%, #ffffff 0%, #f8f1de 36%, #ead9a8 72%, #cfae5c 100%);
+  color: #0d1530;
   -webkit-clip-path: url(#card-shield);
   clip-path: url(#card-shield);
   filter: drop-shadow(0 0 60px rgba(227, 192, 106, 0.45));
@@ -1553,6 +1592,7 @@ svg {
 .walkout__card-ovr {
   font-size: clamp(4rem, 18vw, 6.5rem);
   line-height: 0.9;
+  color: #a80006;
 }
 
 .walkout__card-pos {
@@ -1562,7 +1602,7 @@ svg {
 .walkout__card-name {
   grid-row: 4;
   padding-top: 8px;
-  border-top: 1px solid rgba(42, 29, 5, 0.4);
+  border-top: 1px solid rgba(13, 21, 48, 0.4);
   font-size: clamp(2.25rem, 10vw, 3.5rem);
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -1620,11 +1660,11 @@ svg {
     padding-top: 44px;
   }
 
-  .hero__card::before {
-    left: -100vw;
-    top: -28px;
-    bottom: -24px;
-    transform: none;
+  .hero__card::before,
+  .hero__card::after {
+    top: 50%;
+    left: 84px;
+    width: 380px;
   }
 
   .hero__crest {

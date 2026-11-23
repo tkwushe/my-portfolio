@@ -7,7 +7,7 @@ import './styles/card-art.css';
 import './styles/broadcast-sections.css';
 import './styles/formation.css';
 import './styles/case-extra.css';
-import './styles/form-guide.css';
+import './styles/form.css';
 import './styles/motion.css';
 
 createRoot(document.getElementById('root')).render(

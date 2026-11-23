@@ -9,6 +9,8 @@ export const profile = {
   firstName: 'Takudzwa',
   lastName: 'Wushe',
   role: 'Assistant Data Scientist',
+  // The hero shows the field, not the job title; the title stays in the career history.
+  heroRole: 'Data Scientist',
   study: 'MSc Applied AI',
   position: 'DS',
   // The name printed on the front of the player card: my nickname.
@@ -40,10 +42,9 @@ export const ticker = [
   'Around 10,000 synthetic one-second clips generated with custom ComfyUI pipelines',
   'MSc Applied AI at Warwick: Applied Statistics for AI in progress',
   'In development: Mine Surveillance, satellite change detection for Zimbabwe',
-  'Planning: an AI production system for sports radio',
+  'In development: an AI production system for a sports show, working as a demo',
   'Current interest: knowledge distillation',
-  'Football: supports Arsenal and watches loads of it',
-  'Cricket: Australia and Zimbabwe, favourite player Steve Smith',
+  'Interests: football and cricket',
 ];
 
 // How the interest in machine learning started, in my own words.
@@ -149,4 +150,37 @@ export const attributes = [
 export const interests = [
   "The areas I care about most are where data can help people make better decisions, mainly in sustainability and social development, and more and more in finance. Quantitative research appeals to me because it rewards the same careful testing I do on the detector.",
   "Longer term, I want to help grow tech in Zimbabwe. My water points dissertation is a small example of what I mean, and I'd like to build more things like it there, especially around resource management and access to basic services.",
+];
+
+// Form: how the way I work has changed, from reacting to things to getting ahead of them.
+// Each stage is drawn as a position further up the pitch. `x` is that position, 0 to 100.
+export const form = [
+  {
+    x: 14,
+    period: '2022 – 2025',
+    where: 'BSc at Anglia Ruskin',
+    title: 'Reacting',
+    text: 'In my second year one module went worse than the others, so I chose a machine learning dissertation to prove I could do it. The choice was a reaction to a bad result.',
+  },
+  {
+    x: 38,
+    period: 'November 2025',
+    where: 'Joined Pegara',
+    title: 'Getting organised',
+    text: 'The Japanese work style is strict, and it made me more organised and more thoughtful about how I do things. At a startup I was also accountable early on.',
+  },
+  {
+    x: 62,
+    period: 'February 2026',
+    where: 'Leading the detector',
+    title: 'Planning ahead',
+    text: 'Our CTO trusted me to lead the animal detector. I now set up the evaluation before I choose a model, and every change is tested against the same locked clips.',
+  },
+  {
+    x: 86,
+    period: '2026 onwards',
+    where: 'My own projects',
+    title: 'On the front foot',
+    text: 'I start things myself now: Mine Surveillance, the AI sports show and my reading on knowledge distillation. I want to be independent and start projects that are meaningful.',
+  },
 ];

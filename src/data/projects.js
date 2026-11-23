@@ -224,7 +224,7 @@ export const squad = [
 ].map((project) => ({ ...project, body: caseStudies[project.slug].split('\n\n') }));
 
 // In development and current interests. Nothing here makes a results claim yet.
-export const lab = [
+const labEntries = [
   {
     name: 'Mine Surveillance',
     icon: 'satellite',
@@ -234,12 +234,37 @@ export const lab = [
     stats: [{ value: 'Demo', label: 'Stage' }],
   },
   {
-    name: 'AI Radio Station',
+    slug: 'sports-show',
+    name: 'AI Sports Show',
     icon: 'radio',
-    status: 'Planning',
-    description: 'An AI-assisted production system for a sports radio show in Zimbabwe.',
-    cardLine: 'AI help behind a Zimbabwean sports show',
-    stats: [{ value: 'Planning', label: 'Stage' }],
+    status: 'In development',
+    category: 'Applied AI',
+    position: 'AI',
+    title: 'AI Sports Show: from live news to a voiced bulletin, with a producer in charge',
+    description: "An AI-assisted production system for a sports show that's able to fetch the latest news through APIs. It ranks the stories, writes a script for two presenters, checks every claim against its sources and records the audio, with a producer approving each stage.",
+    summary: "An AI-assisted production system for a sports show that's able to fetch the latest news through APIs.",
+    cardLine: 'Live news in, a voiced show out',
+    stats: [{ value: 'Demo', label: 'Stage' }],
+    // No results claims: this is a working demo, not a show on air.
+    report: {
+      problem: 'A daily sports show needs fresh stories found, checked, scripted and recorded every day, and most of that work is repetitive.',
+      approach: 'An AI-assisted production pipeline. It fetches live news through APIs, ranks it for freshness and source reliability, has a large language model write a two-presenter script, checks the script claim by claim against its sources, and voices it with text-to-speech. A producer approves the stories and the script.',
+      result: "Working as a demo. It has produced full 15-minute voiced episodes. It isn't on air and has no results to report yet, so it has no rating.",
+      resultLabel: 'Where it stands',
+    },
+    diagram: {
+      title: 'How an episode is made',
+      caption: 'From the news of the day to a finished audio file, in the order it happens.',
+      groups: [
+        { name: '1 · Research', items: ['Search API for sports news worldwide', 'RSS feeds and a sports data API', 'Every story in one schema', 'Confidence label on each story'] },
+        { name: '2 · Ranking', items: ['Freshness check', 'Source trust score', 'Priority score', 'Duplicate stories merged'] },
+        { name: '3 · Script', items: ['Producer approves the stories', 'Gemini 2.5 Flash writes the script', 'Fallback LLM provider', 'Two presenter styles'] },
+        { name: '4 · Checks', items: ['Every claim checked against its source', 'Unsupported lines trigger a rewrite', 'Length checked against the target', 'Producer approves the script'] },
+        { name: '5 · Voice', items: ['ElevenLabs text-to-speech', 'One voice per presenter', 'FFmpeg stitching and loudness', 'Cue sheet for the studio'] },
+      ],
+    },
+    technologies: ['LLM Pipeline', 'Human-in-the-loop', 'Grounding Checks', 'Gemini 2.5 Flash', 'Exa Search API', 'ElevenLabs TTS', 'FFmpeg', 'Python', 'FastAPI', 'Next.js', 'React', 'TypeScript', 'SQLite', 'S3 Storage', 'Docker'],
+    links: {},
   },
   {
     name: 'Knowledge Distillation',
@@ -250,6 +275,11 @@ export const lab = [
     stats: [{ value: 'Reading', label: 'Stage' }],
   },
 ];
+
+// In-development work with a slug has its own match report; `dev` tells the report to show the unrated card.
+export const lab = labEntries.map((project) => (
+  project.slug ? { ...project, dev: true, body: caseStudies[project.slug].split('\n\n') } : project
+));
 
 // The bench: smaller builds without a write-up.
 export const bench = [
@@ -273,4 +303,4 @@ export const bench = [
   },
 ];
 
-export const findProject = (slug) => squad.find((project) => project.slug === slug);
+export const findProject = (slug) => [...squad, ...lab].find((project) => project.slug === slug);

@@ -5,7 +5,7 @@ import Hero from './components/Hero';
 import Squad from './components/Squad';
 import Lab from './components/Lab';
 import Scorecard from './components/Scorecard';
-import FormGuide from './components/FormGuide';
+import Form from './components/Form';
 import Attributes from './components/Attributes';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
@@ -163,7 +163,7 @@ export default function App() {
               <Squad />
               <Lab />
               <Scorecard />
-              <FormGuide />
+              <Form />
               <Attributes />
               <Contact />
             </>

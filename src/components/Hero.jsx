@@ -22,7 +22,7 @@ export default function Hero({ entrance = false, waiting = false, returning = fa
             <span className="hero__last">{profile.lastName}</span>
           </h1>
           <p className="hero__role">
-            <span>{profile.role}</span>
+            <span>{profile.heroRole}</span>
             <span>{profile.study}</span>
           </p>
           <p className="hero__tagline">{profile.tagline}</p>
@@ -42,16 +42,10 @@ export default function Hero({ entrance = false, waiting = false, returning = fa
             </li>
             <li>
               <img className="allegiance__icon allegiance__icon--crest" src={crest} alt="" width="292" height="343" />
-              <span>
-                <span className="allegiance__label">Supports</span>
-                {profile.supports}
-              </span>
-            </li>
-            <li>
               <MdSportsCricket className="allegiance__icon allegiance__icon--cricket" aria-hidden="true" />
               <span>
-                <span className="allegiance__label">Cricket · fave {profile.cricketFavourite}</span>
-                {profile.cricket}
+                <span className="allegiance__label">Interests</span>
+                Football and Cricket
               </span>
             </li>
           </ul>
@@ -72,8 +66,8 @@ export default function Hero({ entrance = false, waiting = false, returning = fa
       {/* Where I am now and what I work with; the tagline above says what I'm after. */}
       <dl className="statbar statbar--words">
         <div>
-          <dt>Day job</dt>
-          <dd>Pegara, team of three</dd>
+          <dt>Open to</dt>
+          <dd>DS · DL · Quant roles</dd>
         </div>
         <div>
           <dt>Studying</dt>

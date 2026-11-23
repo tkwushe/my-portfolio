@@ -14,7 +14,7 @@
 }
 
 .card--player {
-  --card-w: 276px;
+  --card-w: 304px;
 }
 
 .card--feature {
@@ -77,6 +77,23 @@
   --face: radial-gradient(125% 90% at 28% 0%, #4a5063 0%, #1b1e28 45%, #050608 100%);
   --ink: #f6d982;
   --ray: rgba(246, 217, 130, 0.1);
+}
+
+/* Icon: ivory stock with a gold edge and navy ink, for the player card only.
+   It is the lightest thing on the page, so it stands out against the night ground. */
+.card--icon {
+  --edge: linear-gradient(135deg, #8a6418 0%, #fff4c2 22%, #d4a437 48%, #fffbe6 72%, #8a6418 100%);
+  --face: radial-gradient(120% 85% at 30% 0%, #ffffff 0%, #f8f1de 36%, #ead9a8 72%, #cfae5c 100%);
+  --ink: #0d1530;
+  --ray: rgba(201, 162, 39, 0.2);
+}
+
+.card--icon .card__rating {
+  color: #a80006;
+}
+
+.card--icon.card--player {
+  filter: drop-shadow(0 26px 30px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 26px rgba(255, 220, 140, 0.35));
 }
 
 /* Arsenal red: reserved for the key player. */
@@ -275,16 +292,16 @@
   height: 54cqw;
 }
 
-/* The portrait takes its tone from the card, like an engraved icon card. */
+/* The portrait is a cut-out, so the card stock shows around the shoulders as on a real card.
+   It fades out at the bottom where it meets the name plate. */
 .card__art img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 50% 18%;
-  /* A warm wash ties the photo to the card stock while keeping the face clear. */
-  filter: sepia(0.25) saturate(0.95) contrast(1.05);
-  -webkit-mask-image: radial-gradient(ellipse 50% 54% at 50% 46%, #000 58%, transparent 100%);
-  mask-image: radial-gradient(ellipse 50% 54% at 50% 46%, #000 58%, transparent 100%);
+  object-position: 50% 0;
+  filter: contrast(1.04) saturate(1.02) drop-shadow(0 1.2cqw 2cqw rgba(13, 21, 48, 0.28));
+  -webkit-mask-image: linear-gradient(180deg, #000 80%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 80%, transparent 100%);
 }
 
 /* ---------- Name and stats ---------- */

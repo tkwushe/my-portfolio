@@ -1,7 +1,7 @@
 import { useId, useState } from 'react';
 import { useTilt } from '../hooks/useTilt';
 import { cardStats, modules, overall, profile } from '../data/profile';
-import profileImage from '../assets/profile-560.jpg';
+import profileImage from '../assets/profile-cutout.webp';
 import CardArt from './CardArt';
 
 // The card silhouette, in objectBoundingBox units so one definition fits every size.
@@ -154,7 +154,7 @@ export function PlayerCard() {
   return (
     <>
       <Card
-        tier="gold"
+        tier="icon"
         id={cardId}
         className="card--player"
         rating={overall}
@@ -166,10 +166,10 @@ export function PlayerCard() {
             <span className="card__club">{profile.club}</span>
           </>
         }
-        art={<img src={profileImage} alt={`${profile.firstName} ${profile.lastName}`} width="560" height="560" {...{ fetchpriority: 'high' }} />}
+        art={<img src={profileImage} alt={`${profile.firstName} ${profile.lastName}`} width="480" height="490" {...{ fetchpriority: 'high' }} />}
         name={profile.cardName}
         stats={cardStats}
-        foot="Rare gold"
+        foot="Season 26/27"
         back={<PlayerBack />}
         flipped={flipped}
       />

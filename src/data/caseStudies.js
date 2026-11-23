@@ -98,3 +98,22 @@ Every dataset and every model version is tracked, and each change gets checked a
 On a separate hard-case retest, the best run reached 93.3 percent accuracy, short of the 95 percent I was aiming for. Most of my progress since has come from working out why it misses those clips.
 
 A lot of this is background work for my employer, so I've kept the details of the data and the deployment out of this write-up. It has changed how I work, though. I now set up the evaluation before I choose a model, and I'm much more interested in small models that do one job reliably. That's what pulled me towards knowledge distillation, and it's the technical area I want to get better at.`;
+
+// A working demo, described as it stands. No results claims.
+caseStudies['sports-show'] = `This started from a question: how much of a daily sports show can be prepared automatically while a producer still decides what goes out? The show needs the day's stories found, checked, written into a script for two presenters and recorded. I built a system that does each of those steps and stops for a person at the points that matter.
+
+It begins with research. The system fetches the latest sports stories from around the world through a search API, with clients for RSS feeds and a sports data API alongside it. Every story is put into the same shape, with a headline, summary, source, publish time, teams, players and score. Each one also carries a confidence label, which is confirmed, developing, rumour or opinion, so a rumour is labelled as a rumour.
+
+Before anything reaches the producer, the stories are ranked. Each one gets a freshness check, a trust score based on how reliable its source is, and a priority score. The same story from different outlets is merged into one, and a story with no date is marked as not fresh instead of being treated as new.
+
+The producer works in a dashboard I built with Next.js, React and TypeScript. It has five views: Story Inbox, Episode Builder, Script Review, Voice Queue and Output Archive. They approve or reject each story, and by default nothing is written or recorded without that approval. An early version could run straight through on its own, so I made human approval the default everywhere.
+
+The approved stories go to a large language model, Gemini 2.5 Flash, with a fallback provider for when it is unavailable. It writes a script for two AI presenters with different styles, one analytical and one more energetic, and the system checks the script's length against the target for the show.
+
+Then the script is checked. A second pass goes through every claim in the script and compares it with the source log for that episode. If a line isn't supported by a source, the script fails and is written again. It's the same idea as the locked test clips in my detector work.
+
+Once the producer approves the script, each line is turned into speech with ElevenLabs, using a separate voice for each presenter. Failed lines are retried, and a run can pick up where it stopped. FFmpeg joins the lines into one file and normalises the loudness, and the system exports a cue sheet for the studio.
+
+Behind the dashboard is a Python service built with FastAPI. Long jobs such as research, script writing and voicing run in the background while the dashboard polls for progress. It has API key authentication, a SQLite store, S3-compatible object storage for the audio, automated tests and a Dockerfile for deployment.
+
+It works end to end as a demo and has produced full 15-minute voiced episodes. It isn't on air. Still to do are a pronunciation list for local names, proper stings and music beds, and a way for the producer to send a script back with notes.`;

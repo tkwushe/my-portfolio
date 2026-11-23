@@ -18,6 +18,11 @@ export default function Lab() {
             <div className="lab__body">
               <h3>{project.name}</h3>
               <p>{project.description}</p>
+              {project.slug && (
+                <a className="lab__more" href={`#/case/${project.slug}`}>
+                  Read the match report <span className="visually-hidden">for {project.name}</span>
+                </a>
+              )}
             </div>
           </li>
         ))}

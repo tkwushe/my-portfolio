@@ -1,5 +1,5 @@
 import { FaArrowLeft, FaCheck, FaExternalLinkAlt, FaGithub, FaMapMarkedAlt } from 'react-icons/fa';
-import { ProjectCard } from './Card';
+import { LabCard, ProjectCard } from './Card';
 import { squad } from '../data/projects';
 
 export default function CaseStudy({ project }) {
@@ -9,16 +9,16 @@ export default function CaseStudy({ project }) {
 
   return (
     <article className="case">
-      <a className="case__back" href={`#slot-${project.slug}`}>
-        <FaArrowLeft aria-hidden="true" /> Back to squad
+      <a className="case__back" href={project.dev ? '#lab' : `#slot-${project.slug}`}>
+        <FaArrowLeft aria-hidden="true" /> {project.dev ? 'Back to in development' : 'Back to squad'}
       </a>
 
       <header className="case__head">
         <div className="case__head-card" data-vt-card={project.slug}>
-          <ProjectCard project={project} />
+          {project.dev ? <LabCard project={project} /> : <ProjectCard project={project} />}
         </div>
         <div className="case__head-text">
-          <p className="chip chip--live">Match report · {project.category}</p>
+          <p className="chip chip--live">Match report · {project.category}{project.dev ? ' · In development' : ''}</p>
           <h1 tabIndex={-1}>{project.title}</h1>
           {!project.report && <p className="section__lead">{project.summary}</p>}
           <div className="case__actions">
@@ -51,7 +51,7 @@ export default function CaseStudy({ project }) {
           <dd>{project.report.approach}</dd>
         </div>
         <div>
-          <dt>The result</dt>
+          <dt>{project.report.resultLabel ?? 'The result'}</dt>
           <dd>{project.report.result}</dd>
         </div>
       </dl>
